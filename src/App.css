@@ -1,0 +1,14 @@
+.main{
+    max-width: 620px;
+    border: 1px solid black;
+    padding: 45px;
+    border-radius: 6px;
+}
+.item-center{
+  display:flex;
+  justify-content: center;
+}
+.heading{
+  color: blue;
+  margin-top: 125px;
+}
