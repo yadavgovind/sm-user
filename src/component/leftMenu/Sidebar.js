@@ -4,7 +4,7 @@ import React from 'react';
  * 
  */
 const Sidebar = (props) => {
-	const { showHideInventary, toggleInventary, handleRoutes } = props;
+	const { showHideInventory, toggleInventory, handleRoutes } = props;
 	return <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
 		<div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
 			<a href="/" className="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -26,15 +26,15 @@ const Sidebar = (props) => {
 					</button>
 				</li>
 				<li>
-					<a href="#submenu1" data-bs-toggle="collapse" className="nav-link px-0 align-middle" onClick={() => toggleInventary(!showHideInventary)}>
-						<span className="ms-1 d-none d-sm-inline">Inventary</span>
+					<a href="#submenu1" data-bs-toggle="collapse" className="nav-link px-0 align-middle" onClick={() => toggleInventory(!showHideInventory)}>
+						<span className="ms-1 d-none d-sm-inline">Inventory</span>
 					</a>
-					<ul className={`collapse ${showHideInventary ? 'show' : ''} nav flex-column ml-30`} id="submenu1" data-bs-parent="#menu">
+					<ul className={`collapse ${showHideInventory ? 'show' : ''} nav flex-column ml-30`} id="submenu1" data-bs-parent="#menu">
 						<li className="w-100">
-							<button onClick={() => handleRoutes("#in-inventary")} className="nav-link px-0"> <span className="d-none d-sm-inline">In Inventary</span>  </button>
+							<button onClick={() => handleRoutes("#in-inventory")} className="nav-link px-0"> <span className="d-none d-sm-inline">In Inventory</span>  </button>
 						</li>
 						<li>
-							<button onClick={() => handleRoutes("#out-inventary")} className="nav-link px-0"> <span className="d-none d-sm-inline">Out Inventary</span> </button>
+							<button onClick={() => handleRoutes("#out-inventory")} className="nav-link px-0"> <span className="d-none d-sm-inline">Out Inventory</span> </button>
 						</li>
 					</ul>
 				</li>
