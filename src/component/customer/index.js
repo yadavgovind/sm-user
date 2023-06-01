@@ -1,8 +1,10 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import AddCustomer from './AddCustomer';
 const Customer = () => {
 	return <div><h1>Customer</h1>
-		<Table striped="columns" bordered>
+		<AddCustomer />
+		<Table striped="columns" bordered className='mt-2'>
 			<thead>
 				<tr>
 					<th>S.No</th>

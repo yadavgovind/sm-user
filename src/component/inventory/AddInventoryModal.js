@@ -4,28 +4,46 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
 function AddInventoryModal() {
-	const [show, setShow] = useState(false);
+	const [currentModal, openModal] = useState(null);
 
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
 
 	return (
 		<>
-			<Button variant="primary" onClick={handleShow}>
+			<Button variant="primary" onClick={() => openModal("add-inventory")}>
 				<i class="fa-solid fa-plus"></i>
 			</Button>
-			<Modal show={show} onHide={handleClose}>
+			{currentModal === "add-inventory" && <Modal show onHide={() => openModal(null)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Add Inventory</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+							<Button variant="primary" onClick={() => openModal('add-customer')}>
+								<i class="fa-solid fa-plus"></i> Add Customer
+							</Button>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 							<Form.Label>Customer's Phone number</Form.Label>
 							<Form.Control
 								type="number"
-								placeholder="1234567898"
+								placeholder="Enter customer phone number"
 								autoFocus
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+							<Form.Label>Customer's Name</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter full name"
+								autoFocus
+							/>
+						</Form.Group>
+
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+							<Form.Label>Email</Form.Label>
+							<Form.Control
+								type="email"
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
@@ -55,14 +73,60 @@ function AddInventoryModal() {
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
+					<Button variant="secondary" onClick={() => openModal(null)}>
 						Close
 					</Button>
-					<Button variant="primary" onClick={handleClose}>
+					<Button variant="primary" onClick={() => openModal(null)}>
 						Save Changes
 					</Button>
 				</Modal.Footer>
 			</Modal>
+			}
+			{currentModal === "add-customer" && <Modal show onHide={() => openModal(null)}>
+				<Modal.Header closeButton>
+					<Modal.Title>Add Customer</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+							<Form.Label> Name</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter full name"
+								autoFocus
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+							<Form.Label> Phone number</Form.Label>
+							<Form.Control
+								type="number"
+								placeholder=""
+								autoFocus
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+							<Form.Label>Email</Form.Label>
+							<Form.Control
+								type="email"
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+							<Form.Label>Room</Form.Label>
+							<Form.Control
+								type="number"
+							/>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={() => openModal(null)}>
+						Close
+					</Button>
+					<Button variant="primary" onClick={() => openModal(null)}>
+						Save Changes
+					</Button>
+				</Modal.Footer>
+			</Modal>}
 		</>
 	);
 }
