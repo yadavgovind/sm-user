@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Row, Col } from 'react-bootstrap';
 import '../../App.css';
 import { SIGN_IN } from '../../constant/routes';
 function SignUp() {
@@ -30,16 +30,26 @@ function SignUp() {
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicRoom">
             <Form.Label>Number of rooms</Form.Label>
-            <Form.Control type="number" name="rooms" placeholder="Enter Rooms" onChange={handleOnChange} />
+            <Form.Control type="number" name="rooms" value={state.rooms} placeholder="Enter Rooms" onChange={handleOnChange} />
           </Form.Group>
-          {state.rooms &&
+          {state.rooms && Array.from({ length: state.rooms }, (v, i) =>
             <><Form.Group className="mb-3" controlId="formBasicRow">
-              <Form.Label>Number of rows</Form.Label>
-              <Form.Control type="number" placeholder="Enter rows" />
-            </Form.Group><Form.Group className="mb-3" controlId="formBasicColumn">
-                <Form.Label>Number of columns</Form.Label>
-                <Form.Control type="number" placeholder="Enter columns" />
-              </Form.Group></>}
+              <Row>
+                <Col sm={2}>
+                  <Form.Label>Room No</Form.Label>
+                  <Form.Control type="number" placeholder="" value={i + 1} disabled />
+                </Col>
+                <Col>
+                  <Form.Label>Number of rows</Form.Label>
+                  <Form.Control type="number" placeholder="Enter rows" />
+                </Col>
+                <Col>
+                  <Form.Label>Number of columns</Form.Label>
+                  <Form.Control type="number" placeholder="Enter columns" />
+                </Col>
+              </Row>
+            </Form.Group></>
+          )}
           <Button variant="primary" type="submit">
             SIGN UP
           </Button>
