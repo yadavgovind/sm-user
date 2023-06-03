@@ -94,6 +94,14 @@ function SignUp() {
             <Form.Label>Address</Form.Label>
             <Form.Control type="textarea" name='address' value={state.address} placeholder="Enter store address" onChange={handleOnChange} />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPhone">
+            <Form.Label>Area</Form.Label>
+            <Form.Control type="text" name='area' value={state.area} placeholder="Enter area" onChange={handleOnChange} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label> Registration Key</Form.Label>
+            <Form.Control type="text" name="registrationKey" value={state.registrationKey} placeholder="Enter registration key" onChange={handleOnChange} />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicRoom">
             <Form.Label>Number of rooms</Form.Label>
             <Form.Control type="number" name="noOfRooms" value={state.noOfRooms} placeholder="Enter Rooms" onChange={handleOnChange} />
