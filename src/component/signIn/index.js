@@ -25,18 +25,34 @@ function SignIn() {
           }
         })
       .then((response) => {
-        console.log(response.data);
-        sessionStorage.setItem("token",response.data.token);
-      //  history.push('/store');
-      });
+        sessionStorage.setItem("token", response.data.token);
+        getApi()
+        history.push('/store');
+      }).catch(err => console.log(err));
   }
 
- 
-  const submitForm = () => {
-    const payload = {username,otp};
-    postSignInApi(payload);
+  const getApi = async (payload) => {
+    axios
+      .get(`${BASE_API_URL}hello`,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "origin, content-type, accept, x-requested-with",
+            "Access-Control-Max-Age": "3600",
+            "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+          }
+        })
+      .then((response) => {
+        console.log(response)
+      }).catch(err => console.log(err));
+  }
 
-    console.log('payload', payload);
+
+  const submitForm = () => {
+    const payload = { username, otp };
+    postSignInApi(payload);
   }
 
   //login function
@@ -69,8 +85,10 @@ function SignIn() {
             <Form.Label>Phone number</Form.Label>
             <Form.Control type="text" placeholder="Enter phone number" name="phone"
               value={phone} maxLength={10}
-              onChange={(e) => {setPhone(e.target.value)
-                                setUserName(e.target.value)}}
+              onChange={(e) => {
+                setPhone(e.target.value)
+                setUserName(e.target.value)
+              }}
               onBlur={() => handleBlur()}
             />
           </Form.Group>
@@ -80,9 +98,9 @@ function SignIn() {
               name='otp' value={otp}
               onChange={(e) => setOtp(e.target.value)} />
           </Form.Group>
-          <div><Button variant="primary"   onClick={() => {
-           submitForm()
-           
+          <div><Button variant="primary" onClick={() => {
+            submitForm()
+
           }}>
             LOG IN
           </Button></div>
