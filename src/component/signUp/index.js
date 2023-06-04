@@ -40,7 +40,7 @@ function SignUp() {
   // }
   const postSignUpApi = async (payload) => {
     axios
-      .post(BASE_API_URL, payload,
+      .post(`${BASE_API_URL}open/store`, payload,
         {
           headers: {
             "Access-Control-Allow-Origin": "*",
