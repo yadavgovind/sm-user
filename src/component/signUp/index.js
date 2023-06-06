@@ -1,13 +1,14 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from "axios";
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import '../../App.css';
-import { BASE_API_URL, SIGN_IN } from '../../constant/routes';
+import { SIGN_IN } from '../../constant/routes';
+import { postSignUpApi } from './handler';
 function SignUp() {
   const [state, setState] = useState({})
   const [roomDetail, setRoomDetail] = useState({})
+
   const handleOnChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -20,58 +21,11 @@ function SignUp() {
       ...roomDetail, [name]: value
     })
   }
-  // async function signUpApi(payload) {
-  //   const requestOptions = {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(payload)
-  //   };
-  //   let response = () => {
-  //     return new Promise(function (resolve, reject) {
-  //       fetch("http://localhost:8080/api/store/", requestOptions
 
-  //       ).then(response => {
-  //         resolve(response);
-  //       });
-  //     });
-  //   };
-  //   let responseData = await response();
-  //   console.log(responseData.data);
-  // }
-  const postSignUpApi = async (payload) => {
-    axios
-      .post(`${BASE_API_URL}open/store`, payload,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers": "origin, content-type, accept, x-requested-with",
-            "Access-Control-Max-Age": "3600"
-          }
-        })
-      .then((response) => {
-        console.log(response.data);
-      });
-  }
-  const handlePayload = () => {
-    {
-      let arrObj = []
-      state.noOfRooms && Array.from({ length: state.noOfRooms }, (v, i) => {
-        let columnInRoom = roomDetail[`columnInRoom${i + 1}`]
-        let floorInRoom = roomDetail[`floorInRoom${i + 1}`]
-        arrObj.push({ roomNo: i + 1, floorInRoom, columnInRoom })
-      })
-      return { ...state, roomDetails: arrObj }
-    }
-  }
   const submitForm = () => {
-    const payload = handlePayload(state);
-    postSignUpApi(payload)
-    console.log('payload', payload)
+    postSignUpApi(state, roomDetail)
   }
-  console.log('roomDetail', roomDetail)
-  console.log("state", state)
+
   return (
     <>
       <div className='heading item-center'>	<h1>SM STORE</h1></div>
@@ -105,8 +59,8 @@ function SignUp() {
             <Form.Label>Number of rooms</Form.Label>
             <Form.Control type="number" name="noOfRooms" value={state.noOfRooms} placeholder="Enter Rooms" onChange={handleOnChange} />
           </Form.Group>
-          {state.noOfRooms && Array.from({ length: state.noOfRooms }, (v, i) =>
-            <><Form.Group className="mb-3" controlId="formBasicRow">
+          {state.noOfRooms && Array.from({ length: state.noOfRooms }, (v, i) => {
+            return (<><Form.Group className="mb-3" controlId="formBasicRow">
               <Row>
                 <Col sm={2}>
                   {i === 0 && <Form.Label>Room No</Form.Label>}
@@ -133,7 +87,8 @@ function SignUp() {
                     value={state.perLotCapacity && state.perLotCapacity[i + 1]} placeholder="Enter per lot capacity" />
                 </Col> */}
               </Row>
-            </Form.Group></>
+            </Form.Group></>)
+          }
           )}
           <Button variant="primary" onClick={() => submitForm()}>
             SIGN UP
