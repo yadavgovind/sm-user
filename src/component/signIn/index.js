@@ -12,7 +12,7 @@ function SignIn() {
 
   const submitForm = () => {
     const payload = { username, otp };
-    postSignInApi(payload,);
+    postSignInApi(payload);
   }
 
   return (
