@@ -1,5 +1,5 @@
 
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form as FormikForm, FieldArray } from 'formik';
 import * as Yup from 'yup';
@@ -12,41 +12,27 @@ import { SIGN_IN } from '../../constant/routes';
 import { postSignUpApi } from './handler';
 
 const ValidationSchema = Yup.object().shape({
-  storeName: Yup.mixed().required('Name is required'),
-  email: Yup.mixed().required('Email is required'),
-  phone: Yup.mixed().required('Phone is required'),
-  address: Yup.mixed().required('Address is required'),
-  area: Yup.mixed().required('Area is required'),
-  registrationKey: Yup.mixed().required('Registration key is required'),
-  noOfRooms: Yup.mixed().required('Room is required'),
+  storeName: Yup.string().required('Please enter store name.'),
+  email: Yup.string().required('Please enter email.'),
+  phone: Yup.string().required('Please enter phone number'),
+  address: Yup.string().required('Please enter address.'),
+  area: Yup.string().required('Please enter area.'),
+  registrationKey: Yup.string().required('Please enter registration key.'),
+  noOfRooms: Yup.string().required('Please enter room.'),
   roomDetail: Yup.array()
     .of(
       Yup.object().shape({
-        floorInRoom: Yup.string().required('floor is required'),
-        columnInRoom: Yup.string().required('column is required'),
+        floorInRoom: Yup.string().required('Please enter floor.'),
+        columnInRoom: Yup.string().required('Please enter column.'),
       })
     )
 });
 function SignUp() {
-  const [state, setState] = useState({})
-  const [roomDetail, setRoomDetail] = useState({})
 
-  // const handleOnChange = (e) => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   setState({ ...state, [name]: value })
-  // }
-  const handleRoomDetail = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setRoomDetail({
-      ...roomDetail, [name]: value
-    })
-  }
-
-  const submitForm = (values, formik) => {
-    console.log("values", values, formik)
-    postSignUpApi(state, roomDetail)
+  const submitForm = (values) => {
+    if (values.roomDetail.length) {
+      postSignUpApi(values)
+    }
   }
 
   return (
@@ -68,7 +54,6 @@ function SignUp() {
           onSubmit={(values, formik) => submitForm(values, formik)}
         >{({ errors, touched, ...formikProps }) => (
           <FormikForm >
-            {console.log(formikProps.values, errors, ">>><<<", touched)}
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label> Name</Form.Label>
               <Form.Control
@@ -156,14 +141,18 @@ function SignUp() {
                           </Col>
                           <Col>
                             {i === 0 && <Form.Label>Floors</Form.Label>}
-                            <Form.Control type="text" name={floorInRoom} onChange={formikProps.handleChange}
-                              onBlur={formikProps.handleBlur} placeholder="Enter floors" />
+                            <Form.Control type="text"
+                              name={floorInRoom}
+                              onChange={formikProps.handleChange}
+                              onBlur={formikProps.handleBlur}
+                              placeholder="Enter floors" />
                             {errors.roomDetail && errors.roomDetail[i] && errors.roomDetail[i]?.floorInRoom && touched.roomDetail && touched.roomDetail[i]?.floorInRoom && <span className="error">{errors.roomDetail[i].floorInRoom}</span>}
 
                           </Col>
                           <Col>
                             {i === 0 && <Form.Label>Columns</Form.Label>}
-                            <Form.Control type="text" name={columnInRoom}
+                            <Form.Control type="text"
+                              name={columnInRoom}
                               onChange={formikProps.handleChange}
                               onBlur={formikProps.handleBlur}
                               placeholder="Enter columns" />
