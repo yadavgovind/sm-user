@@ -22,7 +22,6 @@ function AddCustomer() {
 
 		return JSON.parse(jsonPayload);
 	}
-	const detail = parseJwt(sessionStorage.getItem('token'))
 
 
 	const handleOnChange = (e) => {
@@ -32,8 +31,9 @@ function AddCustomer() {
 	}
 
 	const handleSubmit = async () => {
+		const detail = parseJwt(sessionStorage.getItem('token'))
 		const payload = { ...state, ...detail }
-		await addCustomerApi(payload, detail.storeId)
+		await addCustomerApi(payload, detail["storeId "])
 		setShow(false)
 	}
 	return (

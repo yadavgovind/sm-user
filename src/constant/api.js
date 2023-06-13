@@ -9,3 +9,17 @@ export const header = {
 		"Access-Control-Max-Age": "3600"
 	}
 }
+
+
+export const headerWithAuthorization = (token) => {
+	return {
+		headers: {
+			"Access-Control-Allow-Origin": "*",
+			"Content-Type": "application/json",
+			"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+			"Access-Control-Allow-Headers": "origin, content-type, accept, x-requested-with",
+			"Access-Control-Max-Age": "3600",
+			"Authorization": `Bearer ${token}`
+		}
+	}
+}
