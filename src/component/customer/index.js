@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import AddCustomer from './AddCustomer';
+import { getCustomerApi, parseJwt } from './handler';
 const Customer = () => {
+	const [state, setState] = useState({})
+	useEffect(() => {
+		const detail = parseJwt(sessionStorage.getItem('token'))
+		sessionStorage.setItem('storeId', detail["storeId "])
+		getCustomerApi(detail['storeId '].trim()).then((customerList) => {
+			setState(customerList)
+		})
+
+	}, [state])
 	return <div><h1>Customer</h1>
 		<AddCustomer />
 		<Table striped="columns" bordered className='mt-2'>

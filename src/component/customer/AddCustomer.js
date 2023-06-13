@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { addCustomerApi } from './handler';
+import { addCustomerApi, parseJwt } from './handler';
 
 function AddCustomer() {
 	const [show, setShow] = useState(false);
@@ -12,16 +12,6 @@ function AddCustomer() {
 	const handleShow = () => {
 		setShow(true)
 	};
-
-	function parseJwt(token) {
-		var base64Url = token.split('.')[1];
-		var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-		var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-		}).join(''));
-
-		return JSON.parse(jsonPayload);
-	}
 
 
 	const handleOnChange = (e) => {
@@ -33,6 +23,7 @@ function AddCustomer() {
 	const handleSubmit = async () => {
 		const detail = parseJwt(sessionStorage.getItem('token'))
 		const payload = { ...state, ...detail }
+		Object.keys(payload).forEach(k => payload[k] = typeof payload[k] == 'string' ? payload[k].trim() : payload[k]);
 		await addCustomerApi(payload, detail["storeId "])
 		setShow(false)
 	}
