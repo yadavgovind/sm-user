@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { addCustomerApi, parseJwt } from './handler';
+import { tokenDecode } from '../../constant/api';
 
 function AddCustomer() {
 	const [show, setShow] = useState(false);
@@ -21,10 +22,9 @@ function AddCustomer() {
 	}
 
 	const handleSubmit = async () => {
-		const detail = parseJwt(sessionStorage.getItem('token'))
+		let detail = tokenDecode()
 		const payload = { ...state, ...detail }
-		Object.keys(payload).forEach(k => payload[k] = typeof payload[k] == 'string' ? payload[k].trim() : payload[k]);
-		await addCustomerApi(payload, detail["storeId "])
+		await addCustomerApi(payload, sessionStorage.getItem('token'))
 		setShow(false)
 	}
 	return (

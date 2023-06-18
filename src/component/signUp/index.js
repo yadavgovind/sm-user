@@ -1,5 +1,5 @@
 
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form as FormikForm, FieldArray } from 'formik';
 import * as Yup from 'yup';
@@ -28,10 +28,11 @@ const ValidationSchema = Yup.object().shape({
     )
 });
 function SignUp() {
-
+  const [isSubmit, setSubmit] = useState(false)
   const submitForm = (values) => {
     if (values.roomDetail.length) {
-      postSignUpApi(values)
+      setSubmit(true)
+      postSignUpApi(values, setSubmit)
     }
   }
 
@@ -168,6 +169,7 @@ function SignUp() {
             </FieldArray>
             <Button variant="primary"
               type="submit"
+              disabled={isSubmit}
               onClick={formikProps.submitForm}
             >
               SIGN UP

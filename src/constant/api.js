@@ -1,3 +1,5 @@
+import jwt_decode from "jwt-decode";
+
 export const BASE_API_URL = 'http://localhost:8080/api/'
 
 export const header = {
@@ -18,8 +20,21 @@ export const headerWithAuthorization = (token) => {
 			"Content-Type": "application/json",
 			"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
 			"Access-Control-Allow-Headers": "origin, content-type, accept, x-requested-with",
-			"Access-Control-Max-Age": "3600",
-			"Authorization": `Bearer ${token}`
+			"Access-Control-Max-Age": "3600"
+			//,
+			//"Authorization": `Bearer ${token}`
 		}
 	}
+}
+
+export const tokenDecode = () => {
+	let payload = Object.entries(jwt_decode(sessionStorage.getItem('token'))).reduce((acc, curr) => {
+		let [key, value] = curr;
+		// Checking if the key is a string
+		acc[typeof key === "string" ? key.trim() : key] = value;
+		return acc;
+	}, {})
+	Object.keys(payload).forEach(k => payload[k] = typeof payload[k] == 'string' ? payload[k].trim() : payload[k]);
+
+	return payload
 }
