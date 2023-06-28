@@ -20,24 +20,7 @@ function SignUp() {
       ...roomDetail, [name]: value
     })
   }
-  // async function signUpApi(payload) {
-  //   const requestOptions = {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(payload)
-  //   };
-  //   let response = () => {
-  //     return new Promise(function (resolve, reject) {
-  //       fetch("http://localhost:8080/api/store/", requestOptions
-
-  //       ).then(response => {
-  //         resolve(response);
-  //       });
-  //     });
-  //   };
-  //   let responseData = await response();
-  //   console.log(responseData.data);
-  // }
+  
   const postSignUpApi = async (payload) => {
     axios
       .post(`${BASE_API_URL}open/store`, payload,

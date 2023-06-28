@@ -27,7 +27,8 @@ function SignIn() {
       .then((response) => {
         console.log(response.data);
         sessionStorage.setItem("token",response.data.token);
-      //  history.push('/store');
+       history.push('/store');
+       
       });
   }
 
