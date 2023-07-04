@@ -16,7 +16,28 @@ function SignIn() {
   const [phone, setPhone] = useState('')
   const [username, setUserName] = useState('')
   const [otp, setOtp] = useState('')
+ 
+  const postSignInApi = async (payload) => {
+    axios
+      .post(`${BASE_API_URL}open/authenticate`, payload,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "origin, content-type, accept, x-requested-with",
+            "Access-Control-Max-Age": "3600"
+          }
+        })
+      .then((response) => {
+        console.log(response.data);
+        sessionStorage.setItem("token",response.data.token);
+       history.push('/store');
+       
+      });
+  }
 
+  
   const submitForm = () => {
     const payload = { username, otp };
     postSignInApi(payload);

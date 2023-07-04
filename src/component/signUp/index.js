@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../App.css';
+ 
 import { SIGN_IN } from '../../constant/routes';
 import { postSignUpApi } from './handler';
 
@@ -24,6 +25,7 @@ const ValidationSchema = Yup.object().shape({
       Yup.object().shape({
         floorInRoom: Yup.string().required('Please enter floor.'),
         columnInRoom: Yup.string().required('Please enter column.'),
+ 
       })
     )
 });

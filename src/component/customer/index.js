@@ -25,6 +25,7 @@ const Customer = () => {
 				</tr>
 			</thead>
 			<tbody>
+				
 				<tr>
 					<td>1</td>
 					<td>Mark</td>
