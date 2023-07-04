@@ -1,127 +1,184 @@
 
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from "axios";
-import { Button, Form, Row, Col } from 'react-bootstrap';
+import { Formik, Form as FormikForm, FieldArray } from 'formik';
+import * as Yup from 'yup';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import '../../App.css';
-import { BASE_API_URL, SIGN_IN } from '../../constant/routes';
-function SignUp() {
-  const [state, setState] = useState({})
-  const [roomDetail, setRoomDetail] = useState({})
-  const handleOnChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setState({ ...state, [name]: value })
-  }
-  const handleRoomDetail = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setRoomDetail({
-      ...roomDetail, [name]: value
-    })
-  }
-  
-  const postSignUpApi = async (payload) => {
-    axios
-      .post(`${BASE_API_URL}open/store`, payload,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers": "origin, content-type, accept, x-requested-with",
-            "Access-Control-Max-Age": "3600"
-          }
-        })
-      .then((response) => {
-        console.log(response.data);
-      });
-  }
-  const handlePayload = () => {
-    {
-      let arrObj = []
-      state.noOfRooms && Array.from({ length: state.noOfRooms }, (v, i) => {
-        let columnInRoom = roomDetail[`columnInRoom${i + 1}`]
-        let floorInRoom = roomDetail[`floorInRoom${i + 1}`]
-        arrObj.push({ roomNo: i + 1, floorInRoom, columnInRoom })
+ 
+import { SIGN_IN } from '../../constant/routes';
+import { postSignUpApi } from './handler';
+
+const ValidationSchema = Yup.object().shape({
+  storeName: Yup.string().required('Please enter store name.'),
+  email: Yup.string().required('Please enter email.'),
+  phone: Yup.string().required('Please enter phone number'),
+  address: Yup.string().required('Please enter address.'),
+  area: Yup.string().required('Please enter area.'),
+  registrationKey: Yup.string().required('Please enter registration key.'),
+  noOfRooms: Yup.string().required('Please enter room.'),
+  roomDetail: Yup.array()
+    .of(
+      Yup.object().shape({
+        floorInRoom: Yup.string().required('Please enter floor.'),
+        columnInRoom: Yup.string().required('Please enter column.'),
+ 
       })
-      return { ...state, roomDetails: arrObj }
+    )
+});
+function SignUp() {
+  const [isSubmit, setSubmit] = useState(false)
+  const submitForm = (values) => {
+    if (values.roomDetail.length) {
+      setSubmit(true)
+      postSignUpApi(values, setSubmit)
     }
   }
-  const submitForm = () => {
-    const payload = handlePayload(state);
-    postSignUpApi(payload)
-    console.log('payload', payload)
-  }
-  console.log('roomDetail', roomDetail)
-  console.log("state", state)
+
   return (
     <>
       <div className='heading item-center'>	<h1>SM STORE</h1></div>
       <div className="container main">
-        <Form >
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label> Name</Form.Label>
-            <Form.Control type="text" name="storeName" value={state.storeName} placeholder="Enter store name" onChange={handleOnChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" name="email" value={state.email} placeholder="Enter email" onChange={handleOnChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPhone">
-            <Form.Label>Phone number</Form.Label>
-            <Form.Control type="number" name='phone' value={state.phone} placeholder="Enter phone number" onChange={handleOnChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPhone">
-            <Form.Label>Address</Form.Label>
-            <Form.Control type="textarea" name='address' rows="5" value={state.address} placeholder="Enter store address" onChange={handleOnChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPhone">
-            <Form.Label>Area</Form.Label>
-            <Form.Control type="text" name='area' value={state.area} placeholder="Enter area" onChange={handleOnChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label> Registration Key</Form.Label>
-            <Form.Control type="text" name="registrationKey" value={state.registrationKey} placeholder="Enter registration key" onChange={handleOnChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicRoom">
-            <Form.Label>Number of rooms</Form.Label>
-            <Form.Control type="number" name="noOfRooms" value={state.noOfRooms} placeholder="Enter Rooms" onChange={handleOnChange} />
-          </Form.Group>
-          {state.noOfRooms && Array.from({ length: state.noOfRooms }, (v, i) =>
-            <><Form.Group className="mb-3" controlId="formBasicRow">
-              <Row>
-                <Col sm={2}>
-                  {i === 0 && <Form.Label>Room No</Form.Label>}
-                  <Form.Control type="number" placeholder="" value={i + 1} disabled />
-                </Col>
-                {/* <Col>
-                  {i == 0 && <Form.Label>Room Capacity</Form.Label>}
-                  <Form.Control type="number" name={`roomCapacity${[i + 1]}`} onChange={handleOnChange}
-                    value={state.roomCapacity && state.roomCapacity[i + 1]} placeholder="Enter room capacity" />
-                </Col> */}
-                <Col>
-                  {i === 0 && <Form.Label>Floors</Form.Label>}
-                  <Form.Control type="number" name={`floorInRoom${[i + 1]}`} onChange={handleRoomDetail}
-                    value={roomDetail.floorInRoom && roomDetail.floorInRoom[i + 1]} placeholder="Enter floors" />
-                </Col>
-                <Col>
-                  {i === 0 && <Form.Label>Columns</Form.Label>}
-                  <Form.Control type="number" name={`columnInRoom${[i + 1]}`} onChange={handleRoomDetail}
-                    value={roomDetail.columnInRoom && roomDetail.columnInRoom[i + 1]} placeholder="Enter columns" />
-                </Col>
-                {/* <Col>
-                  {i == 0 && <Form.Label>Capacity</Form.Label>}
-                  <Form.Control type="number" name={`perLotCapacity${[i + 1]}`} onChange={handleOnChange}
-                    value={state.perLotCapacity && state.perLotCapacity[i + 1]} placeholder="Enter per lot capacity" />
-                </Col> */}
-              </Row>
-            </Form.Group></>
-          )}
-          <Button variant="primary" onClick={() => submitForm()}>
-            SIGN UP
-          </Button>
-        </Form>
+        <Formik
+          validationSchema={ValidationSchema}
+          initialValues={{
+            storeName: '',
+            email: '',
+            phone: '',
+            address: '',
+            area: '',
+            registrationKey: '',
+            noOfRooms: '',
+            roomDetail: []
+          }}
+          onSubmit={(values, formik) => submitForm(values, formik)}
+        >{({ errors, touched, ...formikProps }) => (
+          <FormikForm >
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label> Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="storeName"
+                value={formikProps.values.storeName}
+                placeholder="Enter store name"
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur} />
+              {errors.storeName && touched.storeName && <span className="error">{errors.storeName}</span>}
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={formikProps.values.email}
+                placeholder="Enter email"
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+              />
+              {errors.email && touched.email && <span className="error">{errors.email}</span>}
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPhone">
+              <Form.Label>Phone number</Form.Label>
+              <Form.Control
+                type="text"
+                name='phone'
+                value={formikProps.values.phone}
+                placeholder="Enter phone number"
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur} />
+              {errors.phone && touched.phone && <span className="error">{errors.phone}</span>}
+
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPhone">
+              <Form.Label>Address</Form.Label>
+              <Form.Control type="textarea" name='address'
+                rows="5" value={formikProps.values.address} placeholder="Enter store address"
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur} />
+              {errors.address && touched.address && <span className="error">{errors.address}</span>}
+
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPhone">
+              <Form.Label>Area</Form.Label>
+              <Form.Control type="text" name='area'
+                value={formikProps.values.area} placeholder="Enter area"
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur} />
+              {errors.area && touched.area && <span className="error">{errors.area}</span>}
+
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label> Registration Key</Form.Label>
+              <Form.Control type="text"
+                name="registrationKey"
+                value={formikProps.values.registrationKey}
+                placeholder="Enter registration key"
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur} />
+              {errors.registrationKey && touched.registrationKey && <span className="error">{errors.registrationKey}</span>}
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicRoom">
+              <Form.Label>Number of rooms</Form.Label>
+              <Form.Control type="text"
+                name="noOfRooms" value={formikProps.values.noOfRooms}
+                placeholder="Enter Rooms"
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur} />
+              {errors.noOfRooms && touched.noOfRooms && <span className="error">{errors.noOfRooms}</span>}
+            </Form.Group>
+            <FieldArray name="roomDetail">
+              {({ remove, push }) => (
+                <Fragment>
+                  {formikProps.values.noOfRooms && Array.from({ length: formikProps.values.noOfRooms }, (v, i) => {
+                    let floorInRoom = `roomDetail[${i}].floorInRoom`;
+                    let columnInRoom = `roomDetail[${i}].columnInRoom`;
+                    return (
+                      <Fragment key={`${i}-room`}><Form.Group className="mb-3" controlId="formBasicRow" >
+                        <Row>
+                          <Col sm={2}>
+                            {i === 0 && <Form.Label>Room No</Form.Label>}
+                            <Form.Control type="text" placeholder="" value={i + 1} disabled />
+                          </Col>
+                          <Col>
+                            {i === 0 && <Form.Label>Floors</Form.Label>}
+                            <Form.Control type="text"
+                              name={floorInRoom}
+                              onChange={formikProps.handleChange}
+                              onBlur={formikProps.handleBlur}
+                              placeholder="Enter floors" />
+                            {errors.roomDetail && errors.roomDetail[i] && errors.roomDetail[i]?.floorInRoom && touched.roomDetail && touched.roomDetail[i]?.floorInRoom && <span className="error">{errors.roomDetail[i].floorInRoom}</span>}
+
+                          </Col>
+                          <Col>
+                            {i === 0 && <Form.Label>Columns</Form.Label>}
+                            <Form.Control type="text"
+                              name={columnInRoom}
+                              onChange={formikProps.handleChange}
+                              onBlur={formikProps.handleBlur}
+                              placeholder="Enter columns" />
+                            {errors.roomDetail && errors.roomDetail[i]?.columnInRoom && touched.roomDetail && touched.roomDetail[i]?.columnInRoom && <span className="error">{errors.roomDetail[i].columnInRoom}</span>}
+
+                          </Col>
+                        </Row>
+                      </Form.Group></Fragment>)
+                  }
+                  )}
+                </Fragment>
+              )}
+            </FieldArray>
+            <Button variant="primary"
+              type="submit"
+              disabled={isSubmit}
+              onClick={formikProps.submitForm}
+            >
+              SIGN UP
+            </Button>
+          </FormikForm>
+        )}
+        </Formik>
         <div className='item-center'>Already have account? <Link to={SIGN_IN}>{' Log in'}</Link></div>
       </div>
     </>
