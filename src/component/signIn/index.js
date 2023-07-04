@@ -6,7 +6,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import '../../App.css';
 import { SIGN_UP } from '../../constant/routes';
-import { generateOtpApi, postSignInApi } from './handler';
+import { generateOtpApi } from './handler';
+import axios from 'axios';
+import { BASE_API_URL } from '../../constant/api';
+import history from '../../store/history';
 
 const ValidationSchema = Yup.object().shape({
   otp: Yup.string().required('Please enter otp.'),
@@ -16,7 +19,7 @@ function SignIn() {
   const [phone, setPhone] = useState('')
   const [username, setUserName] = useState('')
   const [otp, setOtp] = useState('')
- 
+
   const postSignInApi = async (payload) => {
     axios
       .post(`${BASE_API_URL}open/authenticate`, payload,
@@ -31,13 +34,13 @@ function SignIn() {
         })
       .then((response) => {
         console.log(response.data);
-        sessionStorage.setItem("token",response.data.token);
-       history.push('/store');
-       
+        sessionStorage.setItem("token", response.data.token);
+        history.push('/store');
+
       });
   }
 
-  
+
   const submitForm = () => {
     const payload = { username, otp };
     postSignInApi(payload);
