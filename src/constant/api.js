@@ -1,15 +1,17 @@
 import jwt_decode from "jwt-decode";
 
-export const BASE_API_URL = 'http://localhost:8080/api/'
+export const BASE_API_URL = 'https://8ksfe6jxw5.execute-api.ap-south-1.amazonaws.com/dev/api/'
 
 export const header = {
-	headers: {
-		"Access-Control-Allow-Origin": "*",
-		"Content-Type": "application/json",
-		"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-		"Access-Control-Allow-Headers": "origin, content-type, accept, x-requested-with",
-		"Access-Control-Max-Age": "3600"
-	}
+	
+		headers: {
+		  "Access-Control-Allow-Origin": "*",
+		  "Content-Type": "application/json",
+		  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+		  "Access-Control-Allow-Headers": "content-type",
+		  "Access-Control-Max-Age": "3600"
+		}
+	  
 }
 
 
@@ -18,9 +20,9 @@ export const headerWithAuthorization = (token) => {
 		headers: {
 			"Access-Control-Allow-Origin": "*",
 			"Content-Type": "application/json",
-			"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-			"Access-Control-Allow-Headers": "origin, content-type, accept, x-requested-with",
-			"Access-Control-Max-Age": "3600"
+			// "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+			// "Access-Control-Allow-Headers": "origin, content-type, accept, x-requested-with",
+			// "Access-Control-Max-Age": "3600"
 			//,
 			//"Authorization": `Bearer ${token}`
 		}

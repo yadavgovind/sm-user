@@ -20,7 +20,7 @@ const ValidationSchema = Yup.object().shape({
   area: Yup.string().required('Please enter area.'),
   registrationKey: Yup.string().required('Please enter registration key.'),
   noOfRooms: Yup.string().required('Please enter room.'),
-  roomDetail: Yup.array()
+  roomDetails: Yup.array()
     .of(
       Yup.object().shape({
         floorInRoom: Yup.string().required('Please enter floor.'),
@@ -32,7 +32,7 @@ const ValidationSchema = Yup.object().shape({
 function SignUp() {
   const [isSubmit, setSubmit] = useState(false)
   const submitForm = (values) => {
-    if (values.roomDetail.length) {
+    if (values.roomDetails.length) {
       setSubmit(true)
       postSignUpApi(values, setSubmit)
     }
@@ -52,7 +52,7 @@ function SignUp() {
             area: '',
             registrationKey: '',
             noOfRooms: '',
-            roomDetail: []
+            roomDetails: []
           }}
           onSubmit={(values, formik) => submitForm(values, formik)}
         >{({ errors, touched, ...formikProps }) => (
@@ -129,12 +129,12 @@ function SignUp() {
                 onBlur={formikProps.handleBlur} />
               {errors.noOfRooms && touched.noOfRooms && <span className="error">{errors.noOfRooms}</span>}
             </Form.Group>
-            <FieldArray name="roomDetail">
+            <FieldArray name="roomDetails">
               {({ remove, push }) => (
                 <Fragment>
                   {formikProps.values.noOfRooms && Array.from({ length: formikProps.values.noOfRooms }, (v, i) => {
-                    let floorInRoom = `roomDetail[${i}].floorInRoom`;
-                    let columnInRoom = `roomDetail[${i}].columnInRoom`;
+                    let floorInRoom = `roomDetails[${i}].floorInRoom`;
+                    let columnInRoom = `roomDetails[${i}].columnInRoom`;
                     return (
                       <Fragment key={`${i}-room`}><Form.Group className="mb-3" controlId="formBasicRow" >
                         <Row>
@@ -149,7 +149,7 @@ function SignUp() {
                               onChange={formikProps.handleChange}
                               onBlur={formikProps.handleBlur}
                               placeholder="Enter floors" />
-                            {errors.roomDetail && errors.roomDetail[i] && errors.roomDetail[i]?.floorInRoom && touched.roomDetail && touched.roomDetail[i]?.floorInRoom && <span className="error">{errors.roomDetail[i].floorInRoom}</span>}
+                            {errors.roomDetails && errors.roomDetails[i] && errors.roomDetails[i]?.floorInRoom && touched.roomDetails && touched.roomDetails[i]?.floorInRoom && <span className="error">{errors.roomDetails[i].floorInRoom}</span>}
 
                           </Col>
                           <Col>
@@ -159,7 +159,7 @@ function SignUp() {
                               onChange={formikProps.handleChange}
                               onBlur={formikProps.handleBlur}
                               placeholder="Enter columns" />
-                            {errors.roomDetail && errors.roomDetail[i]?.columnInRoom && touched.roomDetail && touched.roomDetail[i]?.columnInRoom && <span className="error">{errors.roomDetail[i].columnInRoom}</span>}
+                            {errors.roomDetails && errors.roomDetails[i]?.columnInRoom && touched.roomDetails && touched.roomDetails[i]?.columnInRoom && <span className="error">{errors.roomDetails[i].columnInRoom}</span>}
 
                           </Col>
                         </Row>
