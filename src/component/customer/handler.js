@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_API_URL, headerWithAuthorization } from '../../constant/api';
+import { addCustomer, getCustomer } from "../../service/api";
 
 
 export function parseJwt(token) {
@@ -14,8 +15,7 @@ export function parseJwt(token) {
 
 export const addCustomerApi = async (payload, storeId) => {
 	try {
-		const response = await axios
-			.post(`${BASE_API_URL}customer`, payload, headerWithAuthorization(storeId));
+		const response = await addCustomer(payload, storeId)
 		if (response && response.data) {
 			console.log('response.data', response.data)
 			return
@@ -27,8 +27,7 @@ export const addCustomerApi = async (payload, storeId) => {
 
 export const getCustomerApi = async (storeId) => {
 	try {
-		const response = await axios
-			.get(`${BASE_API_URL}customer/storeId/${storeId}`, headerWithAuthorization(storeId));
+		const response = await getCustomer(storeId)
 		if (response && response.data) {
 			console.log('response.data', response.data)
 			return

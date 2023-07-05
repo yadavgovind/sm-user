@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import '../../App.css';
 import { SIGN_UP } from '../../constant/routes';
-import { generateOtpApi } from './handler';
+import { generateOtpApi, postSignInApi } from './handler';
 import axios from 'axios';
 import { BASE_API_URL } from '../../constant/api';
 import history from '../../store/history';
@@ -20,25 +20,25 @@ function SignIn() {
   const [username, setUserName] = useState('')
   const [otp, setOtp] = useState('')
 
-  const postSignInApi = async (payload) => {
-    axios
-      .post(`${BASE_API_URL}open/authenticate`, payload,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers": "origin, content-type, accept, x-requested-with",
-            "Access-Control-Max-Age": "3600"
-          }
-        })
-      .then((response) => {
-        console.log(response.data);
-        sessionStorage.setItem("token", response.data.token);
-        history.push('/store');
+  // const postSignInApi = async (payload) => {
+  //   axios
+  //     .post(`${BASE_API_URL}open/authenticate`, payload,
+  //       {
+  //         headers: {
+  //           "Access-Control-Allow-Origin": "*",
+  //           "Content-Type": "application/json",
+  //           "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  //           "Access-Control-Allow-Headers": "origin, content-type, accept, x-requested-with",
+  //           "Access-Control-Max-Age": "3600"
+  //         }
+  //       })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       sessionStorage.setItem("token", response.data.token);
+  //       history.push('/store');
 
-      });
-  }
+  //     });
+  // }
 
 
   const submitForm = () => {

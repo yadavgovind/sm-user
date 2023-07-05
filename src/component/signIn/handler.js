@@ -2,11 +2,11 @@ import axios from "axios";
 import { BASE_API_URL } from '../../constant/api';
 import history from '../../store/history';
 import { header } from "../../constant/api";
+import { signIn, generateOtp } from "../../service/api";
 
 export const postSignInApi = async (payload) => {
 	try {
-		const response = await axios
-			.post(`${BASE_API_URL}open/authenticate`, payload, header);
+		const response = await signIn(payload)
 		if (response && response.data) {
 			sessionStorage.setItem("token", response.data.token);
 			getApi()
@@ -27,10 +27,9 @@ export const getApi = async (payload) => {
 }
 
 export const generateOtpApi = async (phone, setOtp) => {
-	axios
-		.get(`${BASE_API_URL}open/generateOtp?mob=${phone}`, header)
+	generateOtp(phone)
 		.then((response) => {
 			setOtp(response.data)
 			window.alert(response.data)
-		});
+		}).catch(err => console.log(err));
 }
