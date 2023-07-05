@@ -1,5 +1,3 @@
-import axios from "axios";
-import { BASE_API_URL, headerWithAuthorization } from '../../constant/api';
 import { addCustomer, getCustomer } from "../../service/api";
 
 
@@ -18,7 +16,7 @@ export const addCustomerApi = async (payload, storeId) => {
 		const response = await addCustomer(payload, storeId)
 		if (response && response.data) {
 			console.log('response.data', response.data)
-			return
+			return response.data
 		}
 	} catch (err) {
 		console.log(err)
@@ -30,7 +28,7 @@ export const getCustomerApi = async (storeId) => {
 		const response = await getCustomer(storeId)
 		if (response && response.data) {
 			console.log('response.data', response.data)
-			return
+			return response.data
 		}
 	} catch (err) {
 		console.log(err)
