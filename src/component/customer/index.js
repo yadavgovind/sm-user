@@ -10,7 +10,6 @@ const Customer = () => {
 		getCustomerApi(detail['storeId '].trim()).then((customerList) => {
 			setState(customerList)
 		})
-
 	}, [])
 	return <div><h1>Customer</h1>
 		<AddCustomer />
@@ -29,7 +28,7 @@ const Customer = () => {
 					return (<tr>
 						<td>{i + 1}</td>
 						<td>{item.firstName}</td>
-						<td>{item.customerNumber}</td>
+						<td>{item.phone}</td>
 						<td>{item.email}</td>
 						<td>{item.vehicleNumber}</td>
 					</tr>)

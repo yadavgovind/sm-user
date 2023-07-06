@@ -23,7 +23,7 @@ function AddCustomer() {
 
 	const handleSubmit = async () => {
 		let detail = tokenDecode()
-		const payload = { ...state, ...detail }
+		const payload = { ...state, 'storeId': detail.storeId }
 		await addCustomerApi(payload, sessionStorage.getItem('token'))
 		setShow(false)
 	}
@@ -52,7 +52,7 @@ function AddCustomer() {
 							<Form.Control
 								type="text"
 								placeholder="Enter phone number"
-								name="customerNumber"
+								name="phone"
 								maxLength={10}
 								onChange={handleOnChange}
 

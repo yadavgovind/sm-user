@@ -44,3 +44,11 @@ export const addCustomer = async (payload, storeId) => {
 		throw err
 	}
 }
+export const getRoomList = async (storeId) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}lots/available/store/${storeId}`, headerWithAuthorization(storeId));
+		return response
+	} catch (err) {
+		throw err
+	}
+}
