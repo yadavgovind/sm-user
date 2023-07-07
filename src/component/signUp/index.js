@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../App.css';
- 
+
 import { SIGN_IN } from '../../constant/routes';
 import { postSignUpApi } from './handler';
 
@@ -25,7 +25,7 @@ const ValidationSchema = Yup.object().shape({
       Yup.object().shape({
         floorInRoom: Yup.string().required('Please enter floor.'),
         columnInRoom: Yup.string().required('Please enter column.'),
- 
+        perLotCapacity: Yup.string().required('Please enter lot capacity.'),
       })
     )
 });
@@ -135,6 +135,7 @@ function SignUp() {
                   {formikProps.values.noOfRooms && Array.from({ length: formikProps.values.noOfRooms }, (v, i) => {
                     let floorInRoom = `roomDetails[${i}].floorInRoom`;
                     let columnInRoom = `roomDetails[${i}].columnInRoom`;
+                    let perLotCapacity = `roomDetails[${i}].perLotCapacity`;
                     return (
                       <Fragment key={`${i}-room`}><Form.Group className="mb-3" controlId="formBasicRow" >
                         <Row>
@@ -159,7 +160,20 @@ function SignUp() {
                               onChange={formikProps.handleChange}
                               onBlur={formikProps.handleBlur}
                               placeholder="Enter columns" />
-                            {errors.roomDetails && errors.roomDetails[i]?.columnInRoom && touched.roomDetails && touched.roomDetails[i]?.columnInRoom && <span className="error">{errors.roomDetails[i].columnInRoom}</span>}
+                            {errors.roomDetails && errors.roomDetails[i]?.columnInRoom && touched.roomDetails && touched.roomDetails[i]?.columnInRoom &&
+                              <span className="error">{errors.roomDetails[i].columnInRoom}</span>}
+
+                          </Col>
+                          <Col>
+                            {i === 0 && <Form.Label>LotCapacity</Form.Label>}
+                            <Form.Control type="text"
+                              name={perLotCapacity}
+                              onChange={formikProps.handleChange}
+                              onBlur={formikProps.handleBlur}
+                              placeholder="Enter Lot Capacity" />
+                            {errors.roomDetails && errors.roomDetails[i]?.perLotCapacity &&
+                              touched.roomDetails && touched.roomDetails[i]?.perLotCapacity &&
+                              <span className="error">{errors.roomDetails[i].perLotCapacity}</span>}
 
                           </Col>
                         </Row>
