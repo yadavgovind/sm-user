@@ -10,7 +10,7 @@ const Room = () => {
 		const storeId = sessionStorage.getItem('storeId')
 		getRoomDetailApi(storeId.trim()).then((roomDetail) => {
 			setState(roomDetail)
-		})
+		}).catch(err => console.log(err))
 	}, [])
 	console.log('state', state)
 	return <div>

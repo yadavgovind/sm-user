@@ -10,7 +10,7 @@ const Customer = () => {
 		sessionStorage.setItem('storeId', detail["storeId "])
 		getCustomerApi(detail['storeId '].trim()).then((customerList) => {
 			setState(customerList)
-		})
+		}).catch(err => console.log(err))
 	}, [])
 	return <div><h1>Customer</h1>
 		<AddCustomer />
