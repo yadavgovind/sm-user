@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import AddCustomer from './AddCustomer';
+import './index.css'
 import { getCustomerApi, parseJwt } from './handler';
 const Customer = () => {
 	const [state, setState] = useState([])
@@ -13,7 +14,7 @@ const Customer = () => {
 	}, [])
 	return <div><h1>Customer</h1>
 		<AddCustomer />
-		{state.length && <Table striped="columns" bordered className='mt-2'>
+		{state.length ? <Table striped="columns" bordered className='mt-2'>
 			<thead>
 				<tr>
 					<th>S.No</th>
@@ -35,7 +36,8 @@ const Customer = () => {
 				})}
 
 			</tbody>
-		</Table>}
+		</Table> :
+			<h3 className='msg'>Please add your customer</h3>}
 	</div>;
 }
 export default Customer;
