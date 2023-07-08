@@ -26,6 +26,7 @@ const ValidationSchema = Yup.object().shape({
         floorInRoom: Yup.string().required('Please enter floor.'),
         columnInRoom: Yup.string().required('Please enter column.'),
         perLotCapacity: Yup.string().required('Please enter lot capacity.'),
+        roomNo: Yup.string()
       })
     )
 });
@@ -56,6 +57,7 @@ function SignUp() {
           }}
           onSubmit={(values, formik) => submitForm(values, formik)}
         >{({ errors, touched, ...formikProps }) => (
+
           <FormikForm >
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label> Name</Form.Label>
@@ -129,6 +131,7 @@ function SignUp() {
                 onBlur={formikProps.handleBlur} />
               {errors.noOfRooms && touched.noOfRooms && <span className="error">{errors.noOfRooms}</span>}
             </Form.Group>
+            {console.log(formikProps)}
             <FieldArray name="roomDetails">
               {({ remove, push }) => (
                 <Fragment>
@@ -136,12 +139,16 @@ function SignUp() {
                     let floorInRoom = `roomDetails[${i}].floorInRoom`;
                     let columnInRoom = `roomDetails[${i}].columnInRoom`;
                     let perLotCapacity = `roomDetails[${i}].perLotCapacity`;
+                    let roomNo = `roomDetails[${i}].roomNo`;
+
                     return (
                       <Fragment key={`${i}-room`}><Form.Group className="mb-3" controlId="formBasicRow" >
                         <Row>
                           <Col sm={2}>
                             {i === 0 && <Form.Label>Room No</Form.Label>}
-                            <Form.Control type="text" placeholder="" value={i + 1} disabled />
+                            <Form.Control type="text" placeholder="" value={i + 1} disabled
+                              name={roomNo}
+                            />
                           </Col>
                           <Col>
                             {i === 0 && <Form.Label>Floors</Form.Label>}
