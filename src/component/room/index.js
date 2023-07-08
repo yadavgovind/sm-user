@@ -2,29 +2,25 @@ import React, { useEffect, useState } from 'react';
 import './index.css'
 import { getRoomDetailApi } from './handler';
 const Room = () => {
-	let rooms = [1, 2, 3]
-	let row = [1, 2, 3, 4];
-	let col = [1, 2, 3];
-	const [state, setState] = useState([])
+	const [rooms, setRoom] = useState([])
 	useEffect(() => {
 		const storeId = sessionStorage.getItem('storeId')
 		getRoomDetailApi(storeId.trim()).then((roomDetail) => {
-			setState(roomDetail)
+			setRoom(roomDetail)
 		}).catch(err => console.log(err))
 	}, [])
-	console.log('state', state)
 	return <div>
 		<h1>Rooms</h1>
-		{rooms.map((roomNo, index) => {
+		{rooms.length ? rooms.map((item, index) => {
 			return <div className="container">
-				<h3>Room {index + 1}</h3>
+				<h3>Room {item.roomNo}</h3>
 				{
-					row.map((item, i) => {
+					item.floorDetails.map((floor, i) => {
 						return (<div className="row">
 							{
-								col.map((item, index) => {
+								floor.columnDetails.map((col, index) => {
 									return (<div className="col grid " key={`${i}${index}`}>
-										{`${i + 1} of ${index + 1}`}
+										{`${floor.floorNo} of ${col.columnNo}`}
 									</div>)
 								})
 							}
@@ -33,7 +29,7 @@ const Room = () => {
 					})
 				}
 			</div>
-		})
+		}) : ''
 		}
 	</div>;
 }
