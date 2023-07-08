@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import AddInventoryModal from './AddInventoryModal';
+import { getProductTypeApi } from './handler';
 const Inventory = () => {
+	const [productType, setProductType] = useState([])
+	useEffect(() => {
+		getProductTypeApi().then((res) => {
+			setProductType(res)
+		}).catch((err) => {
+			console.log(err)
+		})
+	})
 	return (<><div>
 		<h1>Add Inventory</h1>
 	</div>
-		<AddInventoryModal />
+		<AddInventoryModal productType={productType} />
 		<div className="input-group w-25 float-end">
 			<input
 				type="search"

@@ -52,3 +52,21 @@ export const getRoomList = async (storeId) => {
 		throw err
 	}
 }
+
+export const getCustomerDetail = async (phone) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}customer/phone/${phone}`, headerWithAuthorization());
+		return response
+	} catch (err) {
+		throw err
+	}
+}
+
+export const getProductType = async () => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}product/lookup`, headerWithAuthorization());
+		return response
+	} catch (err) {
+		throw err
+	}
+}

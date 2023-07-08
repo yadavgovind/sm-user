@@ -2,11 +2,17 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import { handleBlur } from './handler';
 
 function AddInventoryModal() {
 	const [currentModal, openModal] = useState(null);
+	const [state, setState] = useState({
+		firstName: '',
+		email: '',
 
-
+	})
+	console.log("customer", state)
+	const { firstName, email } = state;
 	return (
 		<>
 			<Button variant="primary" onClick={() => openModal("add-inventory")}>
@@ -28,6 +34,7 @@ function AddInventoryModal() {
 							<Form.Control
 								type="number"
 								placeholder="Enter customer phone number"
+								onBlur={(e) => handleBlur(e.target.value, setState)}
 								autoFocus
 							/>
 						</Form.Group>
@@ -36,7 +43,8 @@ function AddInventoryModal() {
 							<Form.Control
 								type="text"
 								placeholder="Enter full name"
-								autoFocus
+								name='firstName'
+								value={firstName}
 							/>
 						</Form.Group>
 
@@ -44,31 +52,36 @@ function AddInventoryModal() {
 							<Form.Label>Email</Form.Label>
 							<Form.Control
 								type="email"
+								name='email'
+								value={email}
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 							<Form.Label>Room</Form.Label>
 							<Form.Control
-								type="number"
+								type="text"
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
 							<Form.Label>Lots</Form.Label>
 							<Form.Control
-								type="number"
+								type="text"
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
 							<Form.Label>Quantity</Form.Label>
 							<Form.Control
-								type="number"
+								type="text"
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput5">
 							<Form.Label>Product</Form.Label>
-							<Form.Control
-								type="text"
-							/>
+							<Form.Select aria-label="Default select example">
+								<option>Select Product Type</option>
+								<option value="1">One</option>
+								<option value="2">Two</option>
+								<option value="3">Three</option>
+							</Form.Select>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
