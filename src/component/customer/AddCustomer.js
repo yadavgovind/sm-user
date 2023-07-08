@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { addCustomerApi, parseJwt } from './handler';
+import { toast } from "react-toastify";
+import { addCustomerApi } from './handler';
 import { tokenDecode } from '../../constant/api';
 
-function AddCustomer() {
+function AddCustomer({ setCustomer }) {
 	const [show, setShow] = useState(false);
 	const [state, setState] = useState({})
 
@@ -24,8 +25,14 @@ function AddCustomer() {
 	const handleSubmit = async () => {
 		let detail = tokenDecode()
 		const payload = { ...state, 'storeId': detail.storeId }
-		await addCustomerApi(payload, sessionStorage.getItem('token'))
-		setShow(false)
+		addCustomerApi(payload, sessionStorage.getItem('token')).then((res) => {
+			setCustomer(res)
+			setShow(false)
+		}).catch((err) => {
+			toast.error(err.message)
+			setShow(false)
+		})
+
 	}
 	return (
 		<>

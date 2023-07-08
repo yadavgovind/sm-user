@@ -11,15 +11,16 @@ export function parseJwt(token) {
 	return JSON.parse(jsonPayload);
 }
 
-export const addCustomerApi = async (payload, storeId) => {
+export const addCustomerApi = async (payload, token) => {
 	try {
-		const response = await addCustomer(payload, storeId)
+		const response = await addCustomer(payload, token)
 		if (response && response.data) {
-			console.log('response.data', response.data)
-			return response.data
+			const storeId = sessionStorage.getItem('storeId')
+			const res = await getCustomer(storeId.trim())
+			return res.data
 		}
 	} catch (err) {
-		console.log(err)
+		throw err
 	}
 }
 
@@ -27,7 +28,6 @@ export const getCustomerApi = async (storeId) => {
 	try {
 		const response = await getCustomer(storeId)
 		if (response && response.data) {
-			console.log('response.data', response.data)
 			return response.data
 		}
 	} catch (err) {

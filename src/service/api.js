@@ -38,7 +38,7 @@ export const getCustomer = async (storeId) => {
 
 export const addCustomer = async (payload, storeId) => {
 	try {
-		const response = await axios.post(`${BASE_API_URL}customer`, payload, headerWithAuthorization(storeId));
+		const response = await axios.post(`${BASE_API_URL}customer`, payload, headerWithAuthorization());
 		return response
 	} catch (err) {
 		throw err
@@ -46,7 +46,7 @@ export const addCustomer = async (payload, storeId) => {
 }
 export const getRoomList = async (storeId) => {
 	try {
-		const response = await axios.get(`${BASE_API_URL}lots/available/store/${storeId}`, headerWithAuthorization(storeId));
+		const response = await axios.get(`${BASE_API_URL}lots/available/store/${storeId}`, headerWithAuthorization());
 		return response
 	} catch (err) {
 		throw err

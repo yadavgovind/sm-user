@@ -13,7 +13,7 @@ const Customer = () => {
 		}).catch(err => console.log(err))
 	}, [])
 	return <div><h1>Customer</h1>
-		<AddCustomer />
+		<AddCustomer setCustomer={setState} />
 		{state.length ? <Table striped="columns" bordered className='mt-2'>
 			<thead>
 				<tr>
