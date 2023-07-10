@@ -1,10 +1,10 @@
-import { getCustomerDetail, getProductType } from "../../service/api"
-
+import { getAvailableLots, getCustomerDetail, getProductType } from "../../service/api"
+import { toast } from "react-toastify";
 export const handleBlur = (value, setState) => {
-	getCustomerDetailApi(value).then((res) => {
-		setState(res)
+	value && getCustomerDetailApi(value).then((res) => {
+		res ? setState(res) : toast.error("No record found, please add this customer.")
 	}).catch((err) => {
-		console.log(err)
+		toast.error(err)
 	})
 }
 
@@ -23,6 +23,18 @@ export const getCustomerDetailApi = async (phone) => {
 export const getProductTypeApi = async (phone) => {
 	try {
 		const response = await getProductType()
+		if (response && response.data) {
+			return response.data
+		}
+	} catch (err) {
+		throw err
+	}
+}
+
+
+export const getAvailableLotsApi = async (roomNo, storeId) => {
+	try {
+		const response = await getAvailableLots(roomNo, storeId)
 		if (response && response.data) {
 			return response.data
 		}

@@ -7,6 +7,9 @@ const Room = () => {
 		const storeId = sessionStorage.getItem('storeId')
 		getRoomDetailApi(storeId.trim()).then((roomDetail) => {
 			setRoom(roomDetail)
+			let roomArr = []
+			roomDetail.map(item => roomArr.push(item.roomNo))
+
 		}).catch(err => console.log(err))
 	}, [])
 	return <div>

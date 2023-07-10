@@ -2,19 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import AddInventoryModal from './AddInventoryModal';
 import { getProductTypeApi } from './handler';
+import { getRoomDetailApi } from '../room/handler';
 const Inventory = () => {
 	const [productType, setProductType] = useState([])
+	const [rooms, setRoom] = useState([])
+
 	useEffect(() => {
+		const storeId = sessionStorage.getItem('storeId')
 		getProductTypeApi().then((res) => {
 			setProductType(res)
 		}).catch((err) => {
 			console.log(err)
 		})
-	})
+		getRoomDetailApi(storeId.trim()).then((roomDetail) => {
+			let roomArr = []
+			roomDetail.map(item => roomArr.push(item.roomNo))
+			setRoom(roomArr)
+		}).catch(err => console.log(err))
+	}, [])
 	return (<><div>
 		<h1>Add Inventory</h1>
 	</div>
-		<AddInventoryModal productType={productType} />
+		<AddInventoryModal productType={productType} roomsArr={rooms} />
 		<div className="input-group w-25 float-end">
 			<input
 				type="search"

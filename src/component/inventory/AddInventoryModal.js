@@ -1,18 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { handleBlur } from './handler';
+import { getAvailableLotsApi, handleBlur } from './handler';
 
-function AddInventoryModal() {
+function AddInventoryModal({ productType, roomsArr }) {
 	const [currentModal, openModal] = useState(null);
+	// const [selectedRoom, setRoom] = useState('');
+
+	// const [lots, setLots] = useState([]);
 	const [state, setState] = useState({
 		firstName: '',
 		email: '',
 
 	})
-	console.log("customer", state)
 	const { firstName, email } = state;
+
+
+
+	useEffect(() => {
+		getAvailableLots()
+	}, [])
+	const getRooms = () => {
+		let options = []
+		roomsArr.length && roomsArr.map((item, i) => {
+			return options.push(<option key={i} value={item}>{item}</option>)
+
+		})
+		return options
+	}
+	const getProductTpyes = () => {
+		let options = []
+		productType.map(item => {
+			return options.push(<option key={item.productId} value={item.productType}>{item.productType}{' '}{item.productSize}</option>)
+
+		})
+		return options
+	}
+
+	const getAvailableLots = (roomNo) => {
+		const storeId = sessionStorage.getItem('storeId')
+		getAvailableLotsApi(1, storeId.trim()).then((res) => {
+			// let options = []
+			console.log('res', res)
+			// res.map(item => {
+			// 	return options.push(<option key={item.productId} value={item.productType}>{item.productType}{' '}{item.productSize}</option>)
+
+			// })
+
+		}).catch(err => console.log(err))
+
+	}
 	return (
 		<>
 			<Button variant="primary" onClick={() => openModal("add-inventory")}>
@@ -58,9 +96,10 @@ function AddInventoryModal() {
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 							<Form.Label>Room</Form.Label>
-							<Form.Control
-								type="text"
-							/>
+							<Form.Select aria-label="Default select example" onChange={(e) => console.log('val', e.target)}>
+								<option>Select Room</option>
+								{getRooms()}
+							</Form.Select>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
 							<Form.Label>Lots</Form.Label>
@@ -78,9 +117,8 @@ function AddInventoryModal() {
 							<Form.Label>Product</Form.Label>
 							<Form.Select aria-label="Default select example">
 								<option>Select Product Type</option>
-								<option value="1">One</option>
-								<option value="2">Two</option>
-								<option value="3">Three</option>
+								{getProductTpyes()}
+
 							</Form.Select>
 						</Form.Group>
 					</Form>

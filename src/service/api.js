@@ -70,3 +70,12 @@ export const getProductType = async () => {
 		throw err
 	}
 }
+
+export const getAvailableLots = async (roomNo, storeId) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}lots/lotDetails/${roomNo}/store/${storeId}`, headerWithAuthorization());
+		return response
+	} catch (err) {
+		throw err
+	}
+}
