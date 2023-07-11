@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -6,9 +6,8 @@ import { getAvailableLotsApi, handleBlur } from './handler';
 
 function AddInventoryModal({ productType, roomsArr }) {
 	const [currentModal, openModal] = useState(null);
-	// const [selectedRoom, setRoom] = useState('');
+	const [lotsOption, setLotOption] = useState([]);
 
-	// const [lots, setLots] = useState([]);
 	const [state, setState] = useState({
 		firstName: '',
 		email: '',
@@ -17,10 +16,6 @@ function AddInventoryModal({ productType, roomsArr }) {
 	const { firstName, email } = state;
 
 
-
-	useEffect(() => {
-		getAvailableLots()
-	}, [])
 	const getRooms = () => {
 		let options = []
 		roomsArr.length && roomsArr.map((item, i) => {
@@ -38,18 +33,26 @@ function AddInventoryModal({ productType, roomsArr }) {
 		return options
 	}
 
+	const handleChange = (roomNo) => {
+		getAvailableLots(roomNo)
+	}
 	const getAvailableLots = (roomNo) => {
 		const storeId = sessionStorage.getItem('storeId')
-		getAvailableLotsApi(1, storeId.trim()).then((res) => {
-			// let options = []
-			console.log('res', res)
-			// res.map(item => {
-			// 	return options.push(<option key={item.productId} value={item.productType}>{item.productType}{' '}{item.productSize}</option>)
-
-			// })
-
+		getAvailableLotsApi(roomNo, storeId.trim()).then((res) => {
+			getAvailableLotsOption(res)
 		}).catch(err => console.log(err))
 
+	}
+	const getAvailableLotsOption = (lots) => {
+		let options = []
+		lots.length && lots.map(item => {
+			const label = item.generatedLotName.split('S')[0]
+			const currentCapacity = `currentLotCapacity: ${item.currentLotCapacity}`
+			return options.push(<option value={item.generatedLotName}>{label}{' '}{currentCapacity}</option>)
+
+		})
+		setLotOption(options)
+		return options
 	}
 	return (
 		<>
@@ -70,7 +73,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 							<Form.Label>Customer's Phone number</Form.Label>
 							<Form.Control
-								type="number"
+								type="text"
 								placeholder="Enter customer phone number"
 								onBlur={(e) => handleBlur(e.target.value, setState)}
 								autoFocus
@@ -96,16 +99,22 @@ function AddInventoryModal({ productType, roomsArr }) {
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 							<Form.Label>Room</Form.Label>
-							<Form.Select aria-label="Default select example" onChange={(e) => console.log('val', e.target)}>
+							<Form.Control
+								as="select"
+								aria-label="Default select example"
+								onChange={(e) => handleChange(e.target.value)}>
 								<option>Select Room</option>
 								{getRooms()}
-							</Form.Select>
+							</Form.Control>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
 							<Form.Label>Lots</Form.Label>
 							<Form.Control
-								type="text"
-							/>
+								as="select"
+								aria-label="Default select example">
+								<option>Select lots</option>
+								{lotsOption.length ? lotsOption.map(item => item) : ''}
+							</Form.Control>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
 							<Form.Label>Quantity</Form.Label>
