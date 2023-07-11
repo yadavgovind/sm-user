@@ -79,3 +79,12 @@ export const getAvailableLots = async (roomNo, storeId) => {
 		throw err
 	}
 }
+
+export const addInventory = async (payload) => {
+	try {
+		const response = await axios.post(`${BASE_API_URL}/productin`, payload, headerWithAuthorization());
+		return response
+	} catch (err) {
+		throw err
+	}
+}

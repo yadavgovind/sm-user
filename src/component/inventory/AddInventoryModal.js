@@ -2,18 +2,28 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { getAvailableLotsApi, handleBlur } from './handler';
+import { addInventoryApi, getAvailableLotsApi, handleBlur } from './handler';
+import { toast } from 'react-toastify';
 
 function AddInventoryModal({ productType, roomsArr }) {
 	const [currentModal, openModal] = useState(null);
 	const [lotsOption, setLotOption] = useState([]);
+	const [availableQuantity, setAvailableQuantity] = useState(0);
+	const [lotArr, setLotsArr] = useState([]);
+	const [maxQuantityError, setMaxQuantityError] = useState(false)
+
 
 	const [state, setState] = useState({
 		firstName: '',
 		email: '',
-
+		roomNo: '',
+		lotNo: '',
+		product_type: '',
+		quantity: '',
+		currentQuantity: '',
+		productInDate: new Date()
 	})
-	const { firstName, email } = state;
+	const { firstName, email, quantity } = state;
 
 
 	const getRooms = () => {
@@ -34,12 +44,15 @@ function AddInventoryModal({ productType, roomsArr }) {
 	}
 
 	const handleChange = (roomNo) => {
+		setState({ ...state, roomNo })
 		getAvailableLots(roomNo)
+
 	}
 	const getAvailableLots = (roomNo) => {
 		const storeId = sessionStorage.getItem('storeId')
 		getAvailableLotsApi(roomNo, storeId.trim()).then((res) => {
 			getAvailableLotsOption(res)
+			setLotsArr(res)
 		}).catch(err => console.log(err))
 
 	}
@@ -53,6 +66,25 @@ function AddInventoryModal({ productType, roomsArr }) {
 		})
 		setLotOption(options)
 		return options
+	}
+	const handleOnChangeLot = (lotNo) => {
+		const selectedLot = lotArr.find(item => item.generatedLotName === lotNo)
+		setAvailableQuantity(selectedLot.currentLotCapacity)
+		setState({ ...state, lotNo, currentQuantity: selectedLot.currentLotCapacity })
+	}
+	const handleOnChange = (key, value) => {
+		if (key === 'quantity' && (value > (availableQuantity) || value <= 0)) {
+			setMaxQuantityError(true)
+		} else {
+			setState({ ...state, [key]: value })
+			setMaxQuantityError(false)
+		}
+	}
+	const handleSubmit = () => {
+		addInventoryApi(state).then(() => {
+			openModal(null)
+			toast.success("Inventory added successfully")
+		}).catch(err => toast.error(err && err.message || 'Something went wrong.'))
 	}
 	return (
 		<>
@@ -86,6 +118,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 								placeholder="Enter full name"
 								name='firstName'
 								value={firstName}
+								disabled
 							/>
 						</Form.Group>
 
@@ -95,6 +128,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 								type="email"
 								name='email'
 								value={email}
+								disabled
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
@@ -111,7 +145,9 @@ function AddInventoryModal({ productType, roomsArr }) {
 							<Form.Label>Lots</Form.Label>
 							<Form.Control
 								as="select"
-								aria-label="Default select example">
+								name="lotNo"
+								aria-label="Default select example"
+								onChange={(e) => handleOnChangeLot(e.target.value)}>
 								<option>Select lots</option>
 								{lotsOption.length ? lotsOption.map(item => item) : ''}
 							</Form.Control>
@@ -119,16 +155,26 @@ function AddInventoryModal({ productType, roomsArr }) {
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
 							<Form.Label>Quantity</Form.Label>
 							<Form.Control
-								type="text"
+								type="number"
+								name='quantity'
+								value={quantity}
+								max={availableQuantity}
+								onChange={(e) => handleOnChange(e.target.name, e.target.value)}
 							/>
+							{maxQuantityError && <span style={{ color: 'red' }}>Please enter quantity less than or equal to {availableQuantity}</span>}
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput5">
 							<Form.Label>Product</Form.Label>
-							<Form.Select aria-label="Default select example">
+							<Form.Control
+								as="select"
+								name="product_type"
+								aria-label="Default select example"
+								onChange={(e) => handleOnChange(e.target.name, e.target.value)}
+							>
 								<option>Select Product Type</option>
 								{getProductTpyes()}
 
-							</Form.Select>
+							</Form.Control>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
@@ -136,7 +182,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 					<Button variant="secondary" onClick={() => openModal(null)}>
 						Close
 					</Button>
-					<Button variant="primary" onClick={() => openModal(null)}>
+					<Button variant="primary" onClick={() => handleSubmit()}>
 						Save Changes
 					</Button>
 				</Modal.Footer>
@@ -173,7 +219,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
 							<Form.Label>Room</Form.Label>
 							<Form.Control
-								type="number"
+								type="text"
 							/>
 						</Form.Group>
 					</Form>

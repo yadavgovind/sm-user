@@ -1,4 +1,4 @@
-import { getAvailableLots, getCustomerDetail, getProductType } from "../../service/api"
+import { addInventory, getAvailableLots, getCustomerDetail, getProductType } from "../../service/api"
 import { toast } from "react-toastify";
 export const handleBlur = (value, setState) => {
 	value && getCustomerDetailApi(value).then((res) => {
@@ -35,6 +35,17 @@ export const getProductTypeApi = async (phone) => {
 export const getAvailableLotsApi = async (roomNo, storeId) => {
 	try {
 		const response = await getAvailableLots(roomNo, storeId)
+		if (response && response.data) {
+			return response.data
+		}
+	} catch (err) {
+		throw err
+	}
+}
+
+export const addInventoryApi = async (payload) => {
+	try {
+		const response = await addInventory(payload)
 		if (response && response.data) {
 			return response.data
 		}
