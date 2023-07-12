@@ -12,13 +12,12 @@ function AddInventoryModal({ productType, roomsArr }) {
 	const [lotArr, setLotsArr] = useState([]);
 	const [maxQuantityError, setMaxQuantityError] = useState(false)
 
-
 	const [state, setState] = useState({
 		firstName: '',
 		email: '',
 		roomNo: '',
 		lotNo: '',
-		product_type: '',
+		productId: '',
 		quantity: '',
 		currentQuantity: '',
 		productInDate: new Date()
@@ -37,7 +36,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 	const getProductTpyes = () => {
 		let options = []
 		productType.map(item => {
-			return options.push(<option key={item.productId} value={item.productType}>{item.productType}{' '}{item.productSize}</option>)
+			return options.push(<option key={item.productId} value={item.productId}>{item.productType}{' '}{item.productSize}</option>)
 
 		})
 		return options
@@ -80,11 +79,32 @@ function AddInventoryModal({ productType, roomsArr }) {
 			setMaxQuantityError(false)
 		}
 	}
+
+	const getPayload = (state) => {
+		let payload = {
+			customerId: state.customerId || '',
+			currentQuantity: state.currentQuantity,
+			lotNo: state.lotNo,
+			productId: state.productId,
+			roomNo: state.roomNo,
+			quantity: state.quantity,
+			storeId: sessionStorage.getItem('storeId').trim(),
+			session: ''
+		}
+		return payload
+	}
 	const handleSubmit = () => {
-		addInventoryApi(state).then(() => {
-			openModal(null)
-			toast.success("Inventory added successfully")
-		}).catch(err => toast.error(err && err.message || 'Something went wrong.'))
+		const payload = getPayload(state)
+		if (!state.email || !state.lotNo || !state.productId || !state.quantity || !state.roomNo) {
+			toast.error('Please fill the required fields.')
+		} else {
+			!maxQuantityError && addInventoryApi(payload).then(() => {
+				openModal(null)
+				setState({})
+				toast.success("Inventory added successfully")
+			}).catch(err => toast.error((err && err.message) || 'Something went wrong.'))
+		}
+
 	}
 	return (
 		<>
@@ -115,7 +135,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 							<Form.Label>Customer's Name</Form.Label>
 							<Form.Control
 								type="text"
-								placeholder="Enter full name"
+								placeholder="Customer name"
 								name='firstName'
 								value={firstName}
 								disabled
@@ -126,6 +146,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 							<Form.Label>Email</Form.Label>
 							<Form.Control
 								type="email"
+								placeholder="Email"
 								name='email'
 								value={email}
 								disabled
@@ -157,6 +178,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 							<Form.Control
 								type="number"
 								name='quantity'
+								placeholder="Quantity"
 								value={quantity}
 								max={availableQuantity}
 								onChange={(e) => handleOnChange(e.target.name, e.target.value)}
@@ -167,7 +189,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 							<Form.Label>Product</Form.Label>
 							<Form.Control
 								as="select"
-								name="product_type"
+								name="productId"
 								aria-label="Default select example"
 								onChange={(e) => handleOnChange(e.target.name, e.target.value)}
 							>
