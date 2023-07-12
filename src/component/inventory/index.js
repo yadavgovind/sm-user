@@ -35,25 +35,6 @@ const Inventory = () => {
 				<i className='fas fa-search'></i></button>
 		</div>
 
-		<h4 className='mt-2'>Customer detail</h4>
-		<Table striped="columns" bordered>
-			<thead>
-				<tr>
-					<th>S.No</th>
-					<th>Full Name</th>
-					<th>Phone number</th>
-					<th>Email</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td>Mark</td>
-					<td>1234567898</td>
-					<td>@mdo</td>
-				</tr>
-			</tbody>
-		</Table>
 		<h4>Available lots</h4>
 		<Table striped="columns" bordered>
 			<thead>
