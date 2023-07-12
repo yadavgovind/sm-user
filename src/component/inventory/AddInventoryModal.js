@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { addInventoryApi, getAvailableLotsApi, handleBlur } from './handler';
+import { addInventoryApi, getAvailableLotsApi, handleBlur, handleCustomerSubmit, handleOnChangeCustomer } from './handler';
 import { toast } from 'react-toastify';
 
 function AddInventoryModal({ productType, roomsArr }) {
+	const [customerDetail, setCustomerDetail] = useState({})
 	const [currentModal, openModal] = useState(null);
 	const [lotsOption, setLotOption] = useState([]);
 	const [availableQuantity, setAvailableQuantity] = useState(0);
@@ -221,27 +222,45 @@ function AddInventoryModal({ productType, roomsArr }) {
 							<Form.Control
 								type="text"
 								placeholder="Enter full name"
-								autoFocus
+								name="firstName"
+								onChange={(e) => handleOnChangeCustomer(e, customerDetail, setCustomerDetail)}
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 							<Form.Label> Phone number</Form.Label>
 							<Form.Control
-								type="number"
-								placeholder=""
-								autoFocus
+								type="text"
+								placeholder="Enter phone number"
+								name="phone"
+								maxLength={10}
+								onChange={(e) => handleOnChangeCustomer(e, customerDetail, setCustomerDetail)}
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 							<Form.Label>Email</Form.Label>
 							<Form.Control
 								type="email"
+								placeholder="Enter email"
+								name="email"
+								onChange={(e) => handleOnChangeCustomer(e, customerDetail, setCustomerDetail)}
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
 							<Form.Label>Room</Form.Label>
 							<Form.Control
 								type="text"
+								placeholder="Enter vehicle number"
+								name="vehicleNumber"
+								onChange={(e) => handleOnChangeCustomer(e, customerDetail, setCustomerDetail)}
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+							<Form.Label>Address</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter address"
+								name="address"
+								onChange={(e) => handleOnChangeCustomer(e, customerDetail, setCustomerDetail)}
 							/>
 						</Form.Group>
 					</Form>
@@ -250,7 +269,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 					<Button variant="secondary" onClick={() => openModal(null)}>
 						Close
 					</Button>
-					<Button variant="primary" onClick={() => openModal(null)}>
+					<Button variant="primary" onClick={() => handleCustomerSubmit(customerDetail, openModal)}>
 						Save Changes
 					</Button>
 				</Modal.Footer>
