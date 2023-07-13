@@ -246,7 +246,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
-							<Form.Label>Room</Form.Label>
+							<Form.Label>Vehicle number</Form.Label>
 							<Form.Control
 								type="text"
 								placeholder="Enter vehicle number"

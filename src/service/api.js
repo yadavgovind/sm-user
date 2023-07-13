@@ -88,3 +88,13 @@ export const addInventory = async (payload) => {
 		throw err
 	}
 }
+
+
+export const getLotsDetail = async (storeId) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}productIn/lookup?storeId=${storeId}`, headerWithAuthorization());
+		return response
+	} catch (err) {
+		throw err
+	}
+}

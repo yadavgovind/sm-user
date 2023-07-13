@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Room from '../room';
 import Customer from '../customer';
 import Sidebar from '../leftMenu/Sidebar';
-import Inventory from '../inventory';
+import Inventory from '../inventory/inInventory';
 import history from '../../store/history'
 import './index.css'
 const handleRoutes = (hash) => {

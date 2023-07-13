@@ -1,7 +1,7 @@
-import { addInventory, getAvailableLots, getCustomerDetail, getProductType } from "../../service/api"
+import { addInventory, getAvailableLots, getCustomerDetail, getLotsDetail, getProductType } from "../../../service/api"
 import { toast } from "react-toastify";
-import { addCustomerApi } from "../customer/handler";
-import { tokenDecode } from "../../constant/api";
+import { addCustomerApi } from "../../customer/handler";
+import { tokenDecode } from "../../../constant/api";
 export const handleBlur = (value, setState) => {
 	value && getCustomerDetailApi(value).then((res) => {
 		res ? setState(res) : toast.error("No record found, please add this customer.")
@@ -72,4 +72,15 @@ export const handleCustomerSubmit = async (state, openModal) => {
 		// openModal("add-inventory")
 	})
 
+}
+
+export const getLotsDetailApi = async (storeId) => {
+	try {
+		const response = await getLotsDetail(storeId)
+		if (response && response.data) {
+			return response.data
+		}
+	} catch (err) {
+		throw err
+	}
 }
