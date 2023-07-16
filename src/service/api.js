@@ -98,3 +98,12 @@ export const getLotsDetail = async (storeId) => {
 		throw err
 	}
 }
+
+export const outInventory = async (payload) => {
+	try {
+		const response = await axios.post(`${BASE_API_URL}/productout`, payload, headerWithAuthorization());
+		return response
+	} catch (err) {
+		throw err
+	}
+}

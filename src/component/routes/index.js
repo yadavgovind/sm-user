@@ -5,6 +5,7 @@ import Sidebar from '../leftMenu/Sidebar';
 import Inventory from '../inventory/inInventory';
 import history from '../../store/history'
 import './index.css'
+import OutInventory from '../inventory/outInventory';
 const handleRoutes = (hash) => {
 	switch (hash) {
 		case '#room':
@@ -12,8 +13,9 @@ const handleRoutes = (hash) => {
 		case '#customer':
 			return <Customer />
 		case '#in-inventory':
-		case '#out-inventory':
 			return <Inventory />
+		case '#out-inventory':
+			return <OutInventory />
 		default:
 			return <Customer />
 	}

@@ -42,7 +42,7 @@ const Inventory = () => {
 				<i className='fas fa-search'></i></button>
 		</div>
 
-		<h4>Lots Detail</h4>
+		<h4>Lots In Detail</h4>
 		<Table striped="columns" bordered>
 			<thead>
 				<tr>
