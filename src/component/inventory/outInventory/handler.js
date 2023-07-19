@@ -1,6 +1,17 @@
 import { getCustomerDetail, getAvailableLots, outInventory } from "../../../service/api"
 import { toast } from "react-toastify";
 
+// export const getInventoryListApi = async () => {
+// 	try {
+// 		const response = await getInventoryList()
+// 		if (response && response.data) {
+// 			return response.data
+// 		}
+// 	} catch (err) {
+// 		throw err
+// 	}
+// }
+
 export const handleBlur = (value, setState) => {
 	value && getCustomerDetailApi(value).then((res) => {
 		res ? setState(res) : toast.error("No record found.")

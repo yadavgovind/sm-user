@@ -57,7 +57,7 @@ const Inventory = () => {
 				</tr>
 			</thead>
 			<tbody>
-				{lotsList.length && lotsList.map((item, i) => {
+				{lotsList.length ? lotsList.map((item, i) => {
 					return (<tr>
 						<td>{i + 1}</td>
 						<td>{item.roomNo}</td>
@@ -66,7 +66,7 @@ const Inventory = () => {
 						<td>{item.quantity}</td>
 						<td>{item.productId}</td>
 					</tr>)
-				})}
+				}) : ''}
 			</tbody>
 		</Table>
 	</>);
