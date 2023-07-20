@@ -83,7 +83,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 
 	const getPayload = (state) => {
 		let payload = {
-			customerId: state.customerId || '',
+			customerId: state.id || '',
 			currentQuantity: state.currentQuantity,
 			lotNo: state.lotNo,
 			productId: state.productId,
