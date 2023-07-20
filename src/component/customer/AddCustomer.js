@@ -37,16 +37,16 @@ function AddCustomer({ setCustomer }) {
 	return (
 		<>
 			<Button variant="primary" onClick={handleShow}>
-				<i class="fa-solid fa-plus"></i> Add Customer
+				<i class="fa-solid fa-plus"></i> Add User
 			</Button>
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Add Customer</Modal.Title>
+					<Modal.Title>Add User</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-							<Form.Label>Customer Name</Form.Label>
+							<Form.Label>User Name</Form.Label>
 							<Form.Control
 								type="text"
 								placeholder="Enter full name"
@@ -91,6 +91,18 @@ function AddCustomer({ setCustomer }) {
 								name="address"
 								onChange={handleOnChange}
 							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+							<Form.Label>Role type</Form.Label>
+							<Form.Control
+								as="select"
+								name="roleType"
+								aria-label="Default select example"
+								onChange={(e) => handleOnChange(e)}>
+								<option value=''>Select User Role</option>
+								<option value='customer'>Customer</option>
+								<option value='supplier'>Supplier</option>
+							</Form.Control>
 						</Form.Group>
 					</Form>
 				</Modal.Body>

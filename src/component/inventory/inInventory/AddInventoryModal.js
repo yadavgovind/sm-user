@@ -120,7 +120,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 					<Form>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 							<Button variant="primary" onClick={() => openModal('add-customer')}>
-								<i class="fa-solid fa-plus"></i> Add Customer
+								<i class="fa-solid fa-plus"></i> Add User
 							</Button>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -262,6 +262,18 @@ function AddInventoryModal({ productType, roomsArr }) {
 								name="address"
 								onChange={(e) => handleOnChangeCustomer(e, customerDetail, setCustomerDetail)}
 							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+							<Form.Label>Role type</Form.Label>
+							<Form.Control
+								as="select"
+								name="roleType"
+								aria-label="Default select example"
+								onChange={(e) => handleOnChangeCustomer(e, customerDetail, setCustomerDetail)}>
+								<option value=''>Select User Role</option>
+								<option value='customer'>Customer</option>
+								<option value='supplier'>Supplier</option>
+							</Form.Control>
 						</Form.Group>
 					</Form>
 				</Modal.Body>

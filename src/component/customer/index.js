@@ -12,7 +12,7 @@ const Customer = () => {
 			setState(customerList)
 		}).catch(err => console.log(err))
 	}, [])
-	return <div><h1>Customer</h1>
+	return <div><h1>User</h1>
 		<AddCustomer setCustomer={setState} />
 		{state.length ? <Table striped="columns" bordered className='mt-2'>
 			<thead>
@@ -22,6 +22,7 @@ const Customer = () => {
 					<th>Phone</th>
 					<th>Email</th>
 					<th>Vehicle No</th>
+					<th>Role Type</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,6 +33,7 @@ const Customer = () => {
 						<td>{item.phone}</td>
 						<td>{item.email}</td>
 						<td>{item.vehicleNumber}</td>
+						<td>{item.roleType}</td>
 					</tr>)
 				})}
 
