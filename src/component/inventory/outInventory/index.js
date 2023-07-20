@@ -80,19 +80,25 @@ const OutInventory = () => {
 					<th>S.No</th>
 					<th>Customer ID</th>
 					<th>Lot Number</th>
+					<th>Quantity</th>
+					<th>Product</th>
 					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
 				{lotsList.length ? lotsList.map((item, i) => {
-					return (<tr>
-						<td>{i + 1}</td>
-						<td>{item.customerId}</td>
-						<td onClick={() => handleLotClick(item)} style={{ cursor: 'pointer' }}>{item.lotNo.split('S')[0]}</td>
-						<td>
-							<Button variant="secondary" onClick={() => handleLotClick(item)}>View</Button>
-						</td>
-					</tr>)
+					return item.lotDetails.map((lot => {
+						return (<tr>
+							<td>{i + 1}</td>
+							<td>{item.customerId}</td>
+							<td onClick={() => handleLotClick({ ...lot, customerId: item.customerId })} style={{ cursor: 'pointer' }}>{lot.lotNo}</td>
+							<td>{lot.itemDetails.length}</td>
+							<td>{`${lot.productType}(${lot.productSize})`}</td>
+							<td>
+								<Button variant="secondary" onClick={() => handleLotClick({ ...lot, customerId: item.customerId })}>View</Button>
+							</td>
+						</tr>)
+					}))
 				}) : ''}
 			</tbody>
 		</Table>

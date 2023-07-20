@@ -58,14 +58,16 @@ const Inventory = () => {
 			</thead>
 			<tbody>
 				{lotsList.length ? lotsList.map((item, i) => {
-					return (<tr>
-						<td>{i + 1}</td>
-						<td>{item.roomNo}</td>
-						<td>{item.lotNo.split('S')[0]}</td>
-						<td>{item.customerId}</td>
-						<td>{item.quantity}</td>
-						<td>{item.productId}</td>
-					</tr>)
+					return item.lotDetails.map((lot => {
+						return (<tr>
+							<td>{i + 1}</td>
+							<td>{item.roomNo}</td>
+							<td>{lot.lotNo}</td>
+							<td>{item.customerId}</td>
+							<td>{lot.itemDetails.length}</td>
+							<td>{`${lot.productType}(${lot.productSize})`}</td>
+						</tr>)
+					}))
 				}) : ''}
 			</tbody>
 		</Table>
