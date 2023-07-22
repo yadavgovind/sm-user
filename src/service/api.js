@@ -82,7 +82,7 @@ export const getAvailableLots = async (roomNo, storeId) => {
 
 export const addInventory = async (payload) => {
 	try {
-		const response = await axios.post(`${BASE_API_URL}/productin`, payload, headerWithAuthorization());
+		const response = await axios.post(`${BASE_API_URL}productin`, payload, headerWithAuthorization());
 		return response
 	} catch (err) {
 		throw err
@@ -101,8 +101,8 @@ export const getLotsDetail = async (storeId) => {
 
 export const outInventory = async (payload) => {
 	try {
-		const response = await axios.post(`${BASE_API_URL}/productout`, payload, headerWithAuthorization());
-		return response
+		const response = await axios.post(`${BASE_API_URL}productout`, payload, header);
+		return
 	} catch (err) {
 		throw err
 	}

@@ -1,20 +1,14 @@
 import { getCustomerDetail, getAvailableLots, outInventory } from "../../../service/api"
 import { toast } from "react-toastify";
 
-// export const getInventoryListApi = async () => {
-// 	try {
-// 		const response = await getInventoryList()
-// 		if (response && response.data) {
-// 			return response.data
-// 		}
-// 	} catch (err) {
-// 		throw err
-// 	}
-// }
 
-export const handleBlur = (value, setState) => {
+export const getSupplier = (value, setState) => {
 	value && getCustomerDetailApi(value).then((res) => {
-		res ? setState(res) : toast.error("No record found.")
+		if (res && res.roleType === 'supplier') {
+			setState(res)
+		} else {
+			toast.error("No supplier found with this number.")
+		}
 	}).catch((err) => {
 		toast.error(err)
 	})
@@ -43,11 +37,8 @@ export const getAvailableLotsApi = async (roomNo, storeId) => {
 
 export const outInventoryApi = async (payload) => {
 	try {
-		const response = await outInventory(payload)
-		if (response && response.data) {
-			return response.data
-		}
+		await outInventory(payload)
 	} catch (err) {
-		throw err
+		console.log(err)
 	}
 }
