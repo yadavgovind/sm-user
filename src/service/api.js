@@ -90,9 +90,10 @@ export const addInventory = async (payload) => {
 }
 
 
-export const getLotsDetail = async (storeId) => {
+export const getLotsDetail = async (storeId, searchUser) => {
+	const query = searchUser ? `storeId=${storeId}/customerId=${searchUser}` : `storeId=${storeId}`
 	try {
-		const response = await axios.get(`${BASE_API_URL}productIn/lookup?storeId=${storeId}`, headerWithAuthorization());
+		const response = await axios.get(`${BASE_API_URL}productIn/lookup?${query}`, headerWithAuthorization());
 		return response
 	} catch (err) {
 		throw err

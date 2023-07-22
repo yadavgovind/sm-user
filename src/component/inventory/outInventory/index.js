@@ -8,6 +8,7 @@ import { getLotsDetailApi } from '../inInventory/handler';
 import { getSupplier, outInventoryApi } from './handler';
 import { toast } from 'react-toastify';
 const OutInventory = () => {
+	const [searchUser, setSearchUser] = useState('')
 	const [supplier, setSupplier] = useState({})
 	const [lotsList, setLOtsList] = useState([])
 	const [lotDetail, setLotDetail] = useState({})
@@ -15,16 +16,17 @@ const OutInventory = () => {
 	const [state, setState] = useState({})
 	useEffect(() => {
 		const storeId = sessionStorage.getItem('storeId').trim()
-		getLotsDetailApi(storeId).then((res) => {
+		console.log('searchUser', searchUser)
+		getLotsDetailApi(storeId, searchUser).then((res) => {
 			console.log(">>>>res", res)
 			setLOtsList(res)
 		}).catch((err) => {
 			console.log(err)
 		})
-	}, [])
-	const handleLotClick = (detail) => {
+	}, [searchUser])
+	const handleLotClick = (detail, modal) => {
 		setLotDetail(detail)
-		openModal('lot-detail')
+		modal === 'view-detail' ? openModal('view-detail') : openModal('lot-detail')
 	}
 	const getPayload = () => {
 		let itemDetails = []
@@ -64,7 +66,6 @@ const OutInventory = () => {
 	const handleOnBlur = (itemId, value) => {
 		setState({ ...state, [itemId]: value })
 	}
-	console.log('state', state)
 	return (<><div>
 		<h1>Out Inventory</h1>
 	</div>
@@ -74,6 +75,9 @@ const OutInventory = () => {
 				className="form-control rounded"
 				placeholder="Search Customer"
 				aria-label="Search"
+				name="search"
+				maxLength={10}
+				onBlur={(e) => setSearchUser(e.target.value)}
 				aria-describedby="search-addon" />
 			<button type="button" className="btn btn-primary">
 				<i className='fas fa-search'></i></button>
@@ -84,7 +88,7 @@ const OutInventory = () => {
 			<thead>
 				<tr>
 					<th>S.No</th>
-					<th>Customer ID</th>
+					<th>Customer Name</th>
 					<th>Lot Number</th>
 					<th>Available Quantity</th>
 					<th>Sold Out Quantity</th>
@@ -94,7 +98,7 @@ const OutInventory = () => {
 			</thead>
 			<tbody>
 				{lotsList.length ? lotsList.map((item, i) => {
-					return item.lotDetails.map((lot => {
+					return item.lotDetails.map(((lot, i) => {
 						let soldOutQuantity = 0
 						lot.itemDetails.forEach(detail => {
 							if (detail.productOutId !== 'null') {
@@ -103,13 +107,13 @@ const OutInventory = () => {
 						})
 						return (<tr>
 							<td>{i + 1}</td>
-							<td>{item.customerId}</td>
+							<td>{item.customerName}</td>
 							<td onClick={() => handleLotClick({ ...lot, customerId: item.customerId })} style={{ cursor: 'pointer' }}>{lot.lotNo}</td>
 							<td>{lot.itemDetails.length - soldOutQuantity}</td>
 							<td>{soldOutQuantity}</td>
 							<td>{`${lot.productType}(${lot.productSize})`}</td>
 							<td>
-								<Button variant="secondary" onClick={() => openModal('view-detail')}>View</Button> {'   '}
+								<Button variant="secondary" onClick={() => handleLotClick({ ...lot, customerId: item.customerId }, 'view-detail')}>View</Button> {'   '}
 								<Button variant="danger" onClick={() => handleLotClick({ ...lot, customerId: item.customerId })}>Sold Out</Button>
 							</td>
 						</tr>)

@@ -74,9 +74,9 @@ export const handleCustomerSubmit = async (state, openModal) => {
 
 }
 
-export const getLotsDetailApi = async (storeId) => {
+export const getLotsDetailApi = async (storeId, searchUser) => {
 	try {
-		const response = await getLotsDetail(storeId)
+		const response = await getLotsDetail(storeId, searchUser)
 		if (response && response.data) {
 			return response.data
 		}
