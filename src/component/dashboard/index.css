@@ -1,0 +1,108 @@
+h2 {
+    font: 500 20px/32px Roboto,Helvetica Neue,sans-serif;
+    letter-spacing: normal;
+}
+/* h3 {
+    font: 500 16px/28px Roboto,Helvetica Neue,sans-serif;
+    letter-spacing: normal;
+    margin: 0 0 16px;
+} */
+.fs-16{
+font-size: 16px;
+}
+.navbar{
+box-sizing: border-box;
+font-family: Roboto, "Helvetica Neue", sans-serif;
+font-size: 16px;
+font-stretch: 100%;
+font-weight :400;
+line-height: 20px;
+color: white;
+/* -webkit-tap-highlight-color: rgba(0, 0, 0, 0); */
+background-color: rgb(68, 119, 197);
+border: 1px rgb(68, 119, 197);
+}
+
+.common-head-container {
+    background-color: #eff6fe;
+    padding: 10px 15px;
+}
+.text1a {
+    font-weight: 400;
+    font-size: 18px!important;
+}
+.text1 {
+    font-size: 18px!important;
+    font-weight: 500;
+    line-height: 24px;
+    margin: 0 0 8px!important;
+}
+.text-color {
+    color: #004e98;
+}
+.cardSpace {
+    margin: 10px 0;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+}
+.card-body {
+    flex: 1 1 auto;
+    padding: 1rem 1rem;
+}
+.flex-block {
+    display: flex;
+    justify-content: space-between;
+}
+.boldfive {
+    font-weight: 500!important;
+    margin-top: 8px!important;
+}
+
+.select-box {
+    min-width: 125px;
+    float: right;
+    text-align: right;
+}
+.title{
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 10px;
+    height: 120px;
+    cursor: pointer;
+}
+.label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 7px;
+}
+.sub-label{
+   font-size: 14px;
+}
+.value {
+    font-size: 16px;
+    font-weight: 600;
+}
+.trend{
+    padding-top: 0;
+    font-size: 12px;
+}
+.ht-75{
+   height:75px
+}
+.flex-box {
+    display: flex;
+	flex-wrap: wrap;
+}
+.card-width{
+   min-width: 190px;
+   margin: 4px;
+}

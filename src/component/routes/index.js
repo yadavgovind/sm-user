@@ -6,6 +6,7 @@ import Inventory from '../inventory/inInventory';
 import history from '../../store/history'
 import './index.css'
 import OutInventory from '../inventory/outInventory';
+import Dashboard from '../dashboard'
 const handleRoutes = (hash) => {
 	switch (hash) {
 		case '#room':
@@ -17,7 +18,7 @@ const handleRoutes = (hash) => {
 		case '#out-inventory':
 			return <OutInventory />
 		default:
-			return <Customer />
+			return <Dashboard />
 	}
 }
 const StoreRoutes = () => {
@@ -33,7 +34,7 @@ const StoreRoutes = () => {
 	return <div className="container-fluid">
 		<div className="row flex-nowrap">
 			<Sidebar handleRoutes={(url) => changeUrl(url)} showHideInventory={showHideInventory} toggleInventory={toggleInventory} />
-			<div className="col py-3">
+			<div className="col pd-0">
 				{handleRoutes(url)}
 			</div>
 		</div>

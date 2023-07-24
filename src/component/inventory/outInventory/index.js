@@ -4,16 +4,18 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import { getLotsDetailApi } from '../inInventory/handler';
+import { getLotsDetailApi, handleBlur } from '../inInventory/handler';
 import { getSupplier, outInventoryApi } from './handler';
 import { toast } from 'react-toastify';
+import { getCustomerApi } from '../../customer/handler';
 const OutInventory = () => {
 	const [searchUser, setSearchUser] = useState('')
 	const [supplier, setSupplier] = useState({})
 	const [lotsList, setLOtsList] = useState([])
 	const [lotDetail, setLotDetail] = useState({})
-	const [currentModal, openModal] = useState(null);
+	const [currentModal, openModal] = useState(null)
 	const [state, setState] = useState({})
+
 	useEffect(() => {
 		const storeId = sessionStorage.getItem('storeId').trim()
 		console.log('searchUser', searchUser)
@@ -23,6 +25,16 @@ const OutInventory = () => {
 		}).catch((err) => {
 			console.log(err)
 		})
+		getCustomerApi(storeId)
+			.then((customerList) => {
+				let arr = []
+				customerList.forEach(item => {
+					if (item.roleType === 'supplier') {
+						arr.push(item)
+					}
+				})
+				setSupplier(arr)
+			}).catch(err => console.log(err))
 	}, [searchUser])
 	const handleLotClick = (detail, modal) => {
 		setLotDetail(detail)
@@ -44,7 +56,7 @@ const OutInventory = () => {
 			lotNo: lotDetail.lotNo,
 			quantity: itemDetails.length,
 			reasonOfOut: state.reasonOfOut,
-			supplier
+			soldBusinessManId: supplier
 		}
 		return payload
 	}
@@ -151,16 +163,17 @@ const OutInventory = () => {
 						})}
 					</tbody>
 				</Table>
-				<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+				<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 					<Form.Label>Sold Out Supplier</Form.Label>
 					<Form.Control
-						type="text"
-						placeholder="Enter supplier phone number"
-						name="supplier"
-						onBlur={(e) => getSupplier(e.target.value, setSupplier)}
-						autoFocus
-					/>
+						as="select"
+						aria-label="Default select example"
+						onChange={(e) => handleBlur(e.target.value)}>
+						<option>Select Supplier</option>
+						{/* {getRooms()} */}
+					</Form.Control>
 				</Form.Group>
+
 				<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 					<Form.Label>Reason of out</Form.Label>
 					<Form.Control
