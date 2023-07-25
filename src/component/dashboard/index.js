@@ -1,3 +1,4 @@
+import BarGraph from './barGraph';
 import './index.css'
 const Dashboard = () => {
 	return (
@@ -133,6 +134,7 @@ const Dashboard = () => {
 							</div>
 						</div>
 					</div>
+					<BarGraph />
 				</div>
 			</div >
 		</>
