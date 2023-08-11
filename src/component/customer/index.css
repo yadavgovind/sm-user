@@ -3,3 +3,387 @@
     height: 38px;
     margin-top: 96px;
 }
+
+.navbar-expand-lg .navbar-collapse {
+    display: flex!important;
+    flex-basis: auto;
+}
+.navbar-expand-lg .navbar-nav {
+    flex-direction: row;
+}
+.navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.common-stepper .navbar-nav .nav-item {
+    position: relative;
+}
+
+.common-stepper .navbar-nav .nav-item.disabled .nav-link {
+    background-color: #527da7;
+    cursor: not-allowed;
+}
+.common-stepper .navbar-nav .nav-item .nav-link {
+    background-color: #094681;
+    padding: 5px 30px;
+    cursor: pointer;
+    max-width: 210px;
+    display: flex;
+    align-items: center;
+}
+.common-stepper .navbar-nav .nav-item .nav-link span {
+    color: #fff;
+    font: normal normal 700 12px/17px;
+    line-height: 12px;
+    font-size: 12px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(0,0,0,.55);
+}
+.nav-link, .nav-link2 {
+    background-color: initial;
+    color: #fff;
+    border: none;
+    z-index: 99;
+    text-align: left;
+}
+.nav-link {
+    margin-bottom: 0;
+    width: 100%;
+}
+.nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+ .navbar {
+     padding-top: 0px !important;
+     padding-bottom: 0px !important;
+ }
+
+.common-stepper-counter {
+    background: #fff 0 0 no-repeat padding-box;
+    color: #094681!important;
+    font: normal normal 700 14px Nunito Sans!important;
+    border-radius: 50%;
+    padding: 1px 6px;
+    border: 4px solid #f4f6f833;
+    margin-left: -34px;
+    margin-right: 7px;
+    z-index: 999;
+    position: relative;
+}
+.main-content .card {
+  background-color: #EFF6FE;
+  border: none;
+}
+
+.white-bg {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border: 0.20000000298023224px solid #ECEFF191;
+  border-radius: 8px;
+}
+
+.draft-btn {
+  background: #FF6700 0% 0% no-repeat padding-box;
+  padding: 6px 20px;
+  border: 1px solid #FF6700;
+  border-radius: 50px;
+  color: #ffffff;
+  /* font: normal normal 600 17px/23px Nunito Sans; */
+  font-size: 14px;
+}
+
+/* You can add global styles to this file, and also import other style files */
+
+.tab-container {
+  display: flex;
+}
+
+.building-icon img {
+  margin-right: 15px;
+}
+
+.heading-line {
+  /* font: normal normal bold 20px/27px Nunito Sans!important; */
+  font: normal normal bold 18px/25px Nunito Sans !important;
+  color: #094681;
+  text-transform: uppercase;
+}
+
+.subheading-line {
+  color: #094681;
+  /* font: normal normal 600 16px/22px Nunito Sans; */
+  font: normal normal 600 14px/20px Nunito Sans;
+}
+
+.heading-para {
+  /* font: normal normal 600 16px/25px Nunito Sans; */
+  font: normal normal 600 14px/23px Nunito Sans;
+  color: #094681;
+}
+
+.form-content .form-group {
+  margin-bottom: 20px;
+}
+
+.form-content .form-group .form-label {
+  color: #656565;
+  font-size: 14px;
+  margin-bottom: 0px;
+  text-transform: capitalize;
+}
+
+.que-circle-blue {
+  color: #065FB5;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.info-circle-green {
+  color: #7DA912;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.angular-editor .angular-editor-textarea {
+  height: 4rem !important;
+  margin-top: 0px !important;
+  border: 1px solid #E0E9F2 !important;
+  border-top: 0px !important;
+  border-bottom-left-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
+  background-color: #FAFCFE !important;
+  outline: none !important;
+}
+
+.angular-editor .angular-editor-toolbar {
+  background: #FAFCFE 0 0 no-repeat padding-box !important;
+  border: 1px solid #E0E9F2 !important;
+  border-bottom: 0px !important;
+  border-top-left-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+}
+
+.angular-editor .angular-editor-wrapper .angular-editor-placeholder {
+  color: #102B63 !important;
+}
+
+.angular-editor-toolbar .angular-editor-toolbar-set .angular-editor-button {
+  border-radius: 4px;
+}
+
+.cpbd-save {
+  background: #85b515;
+  padding: 10px 40px;
+  border: 0px;
+  border-radius: 50px;
+  color: #ffffff;
+  float: right;
+}
+
+.cpbd-save img {
+  margin-left: 5px;
+}
+
+.cpbd-cancel {
+  background: #E11112;
+  padding: 10px 40px;
+  border: 1px solid #D23131;
+  border-radius: 50px;
+  color: #ffffff;
+  float: right;
+  margin-left: 12px;
+}
+
+.mandatory-astrisk {
+  color: #F61F1F;
+}
+
+.form-container .form-group {
+  margin-bottom: 20px;
+}
+
+.pg-heading {
+  color: #004E98;
+  font-size: 18px;
+}
+
+.number-avatar {
+  background: #004E98 0% 0% no-repeat padding-box;
+  border: 4px solid #DCECFD;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.number-avatar-title {
+  color: #fff;
+  /* font: normal normal bold 18px/24px Nunito Sans; */
+  font: normal normal bold 16px/22px Nunito Sans;
+}
+
+.form-container {
+  padding: 22px;
+}
+
+.form-container .form-label {
+  /* font: normal normal bold 17px/23px Nunito Sans; */
+  font: normal normal 400 14px Nunito Sans;
+  color: #656565;
+  text-transform: capitalize;
+}
+
+.title-explain {
+  color: #FF6700;
+  /* font: normal normal 600 14px/19px Nunito Sans; */
+  font: normal normal 600 12px/17px Nunito Sans;
+}
+
+.add-section-btn {
+  color: #065fb5;
+  background: #065fb50d 0 0 no-repeat padding-box;
+  border: 1px dashed #065fb5;
+  padding: 4px 15px;
+  font-size: 12px;
+  border-radius: 50px;
+}
+
+.blue-btn {
+  color: #fff;
+  background: #004E98;
+  border-radius: 50px;
+  padding: 12px 16px;
+  border: 1px solid #0E508D;
+  color: #ffffff;
+}
+
+.blue-btn-plus {
+  color: #fff;
+  background: #004E98;
+  border-radius: 50px;
+  padding: 10px 20px;
+  border: 1px solid #0E508D;
+  color: #ffffff;
+  font-size: 32px;
+}
+
+.file-tip-title {
+  color: #094681;
+  /* font: normal normal 800 17px/23px Nunito Sans; */
+  font: normal normal 800 15px/21px Nunito Sans;
+}
+
+.file-tip-para {
+  color: #094681;
+  margin-left: 40px !important;
+}
+
+.cpbd-save-exit {
+  background: transparent linear-gradient(90deg, #EFF0F4 0%, #E2E5EC 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #E2E5EC;
+  border: 1px solid #919EB7;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: #6C859B;
+  float: right;
+  margin-left: 12px;
+}
+
+.status-title {
+  /* font: normal normal bold 17px/23px Nunito Sans; */
+  font: normal normal bold 15px/21px Nunito Sans;
+  color: #042F57;
+}
+
+
+
+
+
+
+
+
+
+
+
+.header-main {
+  background: #4477C5;
+  padding: 8px 20px 8px 20px;
+  display: block;
+  color: #fff;
+  height: 50px;
+
+  img {
+    cursor: pointer;
+  }
+
+  .logosizing {
+    width: auto;
+    height: 36px;
+    margin-top: 5px;
+
+  }
+
+  .left-c {
+    float: left;
+    display: contents;
+  }
+
+  .right-c {
+    float: right;
+    display: flex;
+
+    .avatar-img {
+      height: 40px;
+      width: 40px;
+      border-radius: 25px;
+    }
+
+    .t1 {
+      text-align: right;
+      font-weight: 600;
+      font-size: 16px;
+      font-family: Nunito Sans;
+      letter-spacing: 0px;
+      color: #FFFFFF;
+      opacity: 1;
+      margin-bottom: 0px;
+    }
+
+    .t2 {
+      text-align: right;
+      font-weight: 400;
+      font-size: 12px;
+      font-family: Nunito Sans;
+      letter-spacing: 0px;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      opacity: 1;
+    }
+  }
+
+  .mr-l15 {
+    margin-left: 15px;
+  }
+
+  .mar-t12 {
+    margin-top: 12px;
+  }
+
+  .mar-t8 {
+    margin-top: 8px;
+  }
+
+  .mr-l30 {
+    margin-left: 30px;
+  }
+}

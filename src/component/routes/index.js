@@ -7,6 +7,7 @@ import history from '../../store/history'
 import './index.css'
 import OutInventory from '../inventory/outInventory';
 import Dashboard from '../dashboard'
+import '../dashboard/index.css'
 const handleRoutes = (hash) => {
 	switch (hash) {
 		case '#room':
@@ -35,7 +36,22 @@ const StoreRoutes = () => {
 		<div className="row flex-nowrap">
 			<Sidebar handleRoutes={(url) => changeUrl(url)} showHideInventory={showHideInventory} toggleInventory={toggleInventory} />
 			<div className="col pd-0">
-				{handleRoutes(url)}
+				<div className="header-main">
+					Navbar
+				</div >
+				<div className="common-head-container">
+					<div className='row'>
+						<div className='col-sm-8 px-2'>
+							<p className='text1 text-color'>
+								Dashboard
+							</p>
+							<h2 class="text-color text1 text1a">
+								Welcome
+							</h2>
+						</div>
+						{handleRoutes(url)}
+					</div>
+				</div >
 			</div>
 		</div>
 	</div>;

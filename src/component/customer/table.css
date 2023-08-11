@@ -1,0 +1,98 @@
+.white-bg {
+    background: #fff 0 0 no-repeat padding-box;
+    border: 0.200000003px solid #cedbeb;
+    border-radius: 8px;
+}
+tr.mat-header-row {
+    height: 56px;
+}
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+    padding-left: 24px;
+}
+.mat-header-cell {
+    font-size: 13px;
+    padding: 0;
+    color: #102b63;
+    text-align: left!important;
+    text-transform: uppercase;
+    background: #DBE7F3 0% 0% no-repeat padding-box;
+    border-right: 0px;
+    border-left: 0px;
+}
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    padding: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+    border-bottom-color: #0000001f;
+}
+
+tr.mat-row, tr.mat-footer-row {
+    height: 50px;
+}
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+    padding-left: 24px;
+}
+
+.mat-cell, .mat-footer-cell {
+    font-size: 13px;
+    color: #102b63;
+    text-transform: capitalize;
+    text-align: left;
+    padding: 6px;
+}
+.cdk-overlay-pane{
+    box-sizing: border-box;
+    max-width: 100%;
+    max-height: 100%;
+}
+.cdk-global-overlay-wrapper, .cdk-overlay-pane {
+    display: flex;
+    position: absolute;
+    z-index: 1000;
+}
+.mat-menu-panel{
+    min-width: 112px;
+    max-width: 280px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 48px);
+    border-radius: 4px;
+    outline: 0;
+    min-height: 64px;
+    background: #fff;
+}
+.mat-elevation-z4{
+    box-shadow: 0 2px 4px -1px #0003, 0 4px 5px 0 #00000024, 0 1px 10px 0 #0000001f;
+}
+.mat-menu-content:not(:empty){
+  padding-top: 8px;
+    padding-bottom: 8px;
+}
+.mat-menu-item{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    line-height: 48px;
+    height: 48px;
+    padding: 0 16px;
+    text-align: left;
+    text-decoration: none;
+    max-width: 100%;
+    position: relative;
+        background: #0000;
+    color: #000000de;
+    font-family: Roboto,Helvetica Neue,sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
