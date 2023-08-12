@@ -1,21 +1,55 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
-import AddCustomer from './AddCustomer';
+// import { Table } from 'react-bootstrap';
+// import AddCustomer from './AddCustomer';
+// import history from '../../store/history'
 import './index.css'
 import { getCustomerApi, parseJwt } from './handler';
 import './table.css'
+import { getLotsDetailApi, getProductTypeApi } from '../inventory/inInventory/handler';
+import { getRoomDetailApi } from '../room/handler';
+import AddInventoryModal from '../inventory/inInventory/AddInventoryModal';
+import { useNavigate } from "react-router-dom";
+import Loan from '../loan';
+
 const Customer = () => {
 	const [state, setState] = useState([])
 	const [showOption, toggleButton] = useState('')
+	const [currentModal, openModal] = useState(null);
+	const [productType, setProductType] = useState([])
+	const [lotsList, setLOtsList] = useState([])
+	const [rooms, setRoom] = useState([])
+	const navigate = useNavigate();
 
 	const theading = ['#', 'Name', 'Store', 'Room No', 'Session', 'Phone', 'Email', 'Address', 'Vehicle', 'Role Type', '']
+
+	const lotHeading = ['#', 'Room No', 'Lot Number', 'Customer Id', 'Quantity', 'Product']
+
 	useEffect(() => {
 		const detail = parseJwt(sessionStorage.getItem('token'))
 		sessionStorage.setItem('storeId', detail["storeId "])
-		getCustomerApi(detail['storeId '].trim()).then((customerList) => {
+		const storeId = detail['storeId '].trim()
+		getCustomerApi(storeId).then((customerList) => {
 			setState(customerList)
 		}).catch(err => console.log(err))
+		getLotsDetailApi(storeId).then((res) => {
+			console.log(">>>>res", res)
+			setLOtsList(res)
+		}).catch((err) => {
+			console.log(err)
+		})
+		getProductTypeApi().then((res) => {
+			setProductType(res)
+		}).catch((err) => {
+			console.log(err)
+		})
+		getRoomDetailApi(storeId).then((roomDetail) => {
+			let roomArr = []
+			roomDetail.map(item => roomArr.push(item.roomNo))
+			setRoom(roomArr)
+		}).catch(err => console.log(err))
 	}, [])
+
+
 	return <>
 
 		<div className="row">
@@ -105,13 +139,18 @@ const Customer = () => {
 													<div className='mat-menu-panel mat-elevation-z4'>
 														<div className='mat-menu-content'>
 															<div>
-																<button className='mat-menu-item'>
+																<button className='mat-menu-item' onClick={() => navigate("#in-inventory")}>
 																	<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
 																</button>
 															</div>
 															<div>
-																<button className='mat-menu-item'>
-																	<i className="far fa-edit" style={{ marginRight: "10px" }}></i>Edit
+																<button className='mat-menu-item' onClick={() => openModal("add-inventory")}>
+																	<i className="far fa-edit" style={{ marginRight: "10px" }}></i>Product In
+																</button>
+															</div>
+															<div>
+																<button className='mat-menu-item' onClick={() => openModal("loan")}>
+																	<i className="far fa-edit" style={{ marginRight: "10px" }}></i>Loan
 																</button>
 															</div>
 														</div>
@@ -129,6 +168,14 @@ const Customer = () => {
 				</div>
 			</div>
 		</div>
+		<AddInventoryModal productType={productType} roomsArr={rooms}
+			currentModal={currentModal}
+			openModal={openModal}
+		/>
+		<Loan productType={productType} roomsArr={rooms}
+			currentModal={currentModal}
+			openModal={openModal}
+		/>
 	</>;
 
 }

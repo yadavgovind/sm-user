@@ -5,9 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import { addInventoryApi, getAvailableLotsApi, handleBlur, handleCustomerSubmit, handleOnChangeCustomer } from './handler';
 import { toast } from 'react-toastify';
 
-function AddInventoryModal({ productType, roomsArr }) {
+function AddInventoryModal({ productType, roomsArr, currentModal, openModal }) {
 	const [customerDetail, setCustomerDetail] = useState({})
-	const [currentModal, openModal] = useState(null);
 	const [lotsOption, setLotOption] = useState([]);
 	const [availableQuantity, setAvailableQuantity] = useState(0);
 	const [lotArr, setLotsArr] = useState([]);
@@ -96,7 +95,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 	}
 	const handleSubmit = () => {
 		const payload = getPayload(state)
-		if (!state.email || !state.lotNo || !state.productId || !state.quantity || !state.roomNo) {
+		if (!state.lotNo || !state.productId || !state.quantity || !state.roomNo) {
 			toast.error('Please fill the required fields.')
 		} else {
 			!maxQuantityError && addInventoryApi(payload).then(() => {
@@ -109,50 +108,12 @@ function AddInventoryModal({ productType, roomsArr }) {
 	}
 	return (
 		<>
-			<Button variant="primary" onClick={() => openModal("add-inventory")}>
-				<i class="fa-solid fa-plus"></i>
-			</Button>
 			{currentModal === "add-inventory" && <Modal show onHide={() => openModal(null)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Add Inventory</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-							<Button variant="primary" onClick={() => openModal('add-customer')}>
-								<i class="fa-solid fa-plus"></i> Add User
-							</Button>
-						</Form.Group>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-							<Form.Label>Customer's Phone number</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Enter customer phone number"
-								onBlur={(e) => handleBlur(e.target.value, setState)}
-								autoFocus
-							/>
-						</Form.Group>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-							<Form.Label>Customer's Name</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Customer name"
-								name='firstName'
-								value={firstName}
-								disabled
-							/>
-						</Form.Group>
-
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-							<Form.Label>Email</Form.Label>
-							<Form.Control
-								type="email"
-								placeholder="Email"
-								name='email'
-								value={email}
-								disabled
-							/>
-						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 							<Form.Label>Room</Form.Label>
 							<Form.Control
@@ -206,12 +167,12 @@ function AddInventoryModal({ productType, roomsArr }) {
 						Close
 					</Button>
 					<Button variant="primary" onClick={() => handleSubmit()}>
-						Save Changes
+						Add Product
 					</Button>
 				</Modal.Footer>
 			</Modal>
 			}
-			{currentModal === "add-customer" && <Modal show onHide={() => openModal(null)}>
+			{/* {currentModal === "add-customer" && <Modal show onHide={() => openModal(null)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Add Customer</Modal.Title>
 				</Modal.Header>
@@ -285,7 +246,7 @@ function AddInventoryModal({ productType, roomsArr }) {
 						Save Changes
 					</Button>
 				</Modal.Footer>
-			</Modal>}
+			</Modal>} */}
 		</>
 	);
 }

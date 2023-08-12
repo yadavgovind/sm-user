@@ -7,7 +7,8 @@ const Inventory = () => {
 	const [productType, setProductType] = useState([])
 	const [lotsList, setLOtsList] = useState([])
 	const [rooms, setRoom] = useState([])
-
+	const lotHeading = ['#', 'Room No', 'Lot Number', 'Customer Id', 'Quantity', 'Product', '']
+	const [showOption, toggleButton] = useState('')
 	useEffect(() => {
 		const storeId = sessionStorage.getItem('storeId').trim()
 		getLotsDetailApi(storeId).then((res) => {
@@ -27,50 +28,72 @@ const Inventory = () => {
 			setRoom(roomArr)
 		}).catch(err => console.log(err))
 	}, [])
-	return (<><div>
-		<h1>Add Inventory</h1>
-	</div>
-		<AddInventoryModal productType={productType} roomsArr={rooms} />
-		<div className="input-group w-25 float-end">
-			<input
-				type="search"
-				className="form-control rounded"
-				placeholder="Search Customer"
-				aria-label="Search"
-				aria-describedby="search-addon" />
-			<button type="button" className="btn btn-primary">
-				<i className='fas fa-search'></i></button>
-		</div>
-
+	return (<>
 		<h4>Lots In Detail</h4>
-		<Table striped="columns" bordered>
-			<thead>
-				<tr>
-					<th>S.No</th>
-					<th>Room Number</th>
-					<th>Lot Number</th>
-					<th>Customer ID</th>
-					<th>Quantity</th>
-					<th>Product</th>
 
+		<div className='white-bg'>
+			<div className='example-table-container'>
+				<div className='mb-2 mt-2' style={{
+					height: 'auto',
+					padding: '1px',
+					overflow: 'hidden',
+				}}>
+					<div className='form-group me-3' style={{ float: 'right' }}>
+						<input className='mat-input-element mat-form-field-autofill-control
+									 form-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored'
+							style={{ height: '43px' }}
+							placeholder='Search'
+						/>
+					</div>
+				</div>
+				<table className='mat-table cdk-table mat-sort example-table w-100'>
+					<thead>
+						<tr className='mat-header-row cdk-header-row'>
+							{lotHeading.map(heading => {
+								return (<th className='mat-header-cell cdk-header-cell cdk-column-checkbox mat-column-checkbox'>
+									{heading}
+								</th>
+								)
+							})}
+						</tr>
+					</thead>
+					<tbody>
+						{lotsList.length ? lotsList.map((item, i) => {
+							return item.lotDetails.map((lot => {
+								return (<tr className='mat-row cdk-row'>
+									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{i + 1}</td>
+									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.roomNo}</td>
+									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.lotNo}</td>
+									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.customerId}</td>
+									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.itemDetails.length}</td>
+									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox' onClick={() => toggleButton('')}>{`${lot.productType}(${lot.productSize})`}</td>
+									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>
+										<div className='btn-group dropleft' style={{ float: 'right' }}>
+											<button className='mat-menu-trigger btn btn3bot' onClick={() => toggleButton(i)}>
+												<i className='fas fa-ellipsis-v'>
+												</i>
+											</button>
+										</div>
+										{i === showOption && <div className='cdk-overlay-pane'>
+											<div className='mat-menu-panel mat-elevation-z4'>
+												<div className='mat-menu-content'>
+													<div>
+														<button className='mat-menu-item'>
+															<i className="" style={{ marginRight: "10px" }}></i>Sold
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>}
+									</td>
+								</tr>)
+							}))
+						}) : ''}
+					</tbody>
+				</table>
 
-				</tr>
-			</thead>
-			<tbody>
-				{lotsList.length ? lotsList.map((item, i) => {
-					return item.lotDetails.map((lot => {
-						return (<tr>
-							<td>{i + 1}</td>
-							<td>{item.roomNo}</td>
-							<td>{lot.lotNo}</td>
-							<td>{item.customerId}</td>
-							<td>{lot.itemDetails.length}</td>
-							<td>{`${lot.productType}(${lot.productSize})`}</td>
-						</tr>)
-					}))
-				}) : ''}
-			</tbody>
-		</Table>
+			</div>
+		</div>
 	</>);
 }
 
