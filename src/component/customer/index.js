@@ -139,7 +139,10 @@ const Customer = () => {
 													<div className='mat-menu-panel mat-elevation-z4'>
 														<div className='mat-menu-content'>
 															<div>
-																<button className='mat-menu-item' onClick={() => navigate("#in-inventory")}>
+																<button className='mat-menu-item' onClick={() => {
+																	navigate("#in-inventory")
+																	window.location.reload()
+																}}>
 																	<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
 																</button>
 															</div>
