@@ -103,7 +103,16 @@ export const getLotsDetail = async (storeId, searchUser) => {
 export const outInventory = async (payload) => {
 	try {
 		const response = await axios.post(`${BASE_API_URL}productout`, payload, header);
-		return
+		return response
+	} catch (err) {
+		throw err
+	}
+}
+
+export const addLoan = async (payload) => {
+	try {
+		const response = await axios.post(`${BASE_API_URL}customerloan`, payload, headerWithAuthorization());
+		return response
 	} catch (err) {
 		throw err
 	}

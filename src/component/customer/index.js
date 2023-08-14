@@ -16,6 +16,8 @@ const Customer = () => {
 	const [showOption, toggleButton] = useState('')
 	const [currentModal, openModal] = useState(null);
 	const [productType, setProductType] = useState([])
+	const [customerInfo, setCustomerInfo] = useState({})
+
 	const [lotsList, setLOtsList] = useState([])
 	const [rooms, setRoom] = useState([])
 	const navigate = useNavigate();
@@ -147,12 +149,18 @@ const Customer = () => {
 																</button>
 															</div>
 															<div>
-																<button className='mat-menu-item' onClick={() => openModal("add-inventory")}>
+																<button className='mat-menu-item' onClick={() => {
+																	openModal("add-inventory")
+																	setCustomerInfo(item)
+																}}>
 																	<i className="far fa-edit" style={{ marginRight: "10px" }}></i>Product In
 																</button>
 															</div>
 															<div>
-																<button className='mat-menu-item' onClick={() => openModal("loan")}>
+																<button className='mat-menu-item' onClick={() => {
+																	openModal("loan")
+																	setCustomerInfo(item)
+																}}>
 																	<i className="far fa-edit" style={{ marginRight: "10px" }}></i>Loan
 																</button>
 															</div>
@@ -175,9 +183,10 @@ const Customer = () => {
 			currentModal={currentModal}
 			openModal={openModal}
 		/>
-		<Loan productType={productType} roomsArr={rooms}
+		<Loan
 			currentModal={currentModal}
 			openModal={openModal}
+			customerDetail={customerInfo}
 		/>
 	</>;
 
