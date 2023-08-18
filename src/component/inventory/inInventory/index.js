@@ -21,7 +21,7 @@ const Inventory = () => {
 
 	const [searchUser, setSearchUser] = useState('')
 	const [supplier, setSupplier] = useState({})
-	const [lotDetail, setLotDetail] = useState({})
+	const [lotDetail, setLotDetail] = useState([])
 
 	const [state, setState] = useState({})
 
@@ -45,6 +45,7 @@ const Inventory = () => {
 				setSupplier(arr)
 			}).catch(err => console.log(err))
 	}, [searchUser])
+
 	const handleLotClick = (detail, modal) => {
 		setLotDetail(detail)
 		modal === 'view-detail' ? openModal('view-detail') : openModal('lot-detail')
@@ -71,7 +72,8 @@ const Inventory = () => {
 	}
 	const handleSubmit = () => {
 		const payload = getPayload()
-		if (payload.quantity && payload.reasonOfOut && payload.supplier) {
+		// if (payload.quantity && payload.reasonOfOut && payload.supplier) {
+		if (payload.quantity && payload.reasonOfOut) {
 			outInventoryApi(payload).then(() => {
 				openModal(null)
 				setState({})
@@ -164,7 +166,10 @@ const Inventory = () => {
 														}}>
 															<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
 														</button>
-														<button className='mat-menu-item' onClick={() => openModal("lot-detail")}>
+														<button className='mat-menu-item' onClick={() => {
+															openModal("lot-detail")
+															setLotDetail(lot)
+														}}>
 															<i className="" style={{ marginRight: "10px" }} ></i>Sold
 														</button>
 													</div>
