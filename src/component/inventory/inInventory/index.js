@@ -14,7 +14,7 @@ const Inventory = () => {
 	const [lotsList, setLOtsList] = useState([])
 	const [rooms, setRoom] = useState([])
 	const [currentModal, openModal] = useState(null)
-	const lotHeading = ['#', 'Room No', 'Lot Number', 'Customer Id', 'Quantity', 'Product', '']
+	const lotHeading = ['#', 'Room No', 'Lot Number', 'Customer Name', 'Total Quantity', 'Available Quantity', 'Product', '']
 	const [showOption, toggleButton] = useState('')
 
 	const [customerDetail, setCustomerDetail] = useState({})
@@ -143,8 +143,9 @@ const Inventory = () => {
 									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{i + 1}</td>
 									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.roomNo}</td>
 									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.lotNo}</td>
-									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.customerId}</td>
-									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.itemDetails.length}</td>
+									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.customerName}</td>
+									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.totalQuantity}</td>
+									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.availableQuantity}</td>
 									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox' onClick={() => toggleButton('')}>{`${lot.productType}(${lot.productSize})`}</td>
 									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>
 										<div className='btn-group dropleft' style={{ float: 'right' }}>
