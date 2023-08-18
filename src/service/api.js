@@ -117,3 +117,12 @@ export const addLoan = async (payload) => {
 		throw err
 	}
 }
+
+export const soldSchedule = async (payload) => {
+	try {
+		const response = await axios.post(`${BASE_API_URL}soldSchedule`, payload, header);
+		return response
+	} catch (err) {
+		throw err
+	}
+}

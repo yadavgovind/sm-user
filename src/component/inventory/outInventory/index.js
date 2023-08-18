@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 import { getLotsDetailApi, handleBlur } from '../inInventory/handler';
-import { getSupplier, outInventoryApi } from './handler';
+import { outInventoryApi } from './handler';
 import { toast } from 'react-toastify';
 import { getCustomerApi } from '../../customer/handler';
 const OutInventory = () => {

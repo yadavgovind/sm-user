@@ -1,4 +1,7 @@
-import { addInventory, getAvailableLots, getCustomerDetail, getLotsDetail, getProductType } from "../../../service/api"
+import {
+	addInventory, getAvailableLots, getCustomerDetail,
+	getLotsDetail, getProductType, outInventory, soldSchedule
+} from "../../../service/api"
 import { toast } from "react-toastify";
 import { addCustomerApi } from "../../customer/handler";
 import { tokenDecode } from "../../../constant/api";
@@ -82,5 +85,33 @@ export const getLotsDetailApi = async (storeId, searchUser) => {
 		}
 	} catch (err) {
 		throw err
+	}
+}
+
+export const getSupplier = (value, setState) => {
+	value && getCustomerDetailApi(value).then((res) => {
+		if (res && res.roleType === 'supplier') {
+			setState(res)
+		} else {
+			toast.error("No supplier found with this number.")
+		}
+	}).catch((err) => {
+		toast.error(err)
+	})
+}
+
+export const outInventoryApi = async (payload) => {
+	try {
+		await outInventory(payload)
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+export const soldScheduleApi = async (payload) => {
+	try {
+		await soldSchedule(payload)
+	} catch (err) {
+		console.log(err)
 	}
 }

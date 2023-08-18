@@ -1,14 +1,93 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
-import AddInventoryModal from './AddInventoryModal';
-import { getLotsDetailApi, getProductTypeApi } from './handler';
+import { getLotsDetailApi, getProductTypeApi, handleBlur, outInventoryApi } from './handler';
+
 import { getRoomDetailApi } from '../../room/handler';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { toast } from "react-toastify";
+import { getCustomerApi } from '../../customer/handler';
+import SwitchSoldType from './SwitchSoldType';
 const Inventory = () => {
 	const [productType, setProductType] = useState([])
 	const [lotsList, setLOtsList] = useState([])
 	const [rooms, setRoom] = useState([])
+	const [currentModal, openModal] = useState(null)
 	const lotHeading = ['#', 'Room No', 'Lot Number', 'Customer Id', 'Quantity', 'Product', '']
 	const [showOption, toggleButton] = useState('')
+
+	const [customerDetail, setCustomerDetail] = useState({})
+
+	const [searchUser, setSearchUser] = useState('')
+	const [supplier, setSupplier] = useState({})
+	const [lotDetail, setLotDetail] = useState({})
+
+	const [state, setState] = useState({})
+
+	useEffect(() => {
+		const storeId = sessionStorage.getItem('storeId').trim()
+		console.log('searchUser', searchUser)
+		getLotsDetailApi(storeId, searchUser).then((res) => {
+			console.log(">>>>res", res)
+			setLOtsList(res)
+		}).catch((err) => {
+			console.log(err)
+		})
+		getCustomerApi(storeId)
+			.then((customerList) => {
+				let arr = []
+				customerList.forEach(item => {
+					if (item.roleType === 'supplier') {
+						arr.push(item)
+					}
+				})
+				setSupplier(arr)
+			}).catch(err => console.log(err))
+	}, [searchUser])
+	const handleLotClick = (detail, modal) => {
+		setLotDetail(detail)
+		modal === 'view-detail' ? openModal('view-detail') : openModal('lot-detail')
+	}
+	const getPayload = () => {
+		let itemDetails = []
+		Object.keys(state).forEach(key => {
+			if (state[key] && key !== 'reasonOfOut') {
+				itemDetails.push({
+					itemId: key,
+					weight: state[key]
+				})
+			}
+		})
+		const payload = {
+			itemIds: [...itemDetails],
+			customerId: lotDetail.customerId,
+			lotNo: lotDetail.lotNo,
+			quantity: itemDetails.length,
+			reasonOfOut: state.reasonOfOut,
+			soldBusinessManId: supplier
+		}
+		return payload
+	}
+	const handleSubmit = () => {
+		const payload = getPayload()
+		if (payload.quantity && payload.reasonOfOut && payload.supplier) {
+			outInventoryApi(payload).then(() => {
+				openModal(null)
+				setState({})
+				toast.success("Inventory out successfully")
+			}).catch(err => toast.error((err && err.message) || 'Something went wrong.'))
+		} else {
+			toast.error('Please fill required fields.')
+		}
+
+
+
+	}
+	const handleOnBlur = (itemId, value) => {
+		setState({ ...state, [itemId]: value })
+	}
+
 	useEffect(() => {
 		const storeId = sessionStorage.getItem('storeId').trim()
 		getLotsDetailApi(storeId).then((res) => {
@@ -78,8 +157,14 @@ const Inventory = () => {
 											<div className='mat-menu-panel mat-elevation-z4'>
 												<div className='mat-menu-content'>
 													<div>
-														<button className='mat-menu-item'>
-															<i className="" style={{ marginRight: "10px" }}></i>Sold
+														<button className='mat-menu-item' onClick={() => {
+															openModal("soldType")
+															setCustomerDetail({ customerId: item.customerId, lotNo: lot.lotNo })
+														}}>
+															<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
+														</button>
+														<button className='mat-menu-item' onClick={() => openModal("lot-detail")}>
+															<i className="" style={{ marginRight: "10px" }} ></i>Sold
 														</button>
 													</div>
 												</div>
@@ -94,6 +179,70 @@ const Inventory = () => {
 
 			</div>
 		</div>
+		{currentModal === "lot-detail" && <Modal show onHide={() => openModal(null)}>
+			<Modal.Header closeButton>
+				<Modal.Title>Item in Lots</Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				<Table striped="columns" bordered>
+					<thead>
+						<tr>
+							<th>Item No</th>
+							<th>Product In Id</th>
+							<th>Product Out Id</th>
+							<th>Weight</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						{lotDetail.itemDetails.map((item, i) => {
+							return (<tr>
+								<td>{item.itemNo}</td>
+								<th>{item.productInId || ''}</th>
+								<td>{item.productOutId === 'null' ? '' : item.productOutId}</td>
+								<td>
+									<input type='number' name={`weight${item.id}`} value={item.weight}
+										disabled={item.weight}
+										onBlur={(e) => handleOnBlur(item.id, e.target.value)} />
+								</td>
+							</tr>)
+						})}
+					</tbody>
+				</Table>
+				<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+					<Form.Label>Sold Out Supplier</Form.Label>
+					<Form.Control
+						as="select"
+						aria-label="Default select example"
+						onChange={(e) => handleBlur(e.target.value)}>
+						<option>Select Supplier</option>
+						{/* {getRooms()} */}
+					</Form.Control>
+				</Form.Group>
+
+				<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+					<Form.Label>Reason of out</Form.Label>
+					<Form.Control
+						type="text"
+						placeholder="Enter reason"
+						name="reasonOfOut"
+						onBlur={(e) => handleOnBlur(e.target.name, e.target.value)}
+					/>
+				</Form.Group>
+			</Modal.Body>
+			<Modal.Footer>
+				<Button variant="secondary" onClick={() => openModal(null)}>
+					Close
+				</Button>
+				<Button variant="primary" onClick={() => handleSubmit()}>
+					Sold Out
+				</Button>
+			</Modal.Footer>
+		</Modal>
+		}
+		{currentModal === "soldType" &&
+			<SwitchSoldType customerDetail={customerDetail} openModal={() => openModal(null)} />
+		}
 	</>);
 }
 
