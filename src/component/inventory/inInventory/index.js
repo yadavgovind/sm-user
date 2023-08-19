@@ -162,15 +162,15 @@ const Inventory = () => {
 													<div>
 														<button className='mat-menu-item' onClick={() => {
 															openModal("soldType")
-															setCustomerDetail({ customerId: item.customerId, lotNo: lot.lotNo })
+															setCustomerDetail({ customerId: item.customerId, lotNo: lot.lotNo ,availableQuantity: lot.availableQuantity})
 														}}>
-															<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
+															<i className="fa-solid fa-pencil" style={{ marginRight: "10px" }}></i>sold
 														</button>
-														<button className='mat-menu-item' onClick={() => {
+														<button className='far fa fa-eye' onClick={() => {
 															openModal("lot-detail")
 															setLotDetail(lot)
 														}}>
-															<i className="" style={{ marginRight: "10px" }} ></i>Sold
+															<i className="" style={{ marginRight: "10px" }} ></i>view/weight
 														</button>
 													</div>
 												</div>

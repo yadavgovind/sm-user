@@ -119,8 +119,9 @@ export const addLoan = async (payload) => {
 }
 
 export const soldSchedule = async (payload) => {
+	console.log("Payload"+payload);
 	try {
-		const response = await axios.post(`${BASE_API_URL}soldSchedule`, payload, header);
+		const response = await axios.post(`${BASE_API_URL}soldSchedule`, payload, headerWithAuthorization());
 		return response
 	} catch (err) {
 		throw err

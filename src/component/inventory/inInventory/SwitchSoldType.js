@@ -6,7 +6,8 @@ import Form from 'react-bootstrap/Form';
 import { soldScheduleApi } from "./handler";
 
 export default function SwitchSoldType({ openModal, customerDetail }) {
-	const [state, setState] = useState({ checked: false })
+	const [state, setState] = useState({ checked: true })
+
 
 	const handleChange = (checked, value) => {
 		if (checked === 'soldQuantity') {
@@ -74,7 +75,9 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 							>
 								Full
 							</div>
+
 						}
+
 						uncheckedHandleIcon={
 							<div
 								style={{
@@ -109,7 +112,7 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 				{!state.checked && <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 					<Form.Label>Sold Quantity</Form.Label>
 					<Form.Control
-						type="text"
+						type="number"
 						placeholder="Quantity"
 						name="soldQuantity"
 						onChange={(e) => handleChange(e.target.name, e.target.value)}
