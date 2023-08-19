@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import { Table } from 'react-bootstrap';
-// import AddCustomer from './AddCustomer';
+import AddCustomer from './AddCustomer';
 // import history from '../../store/history'
 import './index.css'
 import { getCustomerApi, parseJwt } from './handler';
@@ -17,6 +17,8 @@ const Customer = () => {
 	const [currentModal, openModal] = useState(null);
 	const [productType, setProductType] = useState([])
 	const [customerInfo, setCustomerInfo] = useState({})
+	const [customerDetail, setCustomer] = useState({})
+
 
 	const [lotsList, setLOtsList] = useState([])
 	const [rooms, setRoom] = useState([])
@@ -98,6 +100,9 @@ const Customer = () => {
 								padding: '1px',
 								overflow: 'hidden',
 							}}>
+								<div className='form-group me-3' style={{ float: 'left' }}>
+									<AddCustomer setCustomer={setCustomer} />
+								</div>
 								<div className='form-group me-3' style={{ float: 'right' }}>
 									<input className='mat-input-element mat-form-field-autofill-control
 									 form-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored'
