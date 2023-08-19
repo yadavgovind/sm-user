@@ -6,19 +6,26 @@ import Form from 'react-bootstrap/Form';
 import { soldScheduleApi } from "./handler";
 
 export default function SwitchSoldType({ openModal, customerDetail }) {
-	const [state, setState] = useState({ checked: false })
+	const [state, setState] = useState({ checked: true })
 
-	const handleChange = (checked) => {
-		setState({ checked })
+ 
+	const handleChange = (checked, value) => {
+		if (checked === 'soldQuantity') {
+			setState({ ...state, 'soldQuantity': value })
+		} else {
+			setState({ ...state, checked })
+		}
 	}
 	const handleSubmit = (checked) => {
 		soldScheduleApi({
 			customerId: customerDetail.customerId,
 			lotNo: customerDetail.lotNo,
 			storeId: sessionStorage.getItem('storeId').trim(),
-			soldType: state.checked ? 'Full' : 'Partial'
+			soldType: state.checked ? 'Full' : 'Partial',
+			soldQuantity:state.checked ? customerDetail.availableQuantity: state.soldQuantity,
 		}).then((res) => {
 			console.log(">>>>res", res)
+			openModal(null)
 		}).catch((err) => {
 			console.log(err)
 		})
@@ -68,8 +75,10 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 								}}
 							>
 								Full
-							</div>
+							</div> 
+							 
 						}
+						
 						uncheckedHandleIcon={
 							<div
 								style={{
@@ -101,6 +110,16 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 						id="small-radius-switch"
 					/>
 				</label>
+				{!state.checked && <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+					<Form.Label>Sold Quantity</Form.Label>
+					<Form.Control
+						type="number"
+						placeholder="Quantity"
+						name="soldQuantity"
+						onChange={(e) => handleChange(e.target.name, e.target.value)}
+
+					/>
+				</Form.Group>}
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={() => openModal(null)}>
