@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
-import { getLotsDetailApi, getProductTypeApi, handleBlur, outInventoryApi } from './handler';
+import { getLotsDetailApi, getProductTypeApi, getSuppliersApi, outInventoryApi } from './handler';
 
 import { getRoomDetailApi } from '../../room/handler';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from "react-toastify";
-import { getCustomerApi } from '../../customer/handler';
 import SwitchSoldType from './SwitchSoldType';
 const Inventory = () => {
 	const [productType, setProductType] = useState([])
@@ -24,6 +23,8 @@ const Inventory = () => {
 	const [lotDetail, setLotDetail] = useState([])
 
 	const [state, setState] = useState({})
+	const [supplierId, setSupplierId] = useState('')
+
 
 	useEffect(() => {
 		const storeId = sessionStorage.getItem('storeId').trim()
@@ -34,22 +35,22 @@ const Inventory = () => {
 		}).catch((err) => {
 			console.log(err)
 		})
-		getCustomerApi(storeId)
-			.then((customerList) => {
-				let arr = []
-				customerList.forEach(item => {
-					if (item.roleType === 'supplier') {
-						arr.push(item)
-					}
-				})
-				setSupplier(arr)
-			}).catch(err => console.log(err))
+		// getCustomerApi(storeId)
+		// 	.then((customerList) => {
+		// 		let arr = []
+		// 		customerList.forEach(item => {
+		// 			if (item.roleType === 'supplier') {
+		// 				arr.push(item)
+		// 			}
+		// 		})
+		// 		setSupplier(arr)
+		// 	}).catch(err => console.log(err))
 	}, [searchUser])
 
-	const handleLotClick = (detail, modal) => {
-		setLotDetail(detail)
-		modal === 'view-detail' ? openModal('view-detail') : openModal('lot-detail')
-	}
+	// const handleLotClick = (detail, modal) => {
+	// 	setLotDetail(detail)
+	// 	modal === 'view-detail' ? openModal('view-detail') : openModal('lot-detail')
+	// }
 	const getPayload = () => {
 		let itemDetails = []
 		Object.keys(state).forEach(key => {
@@ -62,11 +63,11 @@ const Inventory = () => {
 		})
 		const payload = {
 			itemIds: [...itemDetails],
-			customerId: lotDetail.customerId,
+			customerId: customerDetail.customerId,
 			lotNo: lotDetail.lotNo,
 			quantity: itemDetails.length,
 			reasonOfOut: state.reasonOfOut,
-			soldBusinessManId: supplier
+			soldBusinessManId: supplierId
 		}
 		return payload
 	}
@@ -82,9 +83,6 @@ const Inventory = () => {
 		} else {
 			toast.error('Please fill required fields.')
 		}
-
-
-
 	}
 	const handleOnBlur = (itemId, value) => {
 		setState({ ...state, [itemId]: value })
@@ -108,7 +106,20 @@ const Inventory = () => {
 			roomDetail.map(item => roomArr.push(item.roomNo))
 			setRoom(roomArr)
 		}).catch(err => console.log(err))
+
+		getSuppliersApi(storeId).then((res) => {
+			setSupplier(res)
+		}).catch(err => console.log(err))
 	}, [])
+
+	const getSupplier = () => {
+		let options = []
+		supplier.length && supplier.map((item, i) => {
+			return options.push(<option key={i} value={item.id}>{item.firstName}</option>)
+		})
+		return options
+	}
+
 	return (<>
 		<h4>Lots In Detail</h4>
 
@@ -162,15 +173,16 @@ const Inventory = () => {
 													<div>
 														<button className='mat-menu-item' onClick={() => {
 															openModal("soldType")
-															setCustomerDetail({ customerId: item.customerId, lotNo: lot.lotNo ,availableQuantity: lot.availableQuantity})
+															setCustomerDetail({ customerId: item.customerId, lotNo: lot.lotNo })
 														}}>
-															<i className="fa-solid fa-pencil" style={{ marginRight: "10px" }}></i>sold
+															<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
 														</button>
-														<button className='far fa fa-eye' onClick={() => {
+														<button className='mat-menu-item' onClick={() => {
 															openModal("lot-detail")
+															setCustomerDetail({ customerId: item.customerId })
 															setLotDetail(lot)
 														}}>
-															<i className="" style={{ marginRight: "10px" }} ></i>view/weight
+															<i className="" style={{ marginRight: "10px" }} ></i>Sold
 														</button>
 													</div>
 												</div>
@@ -220,9 +232,9 @@ const Inventory = () => {
 					<Form.Control
 						as="select"
 						aria-label="Default select example"
-						onChange={(e) => handleBlur(e.target.value)}>
+						onChange={(e) => setSupplierId(e.target.value)}>
 						<option>Select Supplier</option>
-						{/* {getRooms()} */}
+						{getSupplier()}
 					</Form.Control>
 				</Form.Group>
 

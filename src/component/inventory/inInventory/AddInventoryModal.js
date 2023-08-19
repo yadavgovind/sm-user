@@ -5,8 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import { addInventoryApi, getAvailableLotsApi, handleBlur, handleCustomerSubmit, handleOnChangeCustomer } from './handler';
 import { toast } from 'react-toastify';
 
-function AddInventoryModal({ productType, roomsArr, currentModal, openModal }) {
-	const [customerDetail, setCustomerDetail] = useState({})
+function AddInventoryModal({ productType, roomsArr, currentModal, openModal, customerDetail }) {
+	// const [customerDetail, setCustomerDetail] = useState({})
 	const [lotsOption, setLotOption] = useState([]);
 	const [availableQuantity, setAvailableQuantity] = useState(0);
 	const [lotArr, setLotsArr] = useState([]);
@@ -82,7 +82,7 @@ function AddInventoryModal({ productType, roomsArr, currentModal, openModal }) {
 
 	const getPayload = (state) => {
 		let payload = {
-			customerId: state.id || '',
+			customerId: customerDetail.id || '',
 			currentQuantity: state.currentQuantity,
 			lotNo: state.lotNo,
 			productId: state.productId,

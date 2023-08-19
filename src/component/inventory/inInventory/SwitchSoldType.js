@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Switch from "react-switch";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { soldScheduleApi } from "./handler";
+import { getSuppliersApi, soldScheduleApi } from "./handler";
 
 export default function SwitchSoldType({ openModal, customerDetail }) {
 	const [state, setState] = useState({ checked: true })
-
+	const [supplier, setSupplier] = useState({})
 
 	const handleChange = (checked, value) => {
-		if (checked === 'soldQuantity' || checked === 'amount') {
+		if (checked === 'soldQuantity' || checked === 'amount' || checked === 'soldBussinessManId') {
 			setState({ ...state, [checked]: value })
 		} else {
 			setState({ ...state, checked })
@@ -23,12 +23,27 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 			storeId: sessionStorage.getItem('storeId').trim(),
 			soldType: state.checked ? 'Full' : 'Partial',
 			soldQuantity: state.soldQuantity,
-			amount: state.amount
+			amount: state.amount,
+			soldBusinessManId: state.soldBussinessManId
 		}).then((res) => {
 			openModal(null)
 		}).catch((err) => {
 			console.log(err)
 		})
+	}
+	useEffect(() => {
+		const storeId = sessionStorage.getItem('storeId').trim()
+		getSuppliersApi(storeId).then((res) => {
+			setSupplier(res)
+		}).catch(err => console.log(err))
+	}, [])
+
+	const getSupplier = () => {
+		let options = []
+		supplier.length && supplier.map((item, i) => {
+			return options.push(<option key={i} value={item.id}>{item.firstName}</option>)
+		})
+		return options
 	}
 	return (
 		<Modal show onHide={openModal}>
@@ -129,6 +144,16 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 							onChange={(e) => handleChange(e.target.name, e.target.value)}
 
 						/>
+					</Form.Group>
+					<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+						<Form.Label>Sold Out Supplier</Form.Label>
+						<Form.Control
+							as="select"
+							aria-label="Default select example"
+							onChange={(e) => handleChange('soldBussinessManId', e.target.value)}>
+							<option>Select Supplier</option>
+							{getSupplier()}
+						</Form.Control>
 					</Form.Group>
 				</>
 				}

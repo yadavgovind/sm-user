@@ -1,6 +1,6 @@
 import {
 	addInventory, getAvailableLots, getCustomerDetail,
-	getLotsDetail, getProductType, outInventory, soldSchedule
+	getLotsDetail, getProductType, getSuppliers, outInventory, soldSchedule
 } from "../../../service/api"
 import { toast } from "react-toastify";
 import { addCustomerApi } from "../../customer/handler";
@@ -100,6 +100,7 @@ export const getSupplier = (value, setState) => {
 	})
 }
 
+
 export const outInventoryApi = async (payload) => {
 	try {
 		await outInventory(payload)
@@ -113,5 +114,16 @@ export const soldScheduleApi = async (payload) => {
 		await soldSchedule(payload)
 	} catch (err) {
 		console.log(err)
+	}
+}
+
+export const getSuppliersApi = async (storeId) => {
+	try {
+		const response = await getSuppliers(storeId)
+		if (response && response.data) {
+			return response.data
+		}
+	} catch (err) {
+		throw err
 	}
 }

@@ -187,6 +187,7 @@ const Customer = () => {
 		<AddInventoryModal productType={productType} roomsArr={rooms}
 			currentModal={currentModal}
 			openModal={openModal}
+			customerDetail={customerInfo}
 		/>
 		<Loan
 			currentModal={currentModal}

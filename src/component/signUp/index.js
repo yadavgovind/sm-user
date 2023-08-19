@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../App.css';
 
+import { useNavigate } from "react-router-dom";
 import { SIGN_IN } from '../../constant/routes';
 import { postSignUpApi } from './handler';
 
@@ -32,10 +33,14 @@ const ValidationSchema = Yup.object().shape({
 });
 function SignUp() {
   const [isSubmit, setSubmit] = useState(false)
+  const navigate = useNavigate();
+
   const submitForm = (values) => {
     if (values.roomDetails.length) {
       setSubmit(true)
       postSignUpApi(values, setSubmit)
+      navigate("/")
+      window.location.reload()
     }
   }
 
