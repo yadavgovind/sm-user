@@ -10,8 +10,8 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 
 
 	const handleChange = (checked, value) => {
-		if (checked === 'soldQuantity') {
-			setState({ ...state, 'soldQuantity': value })
+		if (checked === 'soldQuantity' || checked === 'amount') {
+			setState({ ...state, [checked]: value })
 		} else {
 			setState({ ...state, checked })
 		}
@@ -22,7 +22,8 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 			lotNo: customerDetail.lotNo,
 			storeId: sessionStorage.getItem('storeId').trim(),
 			soldType: state.checked ? 'Full' : 'Partial',
-			soldQuantity: state.soldQuantity
+			soldQuantity: state.soldQuantity,
+			amount: state.amount
 		}).then((res) => {
 			openModal(null)
 		}).catch((err) => {
@@ -109,7 +110,7 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 						id="small-radius-switch"
 					/>
 				</label>
-				{!state.checked && <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+				{!state.checked && <><Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 					<Form.Label>Sold Quantity</Form.Label>
 					<Form.Control
 						type="number"
@@ -118,7 +119,19 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 						onChange={(e) => handleChange(e.target.name, e.target.value)}
 
 					/>
-				</Form.Group>}
+				</Form.Group>
+					<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+						<Form.Label>Amount</Form.Label>
+						<Form.Control
+							type="number"
+							placeholder="Amount"
+							name="amount"
+							onChange={(e) => handleChange(e.target.name, e.target.value)}
+
+						/>
+					</Form.Group>
+				</>
+				}
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={() => openModal(null)}>
