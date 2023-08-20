@@ -135,3 +135,13 @@ export const getSuppliers = async (storeId) => {
 		throw err
 	}
 }
+
+export const getLoanDetail = async (storeId) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}customerloan/storeId/${storeId}`, headerWithAuthorization(storeId));
+		return response
+	} catch (err) {
+		throw err
+	}
+}
+

@@ -170,6 +170,15 @@ const Customer = () => {
 																	<i className="far fa-edit" style={{ marginRight: "10px" }}></i>Loan
 																</button>
 															</div>
+															<div>
+																<button className='mat-menu-item' onClick={() => {
+																	sessionStorage.setItem('customerId', item.id)
+																	navigate("#loan-detail")
+																	window.location.reload()
+																}}>
+																	<i className="far fa-edit" style={{ marginRight: "10px" }}></i>Loan detail
+																</button>
+															</div>
 														</div>
 													</div>
 												</div>}
@@ -179,7 +188,6 @@ const Customer = () => {
 
 								</tbody>
 							</table>
-
 						</div>
 					</div>
 				</div>
