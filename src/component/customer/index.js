@@ -126,7 +126,7 @@ const Customer = () => {
 											<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.address || 'N/A'}</td>
 											<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.vehicleNumber}</td>
 											<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox' onClick={() => toggleButton('')}>{item.roleType || 'N/A'}</td>
-											<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>
+											{item.roleType !== 'supplier' ? <td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>
 												<div className='btn-group dropleft' style={{ float: 'right' }}>
 													<button className='mat-menu-trigger btn btn3bot' onClick={() => toggleButton(i)}>
 														<i className='fas fa-ellipsis-v'>
@@ -174,6 +174,9 @@ const Customer = () => {
 													</div>
 												</div>}
 											</td>
+												:
+												<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'></td>
+											}
 										</tr>)
 									})}
 

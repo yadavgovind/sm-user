@@ -6,9 +6,11 @@ import { addLoanApi } from './handle';
 import { toast } from "react-toastify";
 function Loan({ currentModal, openModal, customerDetail }) {
 	const [state, setState] = useState({
-		amount: ''
+		amount: '',
+		countOfPackets: '',
+		loanType: 'packets'
 	})
-	const { amount, loanType } = state;
+	const { amount, loanType, rateOfInterest, countOfPackets } = state;
 
 	const handleChange = (loanType) => {
 		setState({ ...state, loanType })
@@ -23,6 +25,8 @@ function Loan({ currentModal, openModal, customerDetail }) {
 			amount,
 			loanType,
 			customerId: customerDetail.id,
+			rateOfInterest,
+			countOfPackets,
 			storeId: sessionStorage.getItem('storeId').trim()
 		}
 	}
@@ -54,18 +58,39 @@ function Loan({ currentModal, openModal, customerDetail }) {
 								as="select"
 								aria-label="Default select example"
 								onChange={(e) => handleChange(e.target.value)}>
-								<option>Full</option>
-								<option>Partial</option>
+								<option value="packets">Packets</option>
+								<option value="amount">Amount</option>
 
 							</Form.Control>
 						</Form.Group>
+						{loanType === 'amount' && <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
+							<Form.Label>Count of Packets</Form.Label>
+							<Form.Control
+								type="text"
+								name='countOfPackets'
+								placeholder="Count Of Packets"
+								value={countOfPackets}
+								onChange={(e) => handleOnChange(e.target.name, e.target.value)}
+							/>
+						</Form.Group>}
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
 							<Form.Label>Amount</Form.Label>
 							<Form.Control
 								type="text"
 								name='amount'
-								placeholder="amount"
+								placeholder="Amount"
 								value={amount}
+								onChange={(e) => handleOnChange(e.target.name, e.target.value)}
+							/>
+						</Form.Group>
+
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
+							<Form.Label>Rate of Interest</Form.Label>
+							<Form.Control
+								type="text"
+								name='rateOfInterest'
+								placeholder="Rate Of Interest"
+								value={rateOfInterest}
 								onChange={(e) => handleOnChange(e.target.name, e.target.value)}
 							/>
 						</Form.Group>

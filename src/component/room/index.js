@@ -15,14 +15,14 @@ const Room = () => {
 	return <div>
 		<h1>Rooms</h1>
 		{rooms.length ? rooms.map((item, index) => {
-			return <div className="container">
-				<h3>Room {item.roomNo}</h3>
+			return <div className="container border">
+				<div className='hd-main'><div className='room-no'><h3>{item.roomNo}</h3></div></div>
 				{
 					item.floorDetails.map((floor, i) => {
 						return (<div className="row">
 							{
 								floor.columnDetails.map((col, index) => {
-									return (<div className="col grid " key={`${i}${index}`}>
+									return (<div className="col grid br-radius" key={`${i}${index}`}>
 										{`${floor.floorNo} of ${col.columnNo}`}
 									</div>)
 								})
