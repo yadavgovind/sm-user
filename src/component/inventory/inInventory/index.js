@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from "react-toastify";
 import SwitchSoldType from './SwitchSoldType';
+import history from '../../../store/history';
 const Inventory = () => {
 	const [lotsList, setLOtsList] = useState([])
 	const [currentModal, openModal] = useState(null)
@@ -148,6 +149,12 @@ const Inventory = () => {
 								padding: '1px',
 								overflow: 'hidden',
 							}}>
+								<div className='form-group me-3' style={{ float: 'left', marginLeft: "14px" }}>
+									<Button type='' variant="secondary" onClick={() => {
+										history.push('#customer')
+										window.location.reload()
+									}}>Back</Button>
+								</div>
 								<div className='form-group me-3' style={{ float: 'right' }}>
 									<input className='mat-input-element mat-form-field-autofill-control
 									 form-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored'

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getLoanDetailApi } from './handle';
+import { Button } from 'react-bootstrap';
+import history from '../../store/history';
 const LoanDetail = () => {
 	const [loanDetail, setLoanDetail] = useState([])
 	const lotHeading = ['#', 'Customer Name', 'Loan Type', 'Rate of Interest', 'Amount', '']
@@ -78,6 +80,12 @@ const LoanDetail = () => {
 								padding: '1px',
 								overflow: 'hidden',
 							}}>
+								<div className='form-group me-3' style={{ float: 'left', marginLeft: "14px" }}>
+									<Button type='' variant="secondary" onClick={() => {
+										history.push('#customer')
+										window.location.reload()
+									}}>Back</Button>
+								</div>
 								<div className='form-group me-3' style={{ float: 'right' }}>
 									<input className='mat-input-element mat-form-field-autofill-control
 									 form-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored'

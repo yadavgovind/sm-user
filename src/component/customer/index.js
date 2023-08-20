@@ -89,7 +89,7 @@ const Customer = () => {
 								padding: '1px',
 								overflow: 'hidden',
 							}}>
-								<div className='form-group me-3' style={{ float: 'left' }}>
+								<div className='form-group me-3' style={{ float: 'left', marginLeft: "14px" }}>
 									<AddCustomer
 									// setCustomer={setCustomer}
 									/>
