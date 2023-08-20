@@ -37,7 +37,7 @@ const data = {
 // 		borderWidth: 1
 export default function barGraph() {
 	return (
-		<div class="chart-container" style={{ position: 'relative', height: '40vh', width: '80vw' }}>
+		<div className="chart-container" style={{ position: 'relative', height: '40vh', width: '80vw' }}>
 			<Bar options={option} data={data}
 
 			/>

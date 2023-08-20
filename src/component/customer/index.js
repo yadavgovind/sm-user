@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-// import { Table } from 'react-bootstrap';
 import AddCustomer from './AddCustomer';
-// import history from '../../store/history'
 import './index.css'
 import { getCustomerApi, parseJwt } from './handler';
 import './table.css'
-import { getLotsDetailApi, getProductTypeApi } from '../inventory/inInventory/handler';
+import { getProductTypeApi } from '../inventory/inInventory/handler';
 import { getRoomDetailApi } from '../room/handler';
 import AddInventoryModal from '../inventory/inInventory/AddInventoryModal';
 import { useNavigate } from "react-router-dom";
@@ -17,16 +15,10 @@ const Customer = () => {
 	const [currentModal, openModal] = useState(null);
 	const [productType, setProductType] = useState([])
 	const [customerInfo, setCustomerInfo] = useState({})
-	const [customerDetail, setCustomer] = useState({})
-
-
-	const [lotsList, setLOtsList] = useState([])
 	const [rooms, setRoom] = useState([])
 	const navigate = useNavigate();
 
 	const theading = ['#', 'Name', 'Store', 'Room No', 'Session', 'Phone', 'Email', 'Address', 'Vehicle', 'Role Type', '']
-
-	const lotHeading = ['#', 'Room No', 'Lot Number', 'Customer Id', 'Quantity', 'Product']
 
 	useEffect(() => {
 		const detail = parseJwt(sessionStorage.getItem('token'))
@@ -35,12 +27,6 @@ const Customer = () => {
 		getCustomerApi(storeId).then((customerList) => {
 			setState(customerList)
 		}).catch(err => console.log(err))
-		getLotsDetailApi(storeId).then((res) => {
-			console.log(">>>>res", res)
-			setLOtsList(res)
-		}).catch((err) => {
-			console.log(err)
-		})
 		getProductTypeApi().then((res) => {
 			setProductType(res)
 		}).catch((err) => {
@@ -68,6 +54,7 @@ const Customer = () => {
 											<li
 												className="nav-item">
 												<a
+													href='/store'
 													className="nav-link">
 													<span className="common-stepper-counter">1</span>
 													<span>
@@ -76,8 +63,10 @@ const Customer = () => {
 												</a>
 											</li>
 											<li
+
 												className="nav-item">
 												<a
+													href='/store#customer'
 													className="nav-link">
 													<span className="common-stepper-counter">2</span>
 													<span>
@@ -101,7 +90,9 @@ const Customer = () => {
 								overflow: 'hidden',
 							}}>
 								<div className='form-group me-3' style={{ float: 'left' }}>
-									<AddCustomer setCustomer={setCustomer} />
+									<AddCustomer
+									// setCustomer={setCustomer}
+									/>
 								</div>
 								<div className='form-group me-3' style={{ float: 'right' }}>
 									<input className='mat-input-element mat-form-field-autofill-control
@@ -114,8 +105,8 @@ const Customer = () => {
 							<table className='mat-table cdk-table mat-sort example-table w-100'>
 								<thead>
 									<tr className='mat-header-row cdk-header-row'>
-										{theading.map(heading => {
-											return (<th className='mat-header-cell cdk-header-cell cdk-column-checkbox mat-column-checkbox'>
+										{theading.map((heading, i) => {
+											return (<th key={i} className='mat-header-cell cdk-header-cell cdk-column-checkbox mat-column-checkbox'>
 												{heading}
 											</th>
 											)
@@ -124,7 +115,7 @@ const Customer = () => {
 								</thead>
 								<tbody>
 									{state.map((item, i) => {
-										return (<tr className='mat-row cdk-row'>
+										return (<tr className='mat-row cdk-row' key={i}>
 											<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{i + 1}</td>
 											<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.firstName || 'N/A'}</td>
 											<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.store || 'N/A'}</td>

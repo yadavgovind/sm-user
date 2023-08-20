@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { addCustomerApi } from './handler';
 import { tokenDecode } from '../../constant/api';
 
-function AddCustomer({ setCustomer }) {
+function AddCustomer() {
 	const [show, setShow] = useState(false);
 	const [state, setState] = useState({})
 
@@ -26,7 +26,6 @@ function AddCustomer({ setCustomer }) {
 		let detail = tokenDecode()
 		const payload = { ...state, 'storeId': detail.storeId }
 		addCustomerApi(payload, sessionStorage.getItem('token')).then((res) => {
-			setCustomer(res)
 			setShow(false)
 		}).catch((err) => {
 			toast.error(err.message)
@@ -37,7 +36,7 @@ function AddCustomer({ setCustomer }) {
 	return (
 		<>
 			<Button variant="primary" onClick={handleShow}>
-				<i class="fa-solid fa-plus"></i> Add User
+				<i className="fa-solid fa-plus"></i> Add User
 			</Button>
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>

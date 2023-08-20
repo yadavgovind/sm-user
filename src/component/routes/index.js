@@ -8,6 +8,8 @@ import './index.css'
 import OutInventory from '../inventory/outInventory';
 import Dashboard from '../dashboard'
 import '../dashboard/index.css'
+import './table.css'
+
 import LoanDetail from '../loan/LoanDetail';
 const handleRoutes = (hash) => {
 	switch (hash) {
@@ -48,7 +50,7 @@ const StoreRoutes = () => {
 							<p className='text1 text-color'>
 								Dashboard
 							</p>
-							<h2 class="text-color text1 text1a">
+							<h2 className="text-color text1 text1a">
 								Welcome
 							</h2>
 						</div>

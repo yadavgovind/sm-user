@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
-import { getLotsDetailApi, getProductTypeApi, getSuppliersApi, outInventoryApi } from './handler';
+import { getLotsDetailApi, getSuppliersApi, outInventoryApi } from './handler';
 
 
 import Modal from 'react-bootstrap/Modal';
@@ -14,7 +14,7 @@ const Inventory = () => {
 	const lotHeading = ['#', 'Room No', 'Lot Number', 'Customer Name', 'Total Quantity', 'Available Quantity', 'Product', '']
 	const [showOption, toggleButton] = useState('')
 	const [customerDetail, setCustomerDetail] = useState({})
-	const [searchUser, setSearchUser] = useState('')
+	// const [searchUser, setSearchUser] = useState('')
 	const [supplier, setSupplier] = useState({})
 	const [lotDetail, setLotDetail] = useState([])
 	const [state, setState] = useState({})
@@ -22,10 +22,10 @@ const Inventory = () => {
 
 	const customerId = sessionStorage.getItem('customerId')
 
-	const getLots = (userId) => {
+	const getLots = () => {
 		const storeId = sessionStorage.getItem('storeId').trim()
-		getLotsDetailApi(storeId, userId).then((res) => {
-			let lot = res.find(item => item.customerId == customerId)
+		getLotsDetailApi(storeId, customerId).then((res) => {
+			let lot = res.find(item => item.customerId === Number(customerId))
 			lot && setLOtsList([lot])
 		}).catch((err) => {
 			console.log(err)
@@ -33,9 +33,8 @@ const Inventory = () => {
 	}
 
 	useEffect(() => {
-		const userId = searchUser ? searchUser : customerId
-		getLots(userId)
-	}, [searchUser])
+		getLots()
+	})
 	useEffect(() => {
 		const storeId = sessionStorage.getItem('storeId').trim()
 		getSuppliersApi(storeId).then((res) => {
@@ -92,82 +91,133 @@ const Inventory = () => {
 	}
 
 	return (<>
-		<h4>Lots In Detail</h4>
+		<h4>Lots</h4>
+		<div className="row">
+			<div className="col-sm-12">
+				<div className="cp-rightsection">
+					<div className="right-section-tab">
+						<div className="right-nav" id="stpperCall">
+							<nav className="navbar navbar-expand-lg navbar-light mb-1">
+								<div className="nav_inner">
+									<div className="collapse navbar-collapse common-stepper">
+										<ul className="navbar-nav">
+											<li
+												className="nav-item">
+												<a
+													href='/store'
+													className="nav-link">
+													<span className="common-stepper-counter">1</span>
+													<span>
+														Dashboard
+													</span>
+												</a>
+											</li>
+											<li
 
-		<div className='white-bg'>
-			<div className='example-table-container'>
-				<div className='mb-2 mt-2' style={{
-					height: 'auto',
-					padding: '1px',
-					overflow: 'hidden',
-				}}>
-					<div className='form-group me-3' style={{ float: 'right' }}>
-						<input className='mat-input-element mat-form-field-autofill-control
-									 form-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored'
-							style={{ height: '43px' }}
-							placeholder='Search'
-						/>
+												className="nav-item">
+												<a
+													href='/store#customer'
+													className="nav-link">
+													<span className="common-stepper-counter">2</span>
+													<span>
+														Customer
+													</span>
+												</a>
+											</li>
+											<li
+												className="nav-item">
+												<a
+													href='/store#in-inventory'
+													className="nav-link">
+													<span className="common-stepper-counter">3</span>
+													<span>
+														Lot
+													</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</nav>
+						</div>
 					</div>
-				</div>
-				<table className='mat-table cdk-table mat-sort example-table w-100'>
-					<thead>
-						<tr className='mat-header-row cdk-header-row'>
-							{lotHeading.map(heading => {
-								return (<th className='mat-header-cell cdk-header-cell cdk-column-checkbox mat-column-checkbox'>
-									{heading}
-								</th>
-								)
-							})}
-						</tr>
-					</thead>
-					<tbody>
-						{lotsList.length ? lotsList.map((item, i) => {
-							return item.lotDetails.map((lot => {
-								return (<tr className='mat-row cdk-row'>
-									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{i + 1}</td>
-									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.roomNo}</td>
-									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.lotNo}</td>
-									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.customerName}</td>
-									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.totalQuantity}</td>
-									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.availableQuantity}</td>
-									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox' onClick={() => toggleButton('')}>{`${lot.productType}(${lot.productSize})`}</td>
-									<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>
-										<div className='btn-group dropleft' style={{ float: 'right' }}>
-											<button className='mat-menu-trigger btn btn3bot' onClick={() => toggleButton(i)}>
-												<i className='fas fa-ellipsis-v'>
-												</i>
-											</button>
-										</div>
-										{i === showOption && <div className='cdk-overlay-pane'>
-											<div className='mat-menu-panel mat-elevation-z4'>
-												<div className='mat-menu-content'>
-													<div>
-														<button className='mat-menu-item' onClick={() => {
-															openModal("soldType")
-															setCustomerDetail({ customerId: item.customerId, lotNo: lot.lotNo })
-														}}>
-															<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
-														</button>
-														<button className='mat-menu-item' onClick={() => {
-															openModal("lot-detail")
-															setCustomerDetail({ customerId: item.customerId })
-															setLotDetail(lot)
-														}}>
-															<i className="" style={{ marginRight: "10px" }} ></i>Sold
+					<div className='white-bg'>
+						<div className='example-table-container'>
+							<div className='mb-2 mt-2' style={{
+								height: 'auto',
+								padding: '1px',
+								overflow: 'hidden',
+							}}>
+								<div className='form-group me-3' style={{ float: 'right' }}>
+									<input className='mat-input-element mat-form-field-autofill-control
+									 form-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored'
+										style={{ height: '43px' }}
+										placeholder='Search'
+									/>
+								</div>
+							</div>
+
+							<table className='mat-table cdk-table mat-sort example-table w-100'>
+								<thead>
+									<tr className='mat-header-row cdk-header-row'>
+										{lotHeading.map((heading, i) => {
+											return (<th key={i} className='mat-header-cell cdk-header-cell cdk-column-checkbox mat-column-checkbox'>
+												{heading}
+											</th>
+											)
+										})}
+									</tr>
+								</thead>
+								<tbody>
+									{lotsList.length ? lotsList.map((item, i) => {
+										return item.lotDetails.map((lot => {
+											return (<tr className='mat-row cdk-row' key={i}>
+												<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{i + 1}</td>
+												<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.roomNo}</td>
+												<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.lotNo}</td>
+												<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.customerName}</td>
+												<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.totalQuantity}</td>
+												<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.availableQuantity}</td>
+												<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox' onClick={() => toggleButton('')}>{`${lot.productType}(${lot.productSize})`}</td>
+												<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>
+													<div className='btn-group dropleft' style={{ float: 'right' }}>
+														<button className='mat-menu-trigger btn btn3bot' onClick={() => toggleButton(i)}>
+															<i className='fas fa-ellipsis-v'>
+															</i>
 														</button>
 													</div>
-												</div>
-											</div>
-										</div>}
-									</td>
-								</tr>)
-							}))
-						}) : ''}
-					</tbody>
-				</table>
-
+													{i === showOption && <div className='cdk-overlay-pane'>
+														<div className='mat-menu-panel mat-elevation-z4'>
+															<div className='mat-menu-content'>
+																<div>
+																	<button className='mat-menu-item' onClick={() => {
+																		openModal("soldType")
+																		setCustomerDetail({ customerId: item.customerId, lotNo: lot.lotNo })
+																	}}>
+																		<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
+																	</button>
+																	<button className='mat-menu-item' onClick={() => {
+																		openModal("lot-detail")
+																		setCustomerDetail({ customerId: item.customerId })
+																		setLotDetail(lot)
+																	}}>
+																		<i className="" style={{ marginRight: "10px" }} ></i>Sold
+																	</button>
+																</div>
+															</div>
+														</div>
+													</div>}
+												</td>
+											</tr>)
+										}))
+									}) : ''}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
+		</div >
 		{currentModal === "lot-detail" && <Modal show onHide={() => openModal(null)}>
 			<Modal.Header closeButton>
 				<Modal.Title>Item in Lots</Modal.Title>

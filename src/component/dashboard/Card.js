@@ -6,7 +6,7 @@ const Card = () => {
 				<div className='card-body'>
 					<div className='flex-block ht-75'>
 						<div>
-							<h3 class="text-color boldfive fs-16">Project Statistics</h3>
+							<h3 className="text-color boldfive fs-16">Project Statistics</h3>
 						</div>
 						<div className='select-box'>
 							<h3 className='fs-16'>Calender</h3>
