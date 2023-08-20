@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import history from '../../store/history';
-const TableView = ({ theading, showBackButton, backUrl, TableData }) => {
+import AddCustomer from '../customer/AddCustomer';
+const TableView = ({ theading, showBackButton, showAddCustomer, backUrl, TableData }) => {
 
 	return <div className='white-bg'>
 		<div className='example-table-container'>
@@ -15,6 +16,9 @@ const TableView = ({ theading, showBackButton, backUrl, TableData }) => {
 						history.push(backUrl)
 						window.location.reload()
 					}}>Back</Button>}
+
+					{showAddCustomer && <AddCustomer
+					/>}
 				</div>
 				<div className='form-group me-3' style={{ float: 'right' }}>
 					<input className='mat-input-element mat-form-field-autofill-control
