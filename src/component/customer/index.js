@@ -147,6 +147,7 @@ const Customer = () => {
 														<div className='mat-menu-content'>
 															<div>
 																<button className='mat-menu-item' onClick={() => {
+																	sessionStorage.setItem('customerId', item.id)
 																	navigate("#in-inventory")
 																	window.location.reload()
 																}}>

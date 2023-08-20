@@ -24,7 +24,7 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 			soldType: state.checked ? 'Full' : 'Partial',
 			soldQuantity: state.soldQuantity,
 			amount: state.amount,
-			soldBusinessManId: state.soldBussinessManId
+			supplierId: state.soldBussinessManId
 		}).then((res) => {
 			openModal(null)
 		}).catch((err) => {

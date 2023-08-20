@@ -2,55 +2,47 @@ import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { getLotsDetailApi, getProductTypeApi, getSuppliersApi, outInventoryApi } from './handler';
 
-import { getRoomDetailApi } from '../../room/handler';
+
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from "react-toastify";
 import SwitchSoldType from './SwitchSoldType';
 const Inventory = () => {
-	const [productType, setProductType] = useState([])
 	const [lotsList, setLOtsList] = useState([])
-	const [rooms, setRoom] = useState([])
 	const [currentModal, openModal] = useState(null)
 	const lotHeading = ['#', 'Room No', 'Lot Number', 'Customer Name', 'Total Quantity', 'Available Quantity', 'Product', '']
 	const [showOption, toggleButton] = useState('')
-
 	const [customerDetail, setCustomerDetail] = useState({})
-
 	const [searchUser, setSearchUser] = useState('')
 	const [supplier, setSupplier] = useState({})
 	const [lotDetail, setLotDetail] = useState([])
-
 	const [state, setState] = useState({})
 	const [supplierId, setSupplierId] = useState('')
 
+	const customerId = sessionStorage.getItem('customerId')
 
-	useEffect(() => {
+	const getLots = (userId) => {
 		const storeId = sessionStorage.getItem('storeId').trim()
-		console.log('searchUser', searchUser)
-		getLotsDetailApi(storeId, searchUser).then((res) => {
-			console.log(">>>>res", res)
-			setLOtsList(res)
+		getLotsDetailApi(storeId, userId).then((res) => {
+			let lot = res.find(item => item.customerId == customerId)
+			lot && setLOtsList([lot])
 		}).catch((err) => {
 			console.log(err)
 		})
-		// getCustomerApi(storeId)
-		// 	.then((customerList) => {
-		// 		let arr = []
-		// 		customerList.forEach(item => {
-		// 			if (item.roleType === 'supplier') {
-		// 				arr.push(item)
-		// 			}
-		// 		})
-		// 		setSupplier(arr)
-		// 	}).catch(err => console.log(err))
-	}, [searchUser])
+	}
 
-	// const handleLotClick = (detail, modal) => {
-	// 	setLotDetail(detail)
-	// 	modal === 'view-detail' ? openModal('view-detail') : openModal('lot-detail')
-	// }
+	useEffect(() => {
+		const userId = searchUser ? searchUser : customerId
+		getLots(userId)
+	}, [searchUser])
+	useEffect(() => {
+		const storeId = sessionStorage.getItem('storeId').trim()
+		getSuppliersApi(storeId).then((res) => {
+			setSupplier(res)
+		}).catch(err => console.log(err))
+	}, [])
+
 	const getPayload = () => {
 		let itemDetails = []
 		Object.keys(state).forEach(key => {
@@ -76,9 +68,11 @@ const Inventory = () => {
 		// if (payload.quantity && payload.reasonOfOut && payload.supplier) {
 		if (payload.quantity && payload.reasonOfOut) {
 			outInventoryApi(payload).then(() => {
+				getLots()
 				openModal(null)
 				setState({})
 				toast.success("Inventory out successfully")
+
 			}).catch(err => toast.error((err && err.message) || 'Something went wrong.'))
 		} else {
 			toast.error('Please fill required fields.')
@@ -88,29 +82,6 @@ const Inventory = () => {
 		setState({ ...state, [itemId]: value })
 	}
 
-	useEffect(() => {
-		const storeId = sessionStorage.getItem('storeId').trim()
-		getLotsDetailApi(storeId).then((res) => {
-			console.log(">>>>res", res)
-			setLOtsList(res)
-		}).catch((err) => {
-			console.log(err)
-		})
-		getProductTypeApi().then((res) => {
-			setProductType(res)
-		}).catch((err) => {
-			console.log(err)
-		})
-		getRoomDetailApi(storeId).then((roomDetail) => {
-			let roomArr = []
-			roomDetail.map(item => roomArr.push(item.roomNo))
-			setRoom(roomArr)
-		}).catch(err => console.log(err))
-
-		getSuppliersApi(storeId).then((res) => {
-			setSupplier(res)
-		}).catch(err => console.log(err))
-	}, [])
 
 	const getSupplier = () => {
 		let options = []
