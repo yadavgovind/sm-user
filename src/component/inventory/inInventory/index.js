@@ -35,7 +35,7 @@ const Inventory = () => {
 
 	useEffect(() => {
 		getLots()
-	})
+	}, [])
 	useEffect(() => {
 		const storeId = sessionStorage.getItem('storeId').trim()
 		getSuppliersApi(storeId).then((res) => {
