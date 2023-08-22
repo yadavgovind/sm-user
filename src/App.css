@@ -9,9 +9,13 @@
   justify-content: center;
 }
 .heading{
-  color: blue;
-  margin-top: 10px;
+  color: #004e98;
+
 }
 .error{
   color: red;
+}
+.bg-color{
+  background-color: #eff6fe;;
+  height: 725px;
 }

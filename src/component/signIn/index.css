@@ -1,0 +1,83 @@
+
+
+.container{
+    max-width: 960px;
+}
+
+.ss2-panel {
+    background: #fff 0 0 no-repeat padding-box;
+    box-shadow: 0 3px 6px #00000029;
+    border-radius: 20px;
+    opacity: 1;
+    z-index: 99;
+    position: relative;
+}
+.ss2-panel .ss2-left {
+    padding: 35px 30px;
+    margin-left: 20px;
+}
+
+.login-body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.login-body .ss2-heading {
+    margin-bottom: 11px;
+}
+.ss2-heading{
+    font-size: xx-large;
+}
+.login-body p.text, .ss2-link {
+    letter-spacing: 0;
+    color: #365068;
+}
+.login-body p.text {
+    font-size: medium;
+	font-weight: 600;
+	line-height: 27px;
+}
+.btn.ss2-btn-1 {
+    background: #0000 linear-gradient(180deg,#0e508d,#2659af) 0 0 no-repeat padding-box;
+    box-shadow: 0 3px 6px #00000029;
+    border-radius: 50px;
+    border: 0;
+    width: 100%;
+    text-transform: uppercase;
+    padding: 12px;
+    font-size: 16px;
+    float: right;
+	width: 40%;
+}
+.login-action {
+    margin-top: 10px;
+    height: auto;
+    overflow: hidden;
+}
+.login-action>p{
+    float: left;
+    margin-top: 10px;
+    font-size: 15px;
+	font-weight: 600;
+	line-height: 27px;
+}
+
+.ss2-panel .ss2-right {
+    padding: 35px 30px;
+    background-color: #004e98;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: 30%;
+    background-size: 85% auto;
+    border-radius: 0 20px 20px 0;
+    height: 100%;
+}
+.ss2-image-login {
+    display: flex;
+    justify-content: center;
+    /* padding: 80px 30px 0; */
+}
+
+.mr-50{
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
