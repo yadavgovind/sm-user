@@ -1,5 +1,5 @@
 import './index.css'
-const Card = () => {
+const Card = ({ dashboardCount }) => {
 	return (
 		<div className='main-content'>
 			<div className='card cardSpace'>
@@ -27,7 +27,7 @@ const Card = () => {
 										<div className='flex-block'>
 											<div className='mt-2'>
 												<label className='sub-label'>Count</label>
-												<div className='value'>0</div>
+												<div className='value'>{dashboardCount.customerCount || 0}</div>
 												<div className='trend'>0%</div>
 											</div>
 											<div className='mt-2'>
@@ -52,7 +52,7 @@ const Card = () => {
 										<div className='flex-block'>
 											<div className='mt-2'>
 												<label className='sub-label'>Count</label>
-												<div className='value'>0</div>
+												<div className='value'>{dashboardCount.totalProductIn || 0}</div>
 												<div className='trend'>0%</div>
 											</div>
 											<div className='mt-2'>
@@ -77,7 +77,7 @@ const Card = () => {
 										<div className='flex-block'>
 											<div className='mt-2'>
 												<label className='sub-label'>Count</label>
-												<div className='value'>0</div>
+												<div className='value'>{dashboardCount.totalProductOut || 0}</div>
 												<div className='trend'>0%</div>
 											</div>
 											<div className='mt-2'>
@@ -94,7 +94,7 @@ const Card = () => {
 									<div className='title' style={{ backgroundImage: "linear-gradient(40deg, rgb(41, 174, 57) 50%, rgb(62, 181, 77) 50%)" }}>
 										<div className='flex-block'>
 											<div className='label'>
-												Store Status
+												Loan Amount
 											</div>
 											<div className='icon'>
 											</div>
@@ -102,7 +102,7 @@ const Card = () => {
 										<div className='flex-block'>
 											<div className='mt-2'>
 												<label className='sub-label'>Count</label>
-												<div className='value'>0</div>
+												<div className='value'>{dashboardCount.loanAmount || 0}</div>
 												<div className='trend'>0%</div>
 											</div>
 											<div className='mt-2'>

@@ -145,3 +145,30 @@ export const getLoanDetail = async (storeId) => {
 	}
 }
 
+export const getDashboardCount = async (storeId) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}dashboardCount/session/2023`, headerWithAuthorization(storeId));
+		return response
+	} catch (err) {
+		throw err
+	}
+}
+
+
+export const getProductInCount = async (storeId) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}productInCount/identifierType/brand/identifier/chipsona`, headerWithAuthorization(storeId));
+		return response
+	} catch (err) {
+		throw err
+	}
+}
+
+export const getProductOutCount = async (storeId) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}productOutCount/identifierType/room/identifier/1`, headerWithAuthorization(storeId));
+		return response
+	} catch (err) {
+		throw err
+	}
+}
