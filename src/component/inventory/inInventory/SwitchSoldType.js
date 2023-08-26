@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { getSuppliersApi, soldScheduleApi } from "./handler";
 
-export default function SwitchSoldType({ openModal, customerDetail }) {
+export default function SwitchSoldType({ closeModal, customerDetail }) {
 	const [state, setState] = useState({ checked: true })
 	const [supplier, setSupplier] = useState({})
 
@@ -22,11 +22,11 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 			lotNo: customerDetail.lotNo,
 			storeId: sessionStorage.getItem('storeId').trim(),
 			soldType: state.checked ? 'Full' : 'Partial',
-			soldQuantity: state.soldQuantity,
+			soldQuantity: state.checked ? customerDetail.availableQuantity : state.soldQuantity,
 			amount: state.amount,
 			supplierId: state.soldBussinessManId
 		}).then((res) => {
-			openModal(null)
+			closeModal()
 		}).catch((err) => {
 			console.log(err)
 		})
@@ -46,7 +46,7 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 		return options
 	}
 	return (
-		<Modal show onHide={openModal}>
+		<Modal show onHide={closeModal}>
 			<Modal.Header closeButton>
 				<Modal.Title>Sold Type</Modal.Title>
 			</Modal.Header>
@@ -159,7 +159,7 @@ export default function SwitchSoldType({ openModal, customerDetail }) {
 				}
 			</Modal.Body>
 			<Modal.Footer>
-				<Button variant="secondary" onClick={() => openModal(null)}>
+				<Button variant="secondary" onClick={() => closeModal(null)}>
 					Close
 				</Button>
 				<Button variant="primary" onClick={() => handleSubmit()}>

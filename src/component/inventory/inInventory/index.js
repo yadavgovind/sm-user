@@ -60,7 +60,7 @@ const Inventory = () => {
 			lotNo: lotDetail.lotNo,
 			quantity: itemDetails.length,
 			reasonOfOut: state.reasonOfOut,
-			soldBusinessManId: supplierId
+			soldBusinessManId: supplierId.id
 		}
 		return payload
 	}
@@ -84,12 +84,10 @@ const Inventory = () => {
 	}
 
 
-	const getSupplier = () => {
-		let options = []
+	const getSupplier = (soldBossinessManId) => {
 		supplier.length && supplier.map((item, i) => {
-			return options.push(<option key={i} value={item.id}>{item.firstName}</option>)
+			return soldBossinessManId == item.id && setSupplierId({ name: item.firstName, id: item.id })
 		})
-		return options
 	}
 
 	return (<>
@@ -137,6 +135,7 @@ const Inventory = () => {
 														openModal("lot-detail")
 														setCustomerDetail({ customerId: item.customerId })
 														setLotDetail(lot)
+														getSupplier(lot.soldBossinessManId)
 													}}>
 														<i className="" style={{ marginRight: "10px" }} ></i>Sold
 													</button>
@@ -185,13 +184,14 @@ const Inventory = () => {
 				</Table>
 				<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 					<Form.Label>Sold Out Supplier</Form.Label>
+
 					<Form.Control
-						as="select"
-						aria-label="Default select example"
-						onChange={(e) => setSupplierId(e.target.value)}>
-						<option>Select Supplier</option>
-						{getSupplier()}
-					</Form.Control>
+						type="text"
+						placeholder="Supplier"
+						name="supplier"
+						disabled
+						value={supplierId.name}
+					/>
 				</Form.Group>
 
 				<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
@@ -215,7 +215,11 @@ const Inventory = () => {
 		</Modal>
 		}
 		{currentModal === "soldType" &&
-			<SwitchSoldType customerDetail={customerDetail} openModal={() => openModal(null)} />
+			<SwitchSoldType customerDetail={customerDetail} closeModal={() => {
+				getLots()
+				openModal(null)
+			}
+			} />
 		}
 	</>);
 }
