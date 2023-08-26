@@ -107,7 +107,7 @@ const Inventory = () => {
 				backUrl={'#customer'}
 				TableData={() => {
 					return lotsList.length ? lotsList.map((item, i) => {
-						return item.lotDetails.map((lot => {
+						return item.lotDetails.map(((lot, index) => {
 							return (<tr className='mat-row cdk-row' key={i}>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{i + 1}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.roomNo}</td>
@@ -118,28 +118,29 @@ const Inventory = () => {
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox' onClick={() => toggleButton('')}>{`${lot.productType}(${lot.productSize})`}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>
 									<div className='btn-group dropleft' style={{ float: 'right' }}>
-										<button className='mat-menu-trigger btn btn3bot' onClick={() => toggleButton(i)}>
+										<button className='mat-menu-trigger btn btn3bot' onClick={() => toggleButton(index)}>
 											<i className='fas fa-ellipsis-v'>
 											</i>
 										</button>
 									</div>
-									{i === showOption && <div className='cdk-overlay-pane'>
+									{index === showOption && <div className='cdk-overlay-pane'>
 										<div className='mat-menu-panel mat-elevation-z4'>
 											<div className='mat-menu-content'>
 												<div>
-													<button className='mat-menu-item' onClick={() => {
+													{lot.availableQuantity && <button className='mat-menu-item' onClick={() => {
 														openModal("soldType")
-														setCustomerDetail({ customerId: item.customerId, lotNo: lot.lotNo })
+														setCustomerDetail({ customerId: item.customerId, ...lot })
 													}}>
 														<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
-													</button>
-													<button className='mat-menu-item' onClick={() => {
+													</button>}
+													{lot.lotStatus === "IN_PROGRESS" && <button className='mat-menu-item' onClick={() => {
 														openModal("lot-detail")
 														setCustomerDetail({ customerId: item.customerId })
 														setLotDetail(lot)
 													}}>
 														<i className="" style={{ marginRight: "10px" }} ></i>Sold
 													</button>
+													}
 												</div>
 											</div>
 										</div>
