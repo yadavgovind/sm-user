@@ -11,8 +11,8 @@ const LoanDetail = () => {
 	const getLoanDetail = () => {
 		const storeId = sessionStorage.getItem('storeId').trim()
 		getLoanDetailApi(storeId).then((res) => {
-			let loan = res.find(item => item.customerId === Number(customerId))
-			loan && setLoanDetail([loan])
+			let loan = res.filter(item => item.customerId === Number(customerId))
+			loan && setLoanDetail(loan)
 		}).catch((err) => {
 			console.log(err)
 		})
