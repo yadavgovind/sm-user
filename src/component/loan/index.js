@@ -8,12 +8,19 @@ function Loan({ currentModal, openModal, customerDetail }) {
 	const [state, setState] = useState({
 		amount: '',
 		countOfPackets: '',
-		loanType: 'packets'
+		amountPerPacket: '',
+		loanType: 'packets',
+		rateOfInterest: ''
 	})
-	const { amount, loanType, rateOfInterest, countOfPackets } = state;
+	const { amount, loanType, rateOfInterest, countOfPackets, amountPerPacket } = state;
 
 	const handleChange = (loanType) => {
-		setState({ ...state, loanType })
+		if (loanType === 'amount') {
+
+			setState({ loanType })
+		} else {
+			setState({ ...state, loanType })
+		}
 	}
 
 	const handleOnChange = (key, value) => {
@@ -22,11 +29,12 @@ function Loan({ currentModal, openModal, customerDetail }) {
 
 	const getPayload = () => {
 		return {
-			amount,
+			amount: loanType === 'packets' ? (countOfPackets * amountPerPacket) : amount,
 			loanType,
 			customerId: customerDetail.id,
 			rateOfInterest,
 			countOfPackets,
+			amountPerPacket,
 			storeId: sessionStorage.getItem('storeId').trim()
 		}
 	}
@@ -42,7 +50,7 @@ function Loan({ currentModal, openModal, customerDetail }) {
 			openModal(null)
 		})
 	}
-
+	console.log('state', state)
 	return (
 		<>
 			{currentModal === "loan" && <Modal show onHide={() => openModal(null)}>
@@ -63,23 +71,35 @@ function Loan({ currentModal, openModal, customerDetail }) {
 
 							</Form.Control>
 						</Form.Group>
-						{loanType === 'amount' && <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
-							<Form.Label>Count of Packets</Form.Label>
-							<Form.Control
-								type="text"
-								name='countOfPackets'
-								placeholder="Count Of Packets"
-								value={countOfPackets}
-								onChange={(e) => handleOnChange(e.target.name, e.target.value)}
-							/>
-						</Form.Group>}
+						{loanType === 'packets' && <>
+							<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
+								<Form.Label>Count of Packets</Form.Label>
+								<Form.Control
+									type="text"
+									name='countOfPackets'
+									placeholder="Count Of Packets"
+									value={countOfPackets}
+									onChange={(e) => handleOnChange(e.target.name, e.target.value)}
+								/>
+							</Form.Group>
+							<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
+								<Form.Label>Amount per Packet</Form.Label>
+								<Form.Control
+									type="text"
+									name='amountPerPacket'
+									placeholder="Amount per Packet"
+									value={amountPerPacket}
+									onChange={(e) => handleOnChange(e.target.name, e.target.value)}
+								/>
+							</Form.Group>
+						</>}
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
 							<Form.Label>Amount</Form.Label>
 							<Form.Control
 								type="text"
 								name='amount'
 								placeholder="Amount"
-								value={amount}
+								value={countOfPackets && amountPerPacket ? countOfPackets * amountPerPacket : amount}
 								onChange={(e) => handleOnChange(e.target.name, e.target.value)}
 							/>
 						</Form.Group>

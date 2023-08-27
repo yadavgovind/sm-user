@@ -124,11 +124,12 @@ const Customer = () => {
 			openModal={openModal}
 			customerDetail={customerInfo}
 		/>
-		<Loan
+		{currentModal === "loan" && <Loan
 			currentModal={currentModal}
 			openModal={openModal}
 			customerDetail={customerInfo}
 		/>
+		}
 	</>;
 
 }
