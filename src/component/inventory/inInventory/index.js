@@ -23,9 +23,8 @@ const Inventory = () => {
 	const [supplierId, setSupplierId] = useState('')
 
 	const customerId = sessionStorage.getItem('customerId')
-
+	const storeId = sessionStorage.getItem('storeId').trim()
 	const getLots = () => {
-		const storeId = sessionStorage.getItem('storeId').trim()
 		getLotsDetailApi(storeId, customerId).then((res) => {
 			let lot = res.find(item => item.customerId === Number(customerId))
 			lot && setLOtsList([lot])
@@ -38,7 +37,6 @@ const Inventory = () => {
 		getLots()
 	}, [])
 	useEffect(() => {
-		const storeId = sessionStorage.getItem('storeId').trim()
 		getSuppliersApi(storeId).then((res) => {
 			setSupplier(res)
 		}).catch(err => console.log(err))
@@ -60,7 +58,8 @@ const Inventory = () => {
 			lotNo: lotDetail.lotNo,
 			quantity: itemDetails.length,
 			reasonOfOut: state.reasonOfOut,
-			soldBusinessManId: supplierId.id
+			soldBusinessManId: supplierId.id,
+			storeId
 		}
 		return payload
 	}
@@ -125,12 +124,12 @@ const Inventory = () => {
 										<div className='mat-menu-panel mat-elevation-z4'>
 											<div className='mat-menu-content'>
 												<div>
-													{lot.availableQuantity && <button className='mat-menu-item' onClick={() => {
+													{lot.availableQuantity ? <button className='mat-menu-item' onClick={() => {
 														openModal("soldType")
 														setCustomerDetail({ customerId: item.customerId, ...lot })
 													}}>
 														<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
-													</button>}
+													</button> : ''}
 													{lot.lotStatus === "IN_PROGRESS" && <button className='mat-menu-item' onClick={() => {
 														openModal("lot-detail")
 														setCustomerDetail({ customerId: item.customerId })
