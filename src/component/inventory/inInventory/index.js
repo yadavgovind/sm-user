@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
 import { getLotsDetailApi, getSuppliersApi, outInventoryApi } from './handler';
 
 
@@ -157,32 +156,19 @@ const Inventory = () => {
 				<Modal.Title>Item in Lots</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Table striped="columns" bordered>
-					<thead>
-						<tr>
-							<th>Item No</th>
-							<th>Product In Id</th>
-							<th>Product Out Id</th>
-							<th>Weight</th>
-
-						</tr>
-					</thead>
-					<tbody>
+				<Form.Group className="mb-3" >
+					<Form.Label>Weight</Form.Label>
+					<div>
 						{lotDetail.itemDetails.map((item, i) => {
-							return (<tr>
-								<td>{item.itemNo}</td>
-								<th>{item.productInId || ''}</th>
-								<td>{item.productOutId === 'null' ? '' : item.productOutId}</td>
-								<td>
-									<input type='number' name={`weight${item.id}`} value={item.weight}
-										disabled={item.weight}
-										onBlur={(e) => handleOnBlur(item.id, e.target.value)} />
-								</td>
-							</tr>)
+							return (
+								<input type='number' name={`weight${item.id}`} value={item.weight}
+									disabled={item.weight} className='weight-input'
+									onBlur={(e) => handleOnBlur(item.id, e.target.value)} />
+							)
 						})}
-					</tbody>
-				</Table>
-				<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+					</div>
+				</Form.Group>
+				<Form.Group className="mb-3" >
 					<Form.Label>Sold Out Supplier</Form.Label>
 
 					<Form.Control
@@ -194,7 +180,7 @@ const Inventory = () => {
 					/>
 				</Form.Group>
 
-				<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+				<Form.Group className="mb-3" >
 					<Form.Label>Reason of out</Form.Label>
 					<Form.Control
 						type="text"

@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { addLoanApi } from './handle';
 import { toast } from "react-toastify";
-function Loan({ currentModal, openModal, customerDetail }) {
+function Loan({ openModal, customerDetail }) {
 	const [state, setState] = useState({
 		amount: '',
 		countOfPackets: '',
@@ -53,7 +53,7 @@ function Loan({ currentModal, openModal, customerDetail }) {
 	console.log('state', state)
 	return (
 		<>
-			{currentModal === "loan" && <Modal show onHide={() => openModal(null)}>
+			{<Modal show onHide={() => openModal(null)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Loan</Modal.Title>
 				</Modal.Header>

@@ -10,13 +10,13 @@ const NavbarHoc = ({ navbarArr, TableView }) => {
 							<div className="nav_inner">
 								<div className="collapse navbar-collapse common-stepper">
 									<ul className="navbar-nav">
-										{navbarArr.map(item => {
+										{navbarArr.map((item, i) => {
 											return <li
 												className="nav-item">
 												<a
 													href={item.link}
 													className="nav-link">
-													<span className="common-stepper-counter">1</span>
+													<span className="common-stepper-counter">{i + 1}</span>
 													<span>
 														{item.name}
 													</span>
