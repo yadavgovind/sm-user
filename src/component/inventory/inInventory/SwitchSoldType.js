@@ -10,7 +10,7 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 	const [supplier, setSupplier] = useState({})
 
 	const handleChange = (checked, value) => {
-		if (checked === 'soldQuantity' || checked === 'amount' || checked === 'soldBussinessManId') {
+		if (checked === 'soldQuantity' || checked === 'amount' || checked === 'soldBussinessManId' || checked === 'reasonOfOut') {
 			setState({ ...state, [checked]: value })
 		} else {
 			setState({ ...state, checked })
@@ -24,7 +24,8 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 			soldType: state.checked ? 'Full' : 'Partial',
 			soldQuantity: state.checked ? customerDetail.availableQuantity : state.soldQuantity,
 			amount: state.amount,
-			supplierId: state.soldBussinessManId
+			supplierId: state.soldBussinessManId,
+			reasonOfOut: state.reasonOfOut,
 		}).then((res) => {
 			closeModal()
 		}).catch((err) => {
@@ -51,100 +52,101 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 				<Modal.Title>Sold Type</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<label htmlFor="small-radius-switch">
-					<Switch
-						checked={state.checked}
-						onChange={handleChange}
-						handleDiameter={20}
-						// offColor="#08f"
-						onColor="#4477C5"
-						// offHandleColor="#0ff"
-						// onHandleColor="#08f"
-						height={40}
-						width={80}
-						borderRadius={6}
-						activeBoxShadow="0px 0px 1px 2px #ffff"
-						uncheckedIcon={
-							<div
-								style={{
-									display: "flex",
-									justifyContent: "center",
-									alignItems: "center",
-									height: "100%",
-									fontSize: 15,
-									paddingRight: 2
-								}}
-							>
-								Partial
-							</div>
-						}
-						checkedIcon={
-							<div
-								style={{
-									display: "flex",
-									justifyContent: "center",
-									alignItems: "center",
-									height: "100%",
-									fontSize: 15,
-									paddingRight: 2
-								}}
-							>
-								Full
-							</div>
+				<>
+					<label htmlFor="small-radius-switch">
+						<Switch
+							checked={state.checked}
+							onChange={handleChange}
+							handleDiameter={20}
+							onColor="#4477C5"
+							height={40}
+							width={80}
+							borderRadius={6}
+							activeBoxShadow="0px 0px 1px 2px #ffff"
+							uncheckedIcon={
+								<div
+									style={{
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+										height: "100%",
+										fontSize: 15,
+										paddingRight: 2
+									}}
+								>
+									Partial
+								</div>
+							}
+							checkedIcon={
+								<div
+									style={{
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+										height: "100%",
+										fontSize: 15,
+										paddingRight: 2
+									}}
+								>
+									Full
+								</div>
 
-						}
+							}
 
-						uncheckedHandleIcon={
-							<div
-								style={{
-									display: "flex",
-									justifyContent: "center",
-									alignItems: "center",
-									height: "100%",
-									fontSize: 20
-								}}
-							>
+							uncheckedHandleIcon={
+								<div
+									style={{
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+										height: "100%",
+										fontSize: 20
+									}}
+								>
 
-							</div>
-						}
-						checkedHandleIcon={
-							<div
-								style={{
-									display: "flex",
-									justifyContent: "center",
-									alignItems: "center",
-									height: "100%",
-									color: "red",
-									fontSize: 18
-								}}
-							>
+								</div>
+							}
+							checkedHandleIcon={
+								<div
+									style={{
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+										height: "100%",
+										color: "red",
+										fontSize: 18
+									}}
+								>
 
-							</div>
-						}
-						className="react-switch"
-						id="small-radius-switch"
-					/>
-				</label>
-				{!state.checked && <><Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-					<Form.Label>Sold Quantity</Form.Label>
-					<Form.Control
-						type="number"
-						placeholder="Quantity"
-						name="soldQuantity"
-						onChange={(e) => handleChange(e.target.name, e.target.value)}
-
-					/>
-				</Form.Group>
-					<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-						<Form.Label>Amount</Form.Label>
+								</div>
+							}
+							className="react-switch"
+							id="small-radius-switch"
+						/>
+					</label>
+					{!state.checked && <><Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+						<Form.Label>Sold Quantity</Form.Label>
 						<Form.Control
 							type="number"
-							placeholder="Amount"
-							name="amount"
+							placeholder="Quantity"
+							name="soldQuantity"
 							onChange={(e) => handleChange(e.target.name, e.target.value)}
 
 						/>
 					</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+							<Form.Label>Amount</Form.Label>
+							<Form.Control
+								type="number"
+								placeholder="Amount"
+								name="amount"
+								onChange={(e) => handleChange(e.target.name, e.target.value)}
+
+							/>
+						</Form.Group>
+
+					</>
+					}
 					<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 						<Form.Label>Sold Out Supplier</Form.Label>
 						<Form.Control
@@ -155,8 +157,16 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 							{getSupplier()}
 						</Form.Control>
 					</Form.Group>
+					<Form.Group className="mb-3" >
+						<Form.Label>Reason of out</Form.Label>
+						<Form.Control
+							type="text"
+							placeholder="Enter reason"
+							name="reasonOfOut"
+							onBlur={(e) => handleChange(e.target.name, e.target.value)}
+						/>
+					</Form.Group>
 				</>
-				}
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={() => closeModal(null)}>

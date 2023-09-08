@@ -26,4 +26,6 @@ height: 40px;
 .br-radius{
     border-radius: 50px;
     margin: 5px;
+    background: linear-gradient(to right, #4477C5 40%, #e6e0ef 0%);
+    color: black;
 }

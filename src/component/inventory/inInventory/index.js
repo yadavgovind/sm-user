@@ -19,7 +19,7 @@ const Inventory = () => {
 	const [supplier, setSupplier] = useState({})
 	const [lotDetail, setLotDetail] = useState([])
 	const [state, setState] = useState({})
-	const [supplierId, setSupplierId] = useState('')
+
 
 	const customerId = sessionStorage.getItem('customerId')
 	const storeId = sessionStorage.getItem('storeId').trim()
@@ -44,7 +44,7 @@ const Inventory = () => {
 	const getPayload = () => {
 		let itemDetails = []
 		Object.keys(state).forEach(key => {
-			if (state[key] && key !== 'reasonOfOut') {
+			if (state[key]) {
 				itemDetails.push({
 					itemId: key,
 					weight: state[key]
@@ -56,8 +56,6 @@ const Inventory = () => {
 			customerId: customerDetail.customerId,
 			lotNo: lotDetail.lotNo,
 			quantity: itemDetails.length,
-			reasonOfOut: state.reasonOfOut,
-			soldBusinessManId: supplierId.id,
 			storeId
 		}
 		return payload
@@ -79,13 +77,6 @@ const Inventory = () => {
 	}
 	const handleOnBlur = (itemId, value) => {
 		setState({ ...state, [itemId]: value })
-	}
-
-
-	const getSupplier = (soldBossinessManId) => {
-		supplier.length && supplier.map((item, i) => {
-			return soldBossinessManId == item.id && setSupplierId({ name: item.firstName, id: item.id })
-		})
 	}
 
 	return (<>
@@ -129,11 +120,10 @@ const Inventory = () => {
 													}}>
 														<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
 													</button> : ''}
-													{lot.lotStatus === "IN_PROGRESS" && <button className='mat-menu-item' onClick={() => {
+													{(lot.lotStatus === "WEIGHT_IN_PROGRESS") && <button className='mat-menu-item' onClick={() => {
 														openModal("lot-detail")
 														setCustomerDetail({ customerId: item.customerId })
 														setLotDetail(lot)
-														getSupplier(lot.soldBossinessManId)
 													}}>
 														<i className="" style={{ marginRight: "10px" }} ></i>Sold
 													</button>
@@ -167,27 +157,7 @@ const Inventory = () => {
 						})}
 					</div>
 				</Form.Group>
-				<Form.Group className="mb-3" >
-					<Form.Label>Sold Out Supplier</Form.Label>
 
-					<Form.Control
-						type="text"
-						placeholder="Supplier"
-						name="supplier"
-						disabled
-						value={supplierId.name}
-					/>
-				</Form.Group>
-
-				<Form.Group className="mb-3" >
-					<Form.Label>Reason of out</Form.Label>
-					<Form.Control
-						type="text"
-						placeholder="Enter reason"
-						name="reasonOfOut"
-						onBlur={(e) => handleOnBlur(e.target.name, e.target.value)}
-					/>
-				</Form.Group>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={() => openModal(null)}>
