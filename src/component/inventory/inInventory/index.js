@@ -13,7 +13,7 @@ import NavbarHoc from '../../common/NavbarHoc';
 const Inventory = () => {
 	const [lotsList, setLOtsList] = useState([])
 	const [currentModal, openModal] = useState(null)
-	const lotHeading = ['#', 'Room No', 'Lot Number', 'Customer Name', 'Total Quantity', 'Available Quantity', 'Product', '']
+	const lotHeading = ['supplier', 'Room No', 'Lot Number', 'Customer Name', 'Total Quantity', 'Available Quantity', 'status','Product', '']
 	const [showOption, toggleButton] = useState('')
 	const [customerDetail, setCustomerDetail] = useState({})
 	// const [searchUser, setSearchUser] = useState('')
@@ -106,12 +106,13 @@ const Inventory = () => {
 					return lotsList.length ? lotsList.map((item, i) => {
 						return item.lotDetails.map(((lot, index) => {
 							return (<tr className='mat-row cdk-row' key={i}>
-								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{i + 1}</td>
+								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.supplierName}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.roomNo}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.lotNo}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.customerName}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.totalQuantity}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.availableQuantity}</td>
+								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.lotStatus}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox' onClick={() => toggleButton('')}>{`${lot.productType}(${lot.productSize})`}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>
 									<div className='btn-group dropleft' style={{ float: 'right' }}>
@@ -130,7 +131,7 @@ const Inventory = () => {
 													}}>
 														<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
 													</button> : ''}
-													{lot.lotStatus === "IN_PROGRESS" && <button className='mat-menu-item' onClick={() => {
+													{(lot.lotStatus === "IN_PROGRESS"|| lot.lotStatus === "WEIGHT_IN_PROGRESS") && <button className='mat-menu-item' onClick={() => {
 														openModal("lot-detail")
 														setCustomerDetail({ customerId: item.customerId })
 														setLotDetail(lot)

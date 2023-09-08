@@ -1,6 +1,6 @@
 import jwt_decode from "jwt-decode";
 
-export const BASE_API_URL = 'https://8ksfe6jxw5.execute-api.ap-south-1.amazonaws.com/dev/api/'
+export const BASE_API_URL = 'http://localhost:9999/api/'
 
 export const header = {
 
