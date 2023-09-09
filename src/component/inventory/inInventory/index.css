@@ -1,0 +1,15 @@
+.main-wgt{
+    display: flex;
+    border: 1px solid black;
+    height: 31px;
+    border-radius: 11px;
+    margin: 12px;
+    padding-right: 10px;
+}
+
+.child-wgt{
+    padding-left: 10px;
+    background: #3737da;
+    border-radius: 11px 0px 0px 11px;
+    padding-right: 10px;
+	}

@@ -391,4 +391,9 @@
     border-radius: 50px;
     padding: 5px 5px 5px 12px;
     margin: 0px 8px 8px 2px;
+    background: linear-gradient(to right, #4477C5 30%, #e6e0ef 0%);
+    
+}
+.mgn-25{
+   margin: 25px;
 }

@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 import SwitchSoldType from './SwitchSoldType';
 import TableView from '../../common/TableView';
 import NavbarHoc from '../../common/NavbarHoc';
+import { useNavigate } from "react-router-dom";
+
 const Inventory = () => {
 	const [lotsList, setLOtsList] = useState([])
 	const [currentModal, openModal] = useState(null)
@@ -20,7 +22,7 @@ const Inventory = () => {
 	const [lotDetail, setLotDetail] = useState([])
 	const [state, setState] = useState({})
 
-
+	const navigate = useNavigate();
 	const customerId = sessionStorage.getItem('customerId')
 	const storeId = sessionStorage.getItem('storeId').trim()
 	const getLots = () => {
@@ -63,7 +65,7 @@ const Inventory = () => {
 	const handleSubmit = () => {
 		const payload = getPayload()
 		// if (payload.quantity && payload.reasonOfOut && payload.supplier) {
-		if (payload.quantity && payload.reasonOfOut) {
+		if (payload.quantity) {
 			outInventoryApi(payload).then(() => {
 				getLots()
 				openModal(null)
@@ -123,9 +125,12 @@ const Inventory = () => {
 														<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
 													</button> : ''}
 													{(lot.lotStatus === "IN_PROGRESS" || lot.lotStatus === "WEIGHT_IN_PROGRESS") && <button className='mat-menu-item' onClick={() => {
-														openModal("lot-detail")
+														// openModal("lot-detail")
 														setCustomerDetail({ customerId: item.customerId })
+														sessionStorage.setItem('lotDetail', JSON.stringify([...lot.itemDetails, { 'lotNo': lot.lotNo }]))
 														setLotDetail(lot)
+														navigate("#out-inventory")
+														window.location.reload()
 													}}>
 														<i className="" style={{ marginRight: "10px" }} ></i>Sold
 													</button>

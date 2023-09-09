@@ -11,6 +11,7 @@ import '../dashboard/index.css'
 import './table.css'
 
 import LoanDetail from '../loan/LoanDetail';
+import SoldInventory from '../inventory/inInventory/SoldInventory';
 const handleRoutes = (hash) => {
 	switch (hash) {
 		case '#room':
@@ -20,7 +21,7 @@ const handleRoutes = (hash) => {
 		case '#in-inventory':
 			return <Inventory />
 		case '#out-inventory':
-			return <OutInventory />
+			return <SoldInventory />
 		case '#loan-detail':
 			return <LoanDetail />
 		default:
