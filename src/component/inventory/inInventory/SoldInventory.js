@@ -101,12 +101,12 @@ const SoldInventory = () => {
 					<div className='example-table-container mgn-25'>
 						<Form.Group className="mb-3" >
 							<Form.Label>Weight</Form.Label>
-							<div style={{ display: 'flex' }}>
+							<div style={{ display: 'flex', flexWrap: 'wrap' }}>
 								{itemDetail?.map((item, i) => {
 									return (
 										<div className='main-wgt'>
 											<div className='child-wgt'>{item.id}</div>
-											<div><input type='number' name={`weight${item.id}`} value={item.weight}
+											<div><input type='number' className='weight-input' name={`weight${item.id}`} value={item.weight}
 												disabled={item.weight}
 												onBlur={(e) => handleOnBlur(item.id, e.target.value)} />
 											</div>
