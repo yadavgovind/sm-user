@@ -22,7 +22,7 @@ const Dashboard = () => {
 	}, [])
 	return (
 		<>
-			<Card dashboardCount={dashboardCount} />
+			<Card dashboardCount={dashboardCount} productInCount={productInCount} productOutCount={productOutCount} />
 			<BarGraph productInCount={productInCount} productOutCount={productOutCount} />
 		</>
 
