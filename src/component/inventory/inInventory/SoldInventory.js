@@ -12,7 +12,6 @@ const SoldInventory = () => {
 	const itemDetail = lotDetail.filter(item => item.itemNo)
 	const lot = lotDetail.filter(item => item.lotNo)
 
-	console.log('lotDetail out ', itemDetail, lot[0].lotNo)
 	const handleOnBlur = (itemId, value) => {
 		setState({ ...state, [itemId]: value })
 	}
@@ -38,7 +37,6 @@ const SoldInventory = () => {
 	}
 	const handleSubmit = () => {
 		const payload = getPayload()
-		// if (payload.quantity && payload.reasonOfOut && payload.supplier) {
 		if (payload.quantity) {
 			outInventoryApi(payload).then(() => {
 				setState({})

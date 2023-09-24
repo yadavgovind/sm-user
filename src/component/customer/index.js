@@ -3,7 +3,7 @@ import './index.css'
 import { getCustomerApi, parseJwt } from './handler';
 import './table.css'
 import { getProductTypeApi } from '../inventory/inInventory/handler';
-import { getRoomDetailApi } from '../room/handler';
+import { getAvailableListApi } from '../room/handler';
 import AddInventoryModal from '../inventory/inInventory/AddInventoryModal';
 import { useNavigate } from "react-router-dom";
 import Loan from '../loan';
@@ -33,7 +33,7 @@ const Customer = () => {
 		}).catch((err) => {
 			console.log(err)
 		})
-		getRoomDetailApi(storeId).then((roomDetail) => {
+		getAvailableListApi(storeId).then((roomDetail) => {
 			let roomArr = []
 			roomDetail.map(item => roomArr.push(item.roomNo))
 			setRoom(roomArr)
