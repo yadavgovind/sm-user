@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import Switch from "react-switch";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -16,21 +17,30 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 			setState({ ...state, checked })
 		}
 	}
-	const handleSubmit = (checked) => {
-		soldScheduleApi({
-			customerId: customerDetail.customerId,
-			lotNo: customerDetail.lotNo,
-			storeId: sessionStorage.getItem('storeId').trim(),
-			soldType: state.checked ? 'Full' : 'Partial',
-			soldQuantity: state.checked ? customerDetail.availableQuantity : state.soldQuantity,
-			amount: state.amount,
-			supplierId: state.soldBussinessManId,
-			reasonOfOut: state.reasonOfOut,
-		}).then((res) => {
-			closeModal()
-		}).catch((err) => {
-			console.log(err)
-		})
+	const handleSubmit = () => {
+		const { checked, soldBussinessManId, reasonOfOut, amount, soldQuantity } = state
+		let isValidForFull = soldBussinessManId && reasonOfOut
+		let isValidForPartial = isValidForFull && amount && soldQuantity
+		let isValid = checked ? isValidForFull : isValidForPartial
+		if (isValid) {
+			soldScheduleApi({
+				customerId: customerDetail.customerId,
+				lotNo: customerDetail.lotNo,
+				storeId: sessionStorage.getItem('storeId').trim(),
+				soldType: state.checked ? 'Full' : 'Partial',
+				soldQuantity: state.checked ? customerDetail.availableQuantity : state.soldQuantity,
+				amount: state.amount,
+				supplierId: state.soldBussinessManId,
+				reasonOfOut: state.reasonOfOut,
+			}).then((res) => {
+				closeModal()
+			}).catch((err) => {
+				console.log(err)
+			})
+		} else {
+			toast.error('Please fill the required fields.')
+		}
+
 	}
 	useEffect(() => {
 		const storeId = sessionStorage.getItem('storeId').trim()
