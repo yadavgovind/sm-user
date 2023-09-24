@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import Room from '../room';
 import Customer from '../customer';
 import Sidebar from '../leftMenu/Sidebar';
 import Inventory from '../inventory/inInventory';
 import history from '../../store/history'
 import './index.css'
-import OutInventory from '../inventory/outInventory';
 import Dashboard from '../dashboard'
 import '../dashboard/index.css'
 import './table.css'
@@ -18,6 +18,8 @@ const handleRoutes = (hash) => {
 			return <Room />
 		case '#customer':
 			return <Customer />
+		case '#dashboard':
+			return <Dashboard />
 		case '#in-inventory':
 			return <Inventory />
 		case '#out-inventory':
@@ -29,21 +31,23 @@ const handleRoutes = (hash) => {
 	}
 }
 const StoreRoutes = () => {
-	const [showHideInventory, toggleInventory] = useState(false)
 	const [url, setUrl] = useState(history.location.hash)
-
+	const navigate = useNavigate();
 	const changeUrl = (value) => {
 		setUrl(value)
 		history.push(value)
 	}
+	const handleLogout = () => {
+		sessionStorage.clear()
+		navigate("/")
+	}
 
-	// console.log('hash', hash)
 	return <div className="container-fluid">
 		<div className="row flex-nowrap">
-			<Sidebar handleRoutes={(url) => changeUrl(url)} showHideInventory={showHideInventory} toggleInventory={toggleInventory} />
+			<Sidebar handleRoutes={(url) => changeUrl(url)} />
 			<div className="col pd-0">
 				<div className="header-main">
-					Navbar
+					<div style={{ float: 'right', cursor: 'pointer' }} onClick={() => handleLogout()}>Log out</div>
 				</div >
 				<div className="common-head-container">
 					<div className='row'>

@@ -59,7 +59,7 @@ const Customer = () => {
 							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.roomNo || 'N/A'}</td>
 							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.registerSession}</td>
 							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.phone}</td>
-							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.email}</td>
+							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox' style={{ textTransform: 'lowercase' }}>{item.email}</td>
 							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.address || 'N/A'}</td>
 							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.vehicleNumber}</td>
 							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox' onClick={() => toggleButton('')}>{item.roleType || 'N/A'}</td>
