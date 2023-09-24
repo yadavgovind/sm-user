@@ -19,8 +19,8 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 	}
 	const handleSubmit = () => {
 		const { checked, soldBussinessManId, reasonOfOut, amount, soldQuantity } = state
-		let isValidForFull = soldBussinessManId && reasonOfOut
-		let isValidForPartial = isValidForFull && amount && soldQuantity
+		let isValidForFull = soldBussinessManId && reasonOfOut && amount
+		let isValidForPartial = isValidForFull && soldQuantity
 		let isValid = checked ? isValidForFull : isValidForPartial
 		if (isValid) {
 			soldScheduleApi({
@@ -144,19 +144,18 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 
 						/>
 					</Form.Group>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-							<Form.Label>Amount</Form.Label>
-							<Form.Control
-								type="number"
-								placeholder="Amount"
-								name="amount"
-								onChange={(e) => handleChange(e.target.name, e.target.value)}
-
-							/>
-						</Form.Group>
-
 					</>
 					}
+					<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+						<Form.Label>Amount</Form.Label>
+						<Form.Control
+							type="number"
+							placeholder="Amount"
+							name="amount"
+							onChange={(e) => handleChange(e.target.name, e.target.value)}
+
+						/>
+					</Form.Group>
 					<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
 						<Form.Label>Sold Out Supplier</Form.Label>
 						<Form.Control
