@@ -1,8 +1,8 @@
 import { getDashboardCount, getProductInCount, getProductOutCount } from "../../service/api";
 
-export const getDashboardCountApi = async (storeId) => {
+export const getDashboardCountApi = async (year) => {
 	try {
-		const response = await getDashboardCount(storeId)
+		const response = await getDashboardCount(year)
 		if (response && response.data) {
 			return response.data
 		}
@@ -11,9 +11,9 @@ export const getDashboardCountApi = async (storeId) => {
 	}
 }
 
-export const getProductInCountApi = async (storeId) => {
+export const getProductInCountApi = async (type, value) => {
 	try {
-		const response = await getProductInCount(storeId)
+		const response = await getProductInCount(type, value)
 		if (response && response.data) {
 			return response.data
 		}
@@ -22,9 +22,9 @@ export const getProductInCountApi = async (storeId) => {
 	}
 }
 
-export const getProductOutCountApi = async (storeId) => {
+export const getProductOutCountApi = async (type, value) => {
 	try {
-		const response = await getProductOutCount(storeId)
+		const response = await getProductOutCount(type, value)
 		if (response && response.data) {
 			return response.data
 		}

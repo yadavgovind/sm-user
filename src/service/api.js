@@ -153,9 +153,9 @@ export const getLoanDetail = async (storeId) => {
 	}
 }
 
-export const getDashboardCount = async (storeId) => {
+export const getDashboardCount = async (year) => {
 	try {
-		const response = await axios.get(`${BASE_API_URL}dashboardCount/session/2023`, headerWithAuthorization(storeId));
+		const response = await axios.get(`${BASE_API_URL}dashboardCount/session/${year}`, headerWithAuthorization());
 		return response
 	} catch (err) {
 		throw err
@@ -163,18 +163,18 @@ export const getDashboardCount = async (storeId) => {
 }
 
 
-export const getProductInCount = async (storeId) => {
+export const getProductInCount = async (type, value) => {
 	try {
-		const response = await axios.get(`${BASE_API_URL}productInCount/identifierType/brand/identifier/chipsona`, headerWithAuthorization(storeId));
+		const response = await axios.get(`${BASE_API_URL}productInCount/identifierType/${type}/identifier/${value}`, headerWithAuthorization());
 		return response
 	} catch (err) {
 		throw err
 	}
 }
 
-export const getProductOutCount = async (storeId) => {
+export const getProductOutCount = async (type, value) => {
 	try {
-		const response = await axios.get(`${BASE_API_URL}productOutCount/identifierType/room/identifier/1`, headerWithAuthorization(storeId));
+		const response = await axios.get(`${BASE_API_URL}productOutCount/identifierType/${type}/identifier/${value}`, headerWithAuthorization());
 		return response
 	} catch (err) {
 		throw err
