@@ -28,23 +28,8 @@ const CardItems = ({ title, backgroundImage, count }) => {
 		</div>
 	</div>)
 }
-const Card = ({ roomsArr, productType, dashboardCount, product, handleSelect, handleChange }) => {
-	const getProductTpyes = () => {
-		let options = []
-		productType.map(item => {
-			return options.push(<option key={item.productId} value={item.productId}>{item.productType}{' '}{item.productSize}</option>)
+const Card = ({ dashboardCount, handleSelect }) => {
 
-		})
-		return options
-	}
-	const getRooms = () => {
-		let options = []
-		roomsArr.length && roomsArr.map((item, i) => {
-			return options.push(<option key={i} value={item}>{item}</option>)
-
-		})
-		return options
-	}
 	return (
 		<div className='main-content'>
 			<div className='card cardSpace'>
@@ -92,70 +77,6 @@ const Card = ({ roomsArr, productType, dashboardCount, product, handleSelect, ha
 								count={dashboardCount.loanAmount}
 							/>
 						</div>
-
-						<div className='row flex-box mt-3'>
-							<div className='w-15'>
-								<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-									<Form.Label>Brand Product In </Form.Label>
-									<Form.Control
-										as="select"
-										aria-label="Default select example"
-										onChange={(e) => handleChange('brandProductIn', e.target.value)}
-									>
-										{getProductTpyes()}
-									</Form.Control>
-								</Form.Group>
-								<Form.Group className="mb-3" >
-									<Form.Label>{product.brandProductInQ || 0}</Form.Label>
-								</Form.Group>
-							</div>
-							<div className='w-15'>
-								<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-									<Form.Label>Brand Product Out </Form.Label>
-									<Form.Control
-										as="select"
-										aria-label="Default select example"
-										onChange={(e) => handleChange('brandProductOut', e.target.value)}
-									>
-										{getProductTpyes()}
-									</Form.Control>
-								</Form.Group>
-								<Form.Group className="mb-3" >
-									<Form.Label>{product.brandProductOutQ || 0}</Form.Label>
-								</Form.Group>
-							</div>
-							<div className='w-15'>
-								<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-									<Form.Label>Room Product In </Form.Label>
-									<Form.Control
-										as="select"
-										aria-label="Default select example"
-										onChange={(e) => handleChange('roomProductInQ', e.target.value)}
-									>
-										{getRooms()}
-									</Form.Control>
-								</Form.Group>
-								<Form.Group className="mb-3" >
-									<Form.Label>{product.brandProductInQ || 0}</Form.Label>
-								</Form.Group>
-							</div>
-							<div className='w-15'>
-								<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-									<Form.Label>Room Product Out </Form.Label>
-									<Form.Control
-										as="select"
-										aria-label="Default select example"
-										onChange={(e) => handleChange('roomProductOutQ', e.target.value)}
-									>
-										{getRooms()}
-									</Form.Control>
-								</Form.Group>
-								<Form.Group className="mb-3" >
-									<Form.Label>{product.brandProductOutQ || 0}</Form.Label>
-								</Form.Group>
-							</div>
-						</div>
-
 					</div>
 				</div>
 			</div>

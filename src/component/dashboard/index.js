@@ -7,6 +7,8 @@ import { getDashboardCountApi, getProductInCountApi, getProductOutCountApi } fro
 import { getProductTypeApi } from '../inventory/inInventory/handler';
 import { getAvailableListApi } from '../room/handler';
 import { parseJwt } from '../customer/handler';
+import ProductFilter from './ProductFilter';
+
 const Dashboard = () => {
 	const [year, setYear] = useState(2023)
 	const [state, setProduct] = useState({
@@ -70,12 +72,14 @@ const Dashboard = () => {
 	return (
 		<>
 			<Card
+				dashboardCount={dashboardCount}
+				handleSelect={handleSelect} />
+			<ProductFilter
 				roomsArr={rooms}
 				product={state}
 				productType={productType}
 				handleChange={handleChange}
-				dashboardCount={dashboardCount}
-				handleSelect={handleSelect} />
+			/>
 			<BarGraph />
 		</>
 

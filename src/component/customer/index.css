@@ -78,10 +78,6 @@
     z-index: 999;
     position: relative;
 }
-.main-content .card {
-  background-color: #EFF6FE;
-  border: none;
-}
 
 .white-bg {
   background: #FFFFFF 0% 0% no-repeat padding-box;

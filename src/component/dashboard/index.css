@@ -107,3 +107,26 @@ border: 1px rgb(68, 119, 197);
 .w-15{
   width:15%
 }
+
+.product-filter{
+   border: 4px solid #dcdee9;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #dcdee9;
+    font-size: large;
+}
+
+.pro-h{
+    width: 32%;
+    text-align: center;
+    font-size: large;
+    font-weight: 500;
+}
+
+.w-30{
+ width:30%
+}
+
+.ht-50{
+   height:50px
+}
