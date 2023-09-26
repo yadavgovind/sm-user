@@ -180,3 +180,12 @@ export const getProductOutCount = async (type, value) => {
 		throw err
 	}
 }
+
+export const getCustomerOnSearch = async (searchValue) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}customer/dynamicSearch/${searchValue}`, headerWithAuthorization());
+		return response
+	} catch (err) {
+		throw err
+	}
+}

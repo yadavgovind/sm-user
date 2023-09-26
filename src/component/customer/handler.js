@@ -1,4 +1,4 @@
-import { addCustomer, getCustomer } from "../../service/api";
+import { addCustomer, getCustomer, getCustomerOnSearch } from "../../service/api";
 
 
 export function parseJwt(token) {
@@ -27,6 +27,17 @@ export const addCustomerApi = async (payload, token) => {
 export const getCustomerApi = async (storeId) => {
 	try {
 		const response = await getCustomer(storeId)
+		if (response && response.data) {
+			return response.data
+		}
+	} catch (err) {
+		throw err
+	}
+}
+
+export const getSearchCustomerApi = async (searchValue) => {
+	try {
+		const response = await getCustomerOnSearch(searchValue)
 		if (response && response.data) {
 			return response.data
 		}

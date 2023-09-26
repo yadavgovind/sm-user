@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './index.css'
-import { getCustomerApi, parseJwt } from './handler';
+import { getCustomerApi, getSearchCustomerApi, parseJwt } from './handler';
 import './table.css'
 import { getProductTypeApi } from '../inventory/inInventory/handler';
 import { getAvailableListApi } from '../room/handler';
@@ -20,11 +20,10 @@ const Customer = () => {
 	const navigate = useNavigate();
 
 	const theading = ['#', 'Name', 'Store', 'Room No', 'Session', 'Phone', 'Email', 'Address', 'Vehicle', 'Role Type', '']
-
+	const detail = parseJwt(sessionStorage.getItem('token'))
+	sessionStorage.setItem('storeId', detail["storeId "])
+	const storeId = detail['storeId '].trim()
 	useEffect(() => {
-		const detail = parseJwt(sessionStorage.getItem('token'))
-		sessionStorage.setItem('storeId', detail["storeId "])
-		const storeId = detail['storeId '].trim()
 		getCustomerApi(storeId).then((customerList) => {
 			setState(customerList)
 		}).catch(err => console.log(err))
@@ -40,7 +39,17 @@ const Customer = () => {
 		}).catch(err => console.log(err))
 	}, [])
 
-
+	const handleChange = (value) => {
+		if (value && value.length > 3) {
+			getSearchCustomerApi(value).then((customerList) => {
+				setState(customerList)
+			}).catch(err => console.log(err))
+		} else if (value === '') {
+			getCustomerApi(storeId).then((customerList) => {
+				setState(customerList)
+			}).catch(err => console.log(err))
+		}
+	}
 	return <>
 		<NavbarHoc
 			navbarArr={[
@@ -50,6 +59,8 @@ const Customer = () => {
 			TableView={() => <TableView
 				theading={theading}
 				showAddCustomer={true}
+				showSearch
+				handleChange={handleChange}
 				TableData={() => {
 					return state.map((item, i) => {
 						return (<tr className='mat-row cdk-row' key={i}>
