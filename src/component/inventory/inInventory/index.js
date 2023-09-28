@@ -90,10 +90,11 @@ const Inventory = () => {
 				{ link: '/store#in-inventory', name: 'Lot' },
 
 			]}
+			showBackButton={true}
+			backUrl={'#customer'}
+
 			TableView={() => <TableView
 				theading={lotHeading}
-				showBackButton={true}
-				backUrl={'#customer'}
 				TableData={() => {
 					return lotsList.length ? lotsList.map((item, i) => {
 						return item.lotDetails.map(((lot, index) => {

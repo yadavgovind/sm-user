@@ -1,6 +1,37 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
+import history from '../../store/history';
+import AddCustomer from '../customer/AddCustomer';
+const NavbarHoc = (props) => {
+	const { navbarArr, TableView, showBackButton, showAddCustomer, backUrl, handleChange, showSearch } = props
+	const renderHeader = () => {
+		return (
+			<div className='mb-2 mt-2' style={{
+				height: 'auto',
+				padding: '1px',
+				overflow: 'hidden',
+			}}>
+				<div className='form-group me-3' style={{ float: 'left', marginLeft: "14px" }}>
+					{showBackButton && <Button type='' variant="secondary" onClick={() => {
+						history.push(backUrl)
+						window.location.reload()
+					}}>Back</Button>}
 
-const NavbarHoc = ({ navbarArr, TableView }) => {
+					{showAddCustomer && <AddCustomer
+					/>}
+				</div>
+				{showSearch && <div className='form-group me-3' style={{ float: 'right' }}>
+					<input className='mat-input-element mat-form-field-autofill-control
+									 form-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored'
+						style={{ height: '43px' }}
+						placeholder='Search'
+						onChange={(e) => handleChange(e.target.value)}
+					/>
+				</div>}
+			</div>
+		)
+	}
+
 	return <div className="row">
 		<div className="col-sm-12">
 			<div className="cp-rightsection">
@@ -29,7 +60,12 @@ const NavbarHoc = ({ navbarArr, TableView }) => {
 						</nav>
 					</div>
 				</div>
-				<TableView />
+				<div className='white-bg'>
+					<div className='example-table-container'>
+						{renderHeader()}
+						<TableView />
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>;

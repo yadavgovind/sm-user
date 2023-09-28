@@ -30,10 +30,10 @@ const LoanDetail = () => {
 				{ link: '/store#customer', name: 'Customer' },
 				{ link: '/store#loan-detail', name: 'Loan Detail' }
 			]}
+			showBackButton={true}
+			backUrl={'#customer'}
 			TableView={() => <TableView
 				theading={lotHeading}
-				showBackButton={true}
-				backUrl={'#customer'}
 				TableData={() => {
 					return loanDetail.map(((loan, i) => {
 						let date1 = new Date(loan.transactionDate);

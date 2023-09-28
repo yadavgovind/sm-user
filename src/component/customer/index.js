@@ -56,11 +56,12 @@ const Customer = () => {
 				{ link: '/store', name: 'Dashboard' },
 				{ link: '/store#customer', name: 'Customer' },
 			]}
+			showAddCustomer={true}
+			showSearch
+			handleChange={handleChange}
 			TableView={() => <TableView
 				theading={theading}
-				showAddCustomer={true}
-				showSearch
-				handleChange={handleChange}
+
 				TableData={() => {
 					return state.map((item, i) => {
 						return (<tr className='mat-row cdk-row' key={i}>
