@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import history from '../../store/history';
 import AddCustomer from '../customer/AddCustomer';
 const NavbarHoc = (props) => {
-	const { navbarArr, TableView, showBackButton, showAddCustomer, backUrl, handleChange, showSearch } = props
+	const { navbarArr, TableView, showBackButton, showAddCustomer, backUrl, handleBlur, showSearch } = props
 	const renderHeader = () => {
 		return (
 			<div className='mb-2 mt-2' style={{
@@ -25,7 +25,7 @@ const NavbarHoc = (props) => {
 									 form-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored'
 						style={{ height: '43px' }}
 						placeholder='Search'
-						onChange={(e) => handleChange(e.target.value)}
+						onBlur={(e) => handleBlur(e.target.value)}
 					/>
 				</div>}
 			</div>

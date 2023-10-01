@@ -39,8 +39,8 @@ const Customer = () => {
 		}).catch(err => console.log(err))
 	}, [])
 
-	const handleChange = (value) => {
-		if (value && value.length > 3) {
+	const handleBlur = (value) => {
+		if (value) {
 			getSearchCustomerApi(value).then((customerList) => {
 				setState(customerList)
 			}).catch(err => console.log(err))
@@ -58,7 +58,7 @@ const Customer = () => {
 			]}
 			showAddCustomer={true}
 			showSearch
-			handleChange={handleChange}
+			handleBlur={handleBlur}
 			TableView={() => <TableView
 				theading={theading}
 
