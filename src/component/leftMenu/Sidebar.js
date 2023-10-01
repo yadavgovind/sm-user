@@ -23,7 +23,7 @@ const Sidebar = (props) => {
 					</button>
 				</li>
 				<li className="nav-item">
-					<button onClick={() => handleRoutes("#customer")} className="nav-link align-middle px-0">
+					<button onClick={() => handleRoutes("#settlement")} className="nav-link align-middle px-0">
 						<span className="ms-1 d-none d-sm-inline">Settlement</span>
 					</button>
 				</li>

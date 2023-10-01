@@ -12,6 +12,7 @@ import './table.css'
 
 import LoanDetail from '../loan/LoanDetail';
 import SoldInventory from '../inventory/inInventory/SoldInventory';
+import Settlement from '../settlement';
 const handleRoutes = (hash) => {
 	switch (hash) {
 		case '#room':
@@ -26,6 +27,8 @@ const handleRoutes = (hash) => {
 			return <SoldInventory />
 		case '#loan-detail':
 			return <LoanDetail />
+		case '#settlement':
+			return <Settlement />
 		default:
 			return <Dashboard />
 	}

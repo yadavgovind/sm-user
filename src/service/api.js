@@ -189,3 +189,12 @@ export const getCustomerOnSearch = async (searchValue) => {
 		throw err
 	}
 }
+
+export const getSoldSchedule = async (storeId) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}soldSchedule/storeId/${storeId}`, headerWithAuthorization());
+		return response
+	} catch (err) {
+		throw err
+	}
+}
