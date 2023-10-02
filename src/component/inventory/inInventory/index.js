@@ -85,13 +85,13 @@ const Inventory = () => {
 		<h4>Lots</h4>
 		<NavbarHoc
 			navbarArr={[
-				{ link: '/store', name: 'Dashboard' },
-				{ link: '/store#customer', name: 'Customer' },
-				{ link: '/store#in-inventory', name: 'Lot' },
+				{ link: '/store/dashboard', name: 'Dashboard' },
+				{ link: '/store/customer', name: 'Customer' },
+				{ link: '/store/in-inventory', name: 'Lot' },
 
 			]}
 			showBackButton={true}
-			backUrl={'#customer'}
+			backUrl={'/store/customer'}
 
 			TableView={() => <TableView
 				theading={lotHeading}
@@ -130,8 +130,7 @@ const Inventory = () => {
 														setCustomerDetail({ customerId: item.customerId })
 														sessionStorage.setItem('lotDetail', JSON.stringify([...lot.itemDetails, { 'lotNo': lot.lotNo }]))
 														setLotDetail(lot)
-														navigate("#out-inventory")
-														window.location.reload()
+														navigate("/store/out-inventory")
 													}}>
 														<i className="" style={{ marginRight: "10px" }} ></i>Sold
 													</button>

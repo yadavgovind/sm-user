@@ -27,11 +27,11 @@ const LoanDetail = () => {
 		<NavbarHoc
 			navbarArr={[
 				{ link: '/store', name: 'Dashboard' },
-				{ link: '/store#customer', name: 'Customer' },
-				{ link: '/store#loan-detail', name: 'Loan Detail' }
+				{ link: '/store/customer', name: 'Customer' },
+				{ link: '/store/loan-detail', name: 'Loan Detail' }
 			]}
 			showBackButton={true}
-			backUrl={'#customer'}
+			backUrl={'/store/customer'}
 			TableView={() => <TableView
 				theading={lotHeading}
 				TableData={() => {

@@ -10,7 +10,7 @@ export const postSignInApi = async (payload) => {
 		if (response && response.data) {
 			sessionStorage.setItem("token", response.data.token);
 			getApi()
-			history.push('/store');
+			history.push('/store/dashboard');
 			window.location.reload();
 		}
 	} catch (err) {

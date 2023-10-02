@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form as FormikForm } from 'formik';
 import * as Yup from 'yup';
@@ -23,6 +23,9 @@ function SignIn() {
     postSignInApi(payload);
   }
 
+  useEffect(() => {
+    sessionStorage.clear()
+  }, [])
   return (
     <>
       <div className='bg-color'>

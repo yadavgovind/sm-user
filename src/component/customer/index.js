@@ -53,8 +53,8 @@ const Customer = () => {
 	return <>
 		<NavbarHoc
 			navbarArr={[
-				{ link: '/store', name: 'Dashboard' },
-				{ link: '/store#customer', name: 'Customer' },
+				{ link: '/store/dashboard', name: 'Dashboard' },
+				{ link: '/store/customer', name: 'Customer' },
 			]}
 			showAddCustomer={true}
 			showSearch
@@ -88,8 +88,7 @@ const Customer = () => {
 											<div>
 												<button className='mat-menu-item' onClick={() => {
 													sessionStorage.setItem('customerId', item.id)
-													navigate("#in-inventory")
-													window.location.reload()
+													navigate("/store/in-inventory")
 												}}>
 													<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
 												</button>
@@ -113,8 +112,8 @@ const Customer = () => {
 											<div>
 												<button className='mat-menu-item' onClick={() => {
 													sessionStorage.setItem('customerId', item.id)
-													navigate("#loan-detail")
-													window.location.reload()
+													navigate("/store/loan-detail")
+
 												}}>
 													<i className="far fa-edit" style={{ marginRight: "10px" }}></i>Loan detail
 												</button>
