@@ -59,7 +59,7 @@ const SoldInventory = () => {
 										<li
 											className="nav-item">
 											<a
-												href={'/store'}
+												href={'/store/dashboard'}
 												className="nav-link">
 												<span className="common-stepper-counter">{1}</span>
 												<span>
@@ -70,7 +70,7 @@ const SoldInventory = () => {
 										<li
 											className="nav-item">
 											<a
-												href={'/store#customer'}
+												href={'/store/customer'}
 												className="nav-link">
 												<span className="common-stepper-counter">{2}</span>
 												<span>
@@ -81,7 +81,7 @@ const SoldInventory = () => {
 										<li
 											className="nav-item">
 											<a
-												href={'/store#in-inventory'}
+												href={'/store/in-inventory'}
 												className="nav-link">
 												<span className="common-stepper-counter">{3}</span>
 												<span>
