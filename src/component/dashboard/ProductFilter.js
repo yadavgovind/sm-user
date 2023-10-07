@@ -12,7 +12,7 @@ const ProductFilter = ({ roomsArr, productType, product, handleChange }) => {
 	const getRooms = () => {
 		let options = []
 		roomsArr.length && roomsArr.map((item, i) => {
-			return options.push(<option key={i} value={item}>{item}</option>)
+			return options.push(<option key={item + i} value={item}>{item}</option>)
 
 		})
 		return options
@@ -71,13 +71,13 @@ const ProductFilter = ({ roomsArr, productType, product, handleChange }) => {
 								<Form.Control
 									as="select"
 									aria-label="Default select example"
-									onChange={(e) => handleChange('roomProductInQ', e.target.value)}
+									onChange={(e) => handleChange('roomProductIn', e.target.value)}
 								>
 									{getRooms()}
 								</Form.Control>
 							</Form.Group>
 							<Form.Group className="mb-3 product-filter" >
-								<Form.Label>{product.brandProductInQ || 0}</Form.Label>
+								<Form.Label>{product.roomProductInQ || 0}</Form.Label>
 							</Form.Group>
 						</div>
 						<div className='w-15'>
@@ -86,13 +86,13 @@ const ProductFilter = ({ roomsArr, productType, product, handleChange }) => {
 								<Form.Control
 									as="select"
 									aria-label="Default select example"
-									onChange={(e) => handleChange('roomProductOutQ', e.target.value)}
+									onChange={(e) => handleChange('roomProductOut', e.target.value)}
 								>
 									{getRooms()}
 								</Form.Control>
 							</Form.Group>
 							<Form.Group className="mb-3 product-filter" >
-								<Form.Label>{product.brandProductOutQ || 0}</Form.Label>
+								<Form.Label>{product.roomProductOutQ || 0}</Form.Label>
 							</Form.Group>
 						</div>
 					</div>

@@ -58,19 +58,24 @@ const Dashboard = () => {
 		getProductInCountApi('brand', state.brandProductIn)
 			.then(res => res && setProduct({ ...state, brandProductInQ: res.quantity }))
 			.catch(err => console.log(err))
+	}, [state.brandProductIn])
+	useEffect(() => {
 		getProductOutCountApi('brand', state.brandProductOut)
 			.then(res => res && setProduct({ ...state, brandProductOutQ: res.quantity }))
 			.catch(err => console.log(err))
-	}, [state.brandProductIn, state.brandProductOut])
+	}, [state.brandProductOut])
 
 	useEffect(() => {
 		getProductInCountApi('room', state.roomProductIn)
 			.then(res => res && setProduct({ ...state, roomProductInQ: res.quantity }))
 			.catch(err => console.log(err))
+	}, [state.roomProductIn])
+
+	useEffect(() => {
 		getProductOutCountApi('room', state.roomProductOut)
 			.then(res => res && setProduct({ ...state, roomProductOutQ: res.quantity }))
 			.catch(err => console.log(err))
-	}, [state.roomProductIn, state.roomProductOut])
+	}, [state.roomProductOut])
 
 	const handleChange = (key, value) => {
 		setProduct({ ...state, [key]: value })
