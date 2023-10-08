@@ -43,6 +43,7 @@ const ProductFilter = ({ roomsArr, productType, product, handleChange }) => {
 									aria-label="Default select example"
 									onChange={(e) => handleChange('brandProductIn', e.target.value)}
 								>
+									<option value='select'>Select Product</option>
 									{getProductTpyes()}
 								</Form.Control>
 							</Form.Group>
@@ -58,6 +59,7 @@ const ProductFilter = ({ roomsArr, productType, product, handleChange }) => {
 									aria-label="Default select example"
 									onChange={(e) => handleChange('brandProductOut', e.target.value)}
 								>
+									<option value='select'>Select Product</option>
 									{getProductTpyes()}
 								</Form.Control>
 							</Form.Group>
@@ -73,6 +75,7 @@ const ProductFilter = ({ roomsArr, productType, product, handleChange }) => {
 									aria-label="Default select example"
 									onChange={(e) => handleChange('roomProductIn', e.target.value)}
 								>
+									<option value='select'>Select Room</option>
 									{getRooms()}
 								</Form.Control>
 							</Form.Group>
@@ -88,6 +91,7 @@ const ProductFilter = ({ roomsArr, productType, product, handleChange }) => {
 									aria-label="Default select example"
 									onChange={(e) => handleChange('roomProductOut', e.target.value)}
 								>
+									<option value='select'>Select Room</option>
 									{getRooms()}
 								</Form.Control>
 							</Form.Group>

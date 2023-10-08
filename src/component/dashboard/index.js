@@ -22,6 +22,7 @@ const Dashboard = () => {
 	const [dashboardCount, setDashboardCount] = useState({ customerCount: 0, loanAmount: 0, totalProductIn: 0, totalProductOut: 0 })
 	const [rooms, setRoom] = useState([])
 	const [loading, setLoading] = useState(false)
+	const [isOnload, setOnLoad] = useState(true)
 
 	const detail = parseJwt(sessionStorage.getItem('token'))
 	sessionStorage.setItem('storeId', detail["storeId "])
@@ -55,29 +56,47 @@ const Dashboard = () => {
 		})
 	}, [])
 	useEffect(() => {
-		getProductInCountApi('brand', state.brandProductIn)
-			.then(res => res && setProduct({ ...state, brandProductInQ: res.quantity }))
-			.catch(err => console.log(err))
+		if (state.brandProductIn !== 'select') {
+			!isOnload && getProductInCountApi('brand', state.brandProductIn)
+				.then(res => res && setProduct({ ...state, brandProductInQ: res.quantity }))
+				.catch(err => console.log(err))
+		} else {
+			setProduct({ ...state, brandProductInQ: 0 })
+		}
+
 	}, [state.brandProductIn])
 	useEffect(() => {
-		getProductOutCountApi('brand', state.brandProductOut)
-			.then(res => res && setProduct({ ...state, brandProductOutQ: res.quantity }))
-			.catch(err => console.log(err))
+		if (state.brandProductOut !== 'select') {
+			!isOnload && getProductOutCountApi('brand', state.brandProductOut)
+				.then(res => res && setProduct({ ...state, brandProductOutQ: res.quantity }))
+				.catch(err => console.log(err))
+		} else {
+			setProduct({ ...state, brandProductOutQ: 0 })
+		}
 	}, [state.brandProductOut])
 
 	useEffect(() => {
-		getProductInCountApi('room', state.roomProductIn)
-			.then(res => res && setProduct({ ...state, roomProductInQ: res.quantity }))
-			.catch(err => console.log(err))
+		if (state.roomProductIn !== 'select') {
+			!isOnload && getProductInCountApi('room', state.roomProductIn)
+				.then(res => res && setProduct({ ...state, roomProductInQ: res.quantity }))
+				.catch(err => console.log(err))
+		} else {
+			setProduct({ ...state, roomProductInQ: 0 })
+		}
 	}, [state.roomProductIn])
 
 	useEffect(() => {
-		getProductOutCountApi('room', state.roomProductOut)
-			.then(res => res && setProduct({ ...state, roomProductOutQ: res.quantity }))
-			.catch(err => console.log(err))
+		if (state.roomProductOut !== 'select') {
+			!isOnload && getProductOutCountApi('room', state.roomProductOut)
+				.then(res => res && setProduct({ ...state, roomProductOutQ: res.quantity }))
+				.catch(err => console.log(err))
+		} else {
+			setProduct({ ...state, roomProductOutQ: 0 })
+		}
 	}, [state.roomProductOut])
 
 	const handleChange = (key, value) => {
+		setOnLoad(false)
 		setProduct({ ...state, [key]: value })
 	}
 	return (
