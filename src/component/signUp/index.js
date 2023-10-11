@@ -40,7 +40,7 @@ function SignUp() {
       setSubmit(true)
       postSignUpApi(values, setSubmit)
       navigate("/")
-      window.location.reload()
+      // window.location.reload()
     }
   }
 
