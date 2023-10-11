@@ -123,7 +123,7 @@ const Inventory = () => {
 														openModal("soldType")
 														setCustomerDetail({ customerId: item.customerId, ...lot })
 													}}>
-														<i className="far fa-eye" style={{ marginRight: "10px" }}></i>View
+														<i className="far fa-pencil" style={{ marginRight: "10px" }}></i>sold
 													</button> : ''}
 													{(lot.lotStatus === "IN_PROGRESS" || lot.lotStatus === "WEIGHT_IN_PROGRESS") && <button className='mat-menu-item' onClick={() => {
 														// openModal("lot-detail")
