@@ -112,7 +112,7 @@ function AddInventoryModal({ productType, roomsArr, currentModal, openModal, cus
 				<Modal.Body>
 					<Form>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-							<Form.Label>Room</Form.Label>
+							<Form.Label>Room<span style={{ color: 'red' }}>*</span></Form.Label>
 							<Form.Control
 								as="select"
 								aria-label="Default select example"
@@ -122,7 +122,7 @@ function AddInventoryModal({ productType, roomsArr, currentModal, openModal, cus
 							</Form.Control>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
-							<Form.Label>Lots</Form.Label>
+							<Form.Label>Lots<span style={{ color: 'red' }}>*</span></Form.Label>
 							<Form.Control
 								as="select"
 								name="lotNo"
@@ -133,7 +133,7 @@ function AddInventoryModal({ productType, roomsArr, currentModal, openModal, cus
 							</Form.Control>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
-							<Form.Label>Quantity</Form.Label>
+							<Form.Label>Quantity<span style={{ color: 'red' }}>*</span></Form.Label>
 							<Form.Control
 								type="number"
 								name='quantity'
@@ -145,7 +145,7 @@ function AddInventoryModal({ productType, roomsArr, currentModal, openModal, cus
 							{maxQuantityError && <span style={{ color: 'red' }}>Please enter quantity less than or equal to {availableQuantity}</span>}
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput5">
-							<Form.Label>Product</Form.Label>
+							<Form.Label>Product<span style={{ color: 'red' }}>*</span></Form.Label>
 							<Form.Control
 								as="select"
 								name="productId"

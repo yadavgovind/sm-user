@@ -135,7 +135,7 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 						/>
 					</label>
 					{!state.checked && <><Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-						<Form.Label>Sold Quantity</Form.Label>
+						<Form.Label>Sold Quantity<span style={{ color: 'red' }}>*</span></Form.Label>
 						<Form.Control
 							type="number"
 							placeholder="Quantity"
@@ -147,7 +147,7 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 					</>
 					}
 					<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-						<Form.Label>Amount</Form.Label>
+						<Form.Label>Amount<span style={{ color: 'red' }}>*</span></Form.Label>
 						<Form.Control
 							type="number"
 							placeholder="Amount"
@@ -157,7 +157,7 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 						/>
 					</Form.Group>
 					<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-						<Form.Label>Sold Out Supplier</Form.Label>
+						<Form.Label>Sold Out Supplier<span style={{ color: 'red' }}>*</span></Form.Label>
 						<Form.Control
 							as="select"
 							aria-label="Default select example"
@@ -167,7 +167,7 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 						</Form.Control>
 					</Form.Group>
 					<Form.Group className="mb-3" >
-						<Form.Label>Reason of out</Form.Label>
+						<Form.Label>Reason of out<span style={{ color: 'red' }}>*</span></Form.Label>
 						<Form.Control
 							type="text"
 							placeholder="Enter reason"
