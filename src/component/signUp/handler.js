@@ -17,6 +17,7 @@ export const postSignUpApi = async (payload, setSubmit) => {
 			console.log(response.data);
 			setSubmit(false)
 			toast.success("Register successfully")
+	
 		}).catch(err => {
 			console.log(err)
 			setSubmit(false)

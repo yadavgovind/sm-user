@@ -35,7 +35,7 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 			}).then((res) => {
 				closeModal()
 			}).catch((err) => {
-				console.log(err)
+				console.log("While schedle sold" + err)
 			})
 		} else {
 			toast.error('Please fill the required fields.')
@@ -59,7 +59,7 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 	return (
 		<Modal show onHide={closeModal}>
 			<Modal.Header closeButton>
-				<Modal.Title>Sold Type</Modal.Title>
+				<Modal.Title>Sold Schedule</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<>
@@ -147,10 +147,10 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 					</>
 					}
 					<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-						<Form.Label>Amount<span style={{ color: 'red' }}>*</span></Form.Label>
+						<Form.Label>Price<span style={{ color: 'red' }}>*</span></Form.Label>
 						<Form.Control
 							type="number"
-							placeholder="Amount"
+							placeholder="price"
 							name="amount"
 							onChange={(e) => handleChange(e.target.name, e.target.value)}
 
