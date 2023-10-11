@@ -11,15 +11,15 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 	const [supplier, setSupplier] = useState({})
 
 	const handleChange = (checked, value) => {
-		if (checked === 'soldQuantity' || checked === 'amount' || checked === 'soldBussinessManId' || checked === 'reasonOfOut') {
+		if (checked === 'soldQuantity' || checked === 'amount' || checked === 'soldBusinessManId' || checked === 'reasonOfOut') {
 			setState({ ...state, [checked]: value })
 		} else {
 			setState({ ...state, checked })
 		}
 	}
 	const handleSubmit = () => {
-		const { checked, soldBussinessManId, reasonOfOut, amount, soldQuantity } = state
-		let isValidForFull = soldBussinessManId && reasonOfOut && amount
+		const { checked, soldBusinessManId, reasonOfOut, amount, soldQuantity } = state
+		let isValidForFull = soldBusinessManId && reasonOfOut && amount
 		let isValidForPartial = isValidForFull && soldQuantity
 		let isValid = checked ? isValidForFull : isValidForPartial
 		if (isValid) {
@@ -30,7 +30,7 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 				soldType: state.checked ? 'Full' : 'Partial',
 				soldQuantity: state.checked ? customerDetail.availableQuantity : state.soldQuantity,
 				amount: state.amount,
-				supplierId: state.soldBussinessManId,
+				supplierId: state.soldBusinessManId,
 				reasonOfOut: state.reasonOfOut,
 			}).then((res) => {
 				closeModal()
@@ -161,7 +161,7 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 						<Form.Control
 							as="select"
 							aria-label="Default select example"
-							onChange={(e) => handleChange('soldBussinessManId', e.target.value)}>
+							onChange={(e) => handleChange('soldBusinessManId', e.target.value)}>
 							<option>Select Supplier</option>
 							{getSupplier()}
 						</Form.Control>

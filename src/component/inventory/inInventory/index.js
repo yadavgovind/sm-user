@@ -123,16 +123,17 @@ const Inventory = () => {
 														openModal("soldType")
 														setCustomerDetail({ customerId: item.customerId, ...lot })
 													}}>
-														<i className="far fa-pencil" style={{ marginRight: "10px" }}></i>sold
+														<i className="far fa-pencil" style={{ marginRight: "10px" }}></i>Sold Schedule
 													</button> : ''}
 													{(lot.lotStatus === "IN_PROGRESS" || lot.lotStatus === "WEIGHT_IN_PROGRESS") && <button className='mat-menu-item' onClick={() => {
 														// openModal("lot-detail")
 														setCustomerDetail({ customerId: item.customerId })
+														sessionStorage.setItem('soldBusinessManId', item.soldBusinessManId)
 														sessionStorage.setItem('lotDetail', JSON.stringify([...lot.itemDetails, { 'lotNo': lot.lotNo }]))
 														setLotDetail(lot)
 														navigate("/store/out-inventory")
 													}}>
-														<i className="" style={{ marginRight: "10px" }} ></i>Sold
+														<i className="" style={{ marginRight: "10px" }} ></i>Weight
 													</button>
 													}
 												</div>
