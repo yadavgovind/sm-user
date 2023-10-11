@@ -11,15 +11,15 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 	const [supplier, setSupplier] = useState({})
 
 	const handleChange = (checked, value) => {
-		if (checked === 'soldQuantity' || checked === 'amount' || checked === 'soldBusinessManId' || checked === 'reasonOfOut') {
+		if (checked === 'soldQuantity' || checked === 'price' || checked === 'soldBusinessManId' || checked === 'reasonOfOut') {
 			setState({ ...state, [checked]: value })
 		} else {
 			setState({ ...state, checked })
 		}
 	}
 	const handleSubmit = () => {
-		const { checked, soldBusinessManId, reasonOfOut, amount, soldQuantity } = state
-		let isValidForFull = soldBusinessManId && reasonOfOut && amount
+		const { checked, soldBusinessManId, reasonOfOut, price, soldQuantity } = state
+		let isValidForFull = soldBusinessManId && reasonOfOut && price
 		let isValidForPartial = isValidForFull && soldQuantity
 		let isValid = checked ? isValidForFull : isValidForPartial
 		if (isValid) {
@@ -29,7 +29,7 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 				storeId: sessionStorage.getItem('storeId').trim(),
 				soldType: state.checked ? 'Full' : 'Partial',
 				soldQuantity: state.checked ? customerDetail.availableQuantity : state.soldQuantity,
-				amount: state.amount,
+				price: state.price,
 				supplierId: state.soldBusinessManId,
 				reasonOfOut: state.reasonOfOut,
 			}).then((res) => {
@@ -151,7 +151,7 @@ export default function SwitchSoldType({ closeModal, customerDetail }) {
 						<Form.Control
 							type="number"
 							placeholder="price"
-							name="amount"
+							name="price"
 							onChange={(e) => handleChange(e.target.name, e.target.value)}
 
 						/>

@@ -3,6 +3,7 @@ import { BASE_API_URL } from '../../constant/api';
 import history from '../../store/history';
 import { header } from "../../constant/api";
 import { signIn, generateOtp } from "../../service/api";
+import { parseJwt } from "../customer/handler";
 
 export const postSignInApi = async (payload) => {
 	try {
@@ -10,8 +11,13 @@ export const postSignInApi = async (payload) => {
 		if (response && response.data) {
 			sessionStorage.setItem("token", response.data.token);
 			getApi()
-			history.push('/store/dashboard');
-			window.location.reload();
+			const detail = parseJwt(response.data.token)
+			sessionStorage.setItem('storeId', detail["storeId "])
+			const userType = detail['userType '].trim()
+			if (userType === 'STORE') {
+				history.push('/store/dashboard');
+				window.location.reload();
+			}
 		}
 	} catch (err) {
 		console.log(err)

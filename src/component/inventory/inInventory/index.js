@@ -18,7 +18,7 @@ const Inventory = () => {
 	const [showOption, toggleButton] = useState('')
 	const [customerDetail, setCustomerDetail] = useState({})
 	// const [searchUser, setSearchUser] = useState('')
-	const [supplier, setSupplier] = useState({})
+	const [supplier, setSupplier] = useState([])
 	const [lotDetail, setLotDetail] = useState([])
 	const [state, setState] = useState({})
 
@@ -119,7 +119,7 @@ const Inventory = () => {
 										<div className='mat-menu-panel mat-elevation-z4'>
 											<div className='mat-menu-content'>
 												<div>
-													{lot.availableQuantity ? <button className='mat-menu-item' onClick={() => {
+													{lot.availableQuantity && supplier.length ? <button className='mat-menu-item' onClick={() => {
 														openModal("soldType")
 														setCustomerDetail({ customerId: item.customerId, ...lot })
 													}}>
