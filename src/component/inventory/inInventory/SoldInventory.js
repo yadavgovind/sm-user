@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { toast } from "react-toastify";
-import { outInventoryApi } from './handler';
+import { getSuppliersApi, outInventoryApi } from './handler';
 import './index.css'
 const SoldInventory = () => {
 	const [state, setState] = useState({})
+	const [supplier, setSupplier] = useState({})
+	const [supplierId, setSupplierId] = useState('')
+
+	const handleSelect = (value) => {
+		setSupplierId(value)
+	}
 	const storeId = sessionStorage.getItem('storeId').trim()
 
 	const lotDetail = JSON.parse(sessionStorage.getItem('lotDetail'))
@@ -31,13 +37,14 @@ const SoldInventory = () => {
 			customerId: sessionStorage.getItem('customerId'),
 			lotNo: lot[0].lotNo,
 			quantity: itemDetails.length,
+			soldBussinessManId: supplierId,
 			storeId
 		}
 		return payload
 	}
 	const handleSubmit = () => {
 		const payload = getPayload()
-		if (payload.quantity) {
+		if (payload.quantity && supplierId) {
 			outInventoryApi(payload).then(() => {
 				setState({})
 				toast.success("Inventory out successfully")
@@ -46,6 +53,19 @@ const SoldInventory = () => {
 		} else {
 			toast.error('Please fill required fields.')
 		}
+	}
+	useEffect(() => {
+		getSuppliersApi(storeId).then((res) => {
+			setSupplier(res)
+		}).catch(err => console.log(err))
+	}, [])
+
+	const getSupplier = () => {
+		let options = []
+		supplier.length && supplier.map((item, i) => {
+			return options.push(<option key={i} value={item.id}>{item.firstName}</option>)
+		})
+		return options
 	}
 	return (<div className="row">
 		<div className="col-sm-12">
@@ -112,6 +132,16 @@ const SoldInventory = () => {
 									)
 								})}
 							</div>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+							<Form.Label>Sold Out Supplier<span style={{ color: 'red' }}>*</span></Form.Label>
+							<Form.Control
+								as="select"
+								aria-label="Default select example"
+								onChange={(e) => handleSelect(e.target.value)}>
+								<option>Select Supplier</option>
+								{getSupplier()}
+							</Form.Control>
 						</Form.Group>
 						<Button variant="primary" onClick={() => handleSubmit()}>
 							Sold Out
