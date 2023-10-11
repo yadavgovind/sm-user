@@ -100,7 +100,7 @@ const Inventory = () => {
 						return item.lotDetails.map(((lot, index) => {
 							const roomNo = lot.lotNo?.split('-')[1]
 							return (<tr className='mat-row cdk-row' key={i}>
-								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.soldBossinessManName || '-'}</td>
+								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.soldBusinessManName || '-'}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{roomNo || '-'}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.lotNo}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.customerName}</td>
@@ -128,7 +128,7 @@ const Inventory = () => {
 													{(lot.lotStatus === "IN_PROGRESS" || lot.lotStatus === "WEIGHT_IN_PROGRESS") && <button className='mat-menu-item' onClick={() => {
 														// openModal("lot-detail")
 														setCustomerDetail({ customerId: item.customerId })
-														sessionStorage.setItem('soldBusinessManId', item.soldBusinessManId)
+														sessionStorage.setItem('soldBusinessManId', lot.soldBusinessManId)
 														sessionStorage.setItem('lotDetail', JSON.stringify([...lot.itemDetails, { 'lotNo': lot.lotNo }]))
 														setLotDetail(lot)
 														navigate("/store/out-inventory")
