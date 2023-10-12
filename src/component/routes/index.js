@@ -30,12 +30,12 @@ const StoreRoutes = () => {
 				<div className="common-head-container">
 					<div className='row'>
 						<div className='col-sm-8 px-2'>
-							<p className='text1 text-color'>
+							{/* <p className='text1 text-color'>
 								Dashboard
+							</p> */}
+							<p className="text-color text1 text1a">
+								Welcome {sessionStorage.getItem('storeName')}
 							</p>
-							<h2 className="text-color text1 text1a">
-								Welcome
-							</h2>
 						</div>
 						<Routes>
 							<Route path={'/store/customer'} element={<Customer />} />
