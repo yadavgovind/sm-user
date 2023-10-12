@@ -41,7 +41,7 @@ const SoldInventory = () => {
 		const payload = getPayload()
 		if (payload.quantity) {
 			outInventoryApi(payload).then(() => {
-				setState({})
+				// setState({})
 				toast.success("Inventory out successfully")
 
 			}).catch(err => toast.error((err && err.message) || 'Something went wrong.'))

@@ -13,6 +13,7 @@ export const postSignInApi = async (payload) => {
 			getApi()
 			const detail = parseJwt(response.data.token)
 			sessionStorage.setItem('storeId', detail["storeId "])
+			sessionStorage.setItem('storeName', detail["storeName "].trim())
 			const userType = detail['userType '].trim()
 			if (userType === 'STORE') {
 				history.push('/store/dashboard');
