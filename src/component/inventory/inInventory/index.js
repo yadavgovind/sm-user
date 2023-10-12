@@ -10,6 +10,7 @@ import SwitchSoldType from './SwitchSoldType';
 import TableView from '../../common/TableView';
 import NavbarHoc from '../../common/NavbarHoc';
 import { useNavigate } from "react-router-dom";
+import KebabMenu from '../../common/KebabMenu';
 
 const Inventory = () => {
 	const [lotsList, setLOtsList] = useState([])
@@ -111,8 +112,7 @@ const Inventory = () => {
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>
 									<div className='btn-group dropleft' style={{ float: 'right' }}>
 										<button className='mat-menu-trigger btn btn3bot' onClick={() => toggleButton(index)}>
-											<i className='fas fa-ellipsis-v'>
-											</i>
+											<KebabMenu />
 										</button>
 									</div>
 									{index === showOption && <div className='cdk-overlay-pane'>
@@ -123,7 +123,10 @@ const Inventory = () => {
 														openModal("soldType")
 														setCustomerDetail({ customerId: item.customerId, ...lot })
 													}}>
-														<i className="far fa-pencil" style={{ marginRight: "10px" }}></i>Sold Schedule
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
+															<path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z" />
+															<path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708l3-3z" />
+														</svg><span style={{ marginLeft: "10px" }}>Sold Schedule</span>
 													</button> : ''}
 													{(lot.lotStatus === "IN_PROGRESS" || lot.lotStatus === "WEIGHT_IN_PROGRESS") && <button className='mat-menu-item' onClick={() => {
 														// openModal("lot-detail")
