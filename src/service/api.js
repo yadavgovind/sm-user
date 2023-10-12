@@ -36,7 +36,7 @@ export const getCustomer = async (storeId) => {
 	}
 }
 
-export const addCustomer = async (payload, storeId) => {
+export const addCustomer = async (payload) => {
 	try {
 		const response = await axios.post(`${BASE_API_URL}customer`, payload, headerWithAuthorization());
 		return response

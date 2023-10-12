@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import './index.css'
-import { getCustomerApi, getSearchCustomerApi, parseJwt } from './handler';
+import { addCustomerApi, getCustomerApi, getSearchCustomerApi, parseJwt } from './handler';
 import './table.css'
-import { getProductTypeApi } from '../inventory/inInventory/handler';
+import { addInventoryApi, getProductTypeApi } from '../inventory/inInventory/handler';
 import { getAvailableListApi } from '../room/handler';
 import AddInventoryModal from '../inventory/inInventory/AddInventoryModal';
 import { useNavigate } from "react-router-dom";
@@ -50,12 +51,25 @@ const Customer = () => {
 			}).catch(err => console.log(err))
 		}
 	}
+
+	const onSubmitAddCustomer = async (payload) => {
+		try {
+			const newCustomer = await addCustomerApi(payload)
+			toast.success("Inventory added successfully")
+			setState(newCustomer)
+			return
+		} catch (err) {
+			toast.error((err && err.message) || 'Something went wrong.')
+			return
+		}
+	}
 	return <>
 		<NavbarHoc
 			navbarArr={[
 				{ link: '/store/dashboard', name: 'Dashboard' },
 				{ link: '/store/customer', name: 'Customer' },
 			]}
+			onSubmitAddCustomer={onSubmitAddCustomer}
 			showAddCustomer={true}
 			showSearch
 			handleBlur={handleBlur}

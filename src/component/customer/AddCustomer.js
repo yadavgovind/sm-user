@@ -16,11 +16,9 @@ const ValidationSchema = Yup.object().shape({
 	vehicleNumber: Yup.string().required('Please enter user vehicle number.'),
 	roleType: Yup.string().required('Please select user role type.'),
 });
-function AddCustomer() {
-	// const [isSubmitting, setIsSubmitting] = useState(false);
+function AddCustomer({ onSubmitAddCustomer }) {
 	const [formikObj, setFormikProps] = useState(null);
 	const [show, setShow] = useState(false);
-	// const [state, setState] = useState({})
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => {
@@ -28,24 +26,11 @@ function AddCustomer() {
 	};
 
 
-	// const handleOnChange = (e) => {
-	// 	const name = e.target.name;
-	// 	const value = e.target.value;
-	// 	setState({ ...state, [name]: value })
-	// }
-
 	const handleSubmit = async (values) => {
 		let detail = tokenDecode()
 		const payload = { ...values, 'storeId': detail.storeId }
-		addCustomerApi(payload, sessionStorage.getItem('token')).then((res) => {
-			setShow(false)
-			// setIsSubmitting(false);
-		}).catch((err) => {
-			toast.error(err.message)
-			setShow(false)
-			// setIsSubmitting(false);
-		})
-
+		await onSubmitAddCustomer(payload)
+		setShow(false)
 	}
 	return (
 		<>
@@ -161,7 +146,6 @@ function AddCustomer() {
 						Close
 					</Button>
 					{formikObj && <Button variant="primary"
-						// disabled={isSubmitting}
 						onClick={formikObj.submitForm}>
 						Save Changes
 					</Button>}

@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import history from '../../store/history';
 import AddCustomer from '../customer/AddCustomer';
 const NavbarHoc = (props) => {
-	const { navbarArr, TableView, showBackButton, showAddCustomer, backUrl, handleBlur, showSearch } = props
+	const { navbarArr, TableView, showBackButton, showAddCustomer, backUrl, handleBlur, showSearch, onSubmitAddCustomer } = props
 	const renderHeader = () => {
 		return (
 			<div className='mb-2 mt-2' style={{
@@ -18,6 +18,7 @@ const NavbarHoc = (props) => {
 					}}>Back</Button>}
 
 					{showAddCustomer && <AddCustomer
+						onSubmitAddCustomer={onSubmitAddCustomer}
 					/>}
 				</div>
 				{showSearch && <div className='form-group me-3' style={{ float: 'right' }}>
