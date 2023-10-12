@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const Inventory = () => {
 	const [lotsList, setLOtsList] = useState([])
 	const [currentModal, openModal] = useState(null)
-	const lotHeading = ['supplier', 'Room No', 'Lot Number', 'Customer Name', 'Total Quantity', 'Available Quantity', 'status', 'Product', '']
+	const lotHeading = ['supplier',  'Lot Number', 'Customer Name', 'Total Quantity', 'Available Quantity', 'status', 'Product', '']
 	const [showOption, toggleButton] = useState('')
 	const [customerDetail, setCustomerDetail] = useState({})
 	// const [searchUser, setSearchUser] = useState('')
@@ -100,8 +100,8 @@ const Inventory = () => {
 						return item.lotDetails.map(((lot, index) => {
 							const roomNo = lot.lotNo?.split('-')[1]
 							return (<tr className='mat-row cdk-row' key={i}>
-								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.soldBusinessManName || '-'}</td>
-								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{roomNo || '-'}</td>
+								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.supplierName || '-'}</td>
+
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.lotNo}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.customerName}</td>
 								<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{lot.totalQuantity}</td>

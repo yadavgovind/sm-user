@@ -19,7 +19,7 @@ const Customer = () => {
 	const [rooms, setRoom] = useState([])
 	const navigate = useNavigate();
 
-	const theading = ['#', 'Name', 'Store', 'Room No', 'Session', 'Phone', 'Email', 'Address', 'Vehicle', 'Role Type', '']
+	const theading = [ 'Name', 'Session', 'Phone', 'Email', 'Address', 'Vehicle', 'Role Type', '']
 	const detail = parseJwt(sessionStorage.getItem('token'))
 	sessionStorage.setItem('storeId', detail["storeId "])
 	const storeId = detail['storeId '].trim()
@@ -64,12 +64,9 @@ const Customer = () => {
 
 				TableData={() => {
 					return state.map((item, i) => {
-						return (<tr className='mat-row cdk-row' key={i}>
-							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{i + 1}</td>
+						return (<tr className='mat-row cdk-row' key={i}> 
 							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.firstName || 'N/A'}</td>
-							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.store || 'N/A'}</td>
-							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.roomNo || 'N/A'}</td>
-							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.registerSession}</td>
+						  <td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.registerSession}</td>
 							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.phone}</td>
 							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox' style={{ textTransform: 'lowercase' }}>{item.email}</td>
 							<td className='mat-cell cdk-cell cdk-column-checkbox mat-column-checkbox'>{item.address || 'N/A'}</td>

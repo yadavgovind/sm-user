@@ -4,7 +4,7 @@ import history from '../../store/history';
 import { header } from "../../constant/api";
 import { signIn, generateOtp } from "../../service/api";
 import { parseJwt } from "../customer/handler";
-
+import { toast } from "react-toastify";
 export const postSignInApi = async (payload) => {
 	try {
 		const response = await signIn(payload)
@@ -21,6 +21,7 @@ export const postSignInApi = async (payload) => {
 		}
 	} catch (err) {
 		console.log(err)
+		toast.error(err.response.data)
 	}
 }
 
