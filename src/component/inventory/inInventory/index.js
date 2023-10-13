@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { getLotsDetailApi, getSuppliersApi, outInventoryApi } from './handler';
-
-
+import { useNavigate } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from "react-toastify";
+import { getLotsDetailApi, getSuppliersApi, outInventoryApi } from './handler';
 import SwitchSoldType from './SwitchSoldType';
 import TableView from '../../common/TableView';
 import NavbarHoc from '../../common/NavbarHoc';
-import { useNavigate } from "react-router-dom";
 import KebabMenu from '../../common/KebabMenu';
 
 const Inventory = () => {
 	const [lotsList, setLOtsList] = useState([])
 	const [currentModal, openModal] = useState(null)
-	const lotHeading = ['supplier',  'Lot Number', 'Customer Name', 'Total Quantity', 'Available Quantity', 'status', 'Product', '']
+	const lotHeading = ['supplier', 'Lot Number', 'Customer Name', 'Total Quantity', 'Available Quantity', 'status', 'Product', '']
 	const [showOption, toggleButton] = useState('')
 	const [customerDetail, setCustomerDetail] = useState({})
 	// const [searchUser, setSearchUser] = useState('')
@@ -115,11 +113,11 @@ const Inventory = () => {
 											<KebabMenu />
 										</button>
 									</div>
-									{index === showOption && <div className='cdk-overlay-pane'>
+									{index === showOption && lot.availableQuantity && supplier.length && <div className='cdk-overlay-pane'>
 										<div className='mat-menu-panel mat-elevation-z4'>
 											<div className='mat-menu-content'>
 												<div>
-													{lot.availableQuantity && supplier.length ? <button className='mat-menu-item' onClick={() => {
+													<button className='mat-menu-item' onClick={() => {
 														openModal("soldType")
 														setCustomerDetail({ customerId: item.customerId, ...lot })
 													}}>
@@ -127,18 +125,7 @@ const Inventory = () => {
 															<path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z" />
 															<path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708l3-3z" />
 														</svg><span style={{ marginLeft: "10px" }}>Sold Schedule</span>
-													</button> : ''}
-													{(lot.lotStatus === "IN_PROGRESS" || lot.lotStatus === "WEIGHT_IN_PROGRESS") && <button className='mat-menu-item' onClick={() => {
-														// openModal("lot-detail")
-														setCustomerDetail({ customerId: item.customerId })
-														sessionStorage.setItem('soldBusinessManId', lot.soldBusinessManId)
-														sessionStorage.setItem('lotDetail', JSON.stringify([...lot.itemDetails, { 'lotNo': lot.lotNo }]))
-														setLotDetail(lot)
-														navigate("/store/out-inventory")
-													}}>
-														<i className="" style={{ marginRight: "10px" }} ></i>Weight
 													</button>
-													}
 												</div>
 											</div>
 										</div>
