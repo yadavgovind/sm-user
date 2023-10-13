@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { toast } from "react-toastify";
 import { outInventoryApi } from './handler';
 import './index.css'
+import { getLotScheduleApi } from '../../settlement/handler';
 const SoldInventory = () => {
 	const [state, setState] = useState({})
+	const [lotScheduleList, setList] = useState([])
 
 	const storeId = sessionStorage.getItem('storeId').trim()
 
 	const lotDetail = JSON.parse(sessionStorage.getItem('lotDetail'))
 	const itemDetail = lotDetail.filter(item => item.itemNo)
 	const lot = lotDetail.filter(item => item.lotNo)
+	const lotId = lotDetail.filter(item => item.lotId)[0].lotId
+	const customerId = lotDetail.filter(item => item.customerId)[0].customerId
 
 	const handleOnBlur = (itemId, value) => {
 		setState({ ...state, [itemId]: value })
 	}
 
+	useEffect(() => {
+		getLotScheduleApi(lotId).then((res) => {
+			setList(res)
+		}).catch((err) => {
+			console.log(err)
+		})
+	}, [])
 	const getPayload = () => {
 		let itemDetails = []
 		Object.keys(state).forEach(key => {
@@ -29,7 +40,7 @@ const SoldInventory = () => {
 		})
 		const payload = {
 			itemIds: [...itemDetails],
-			customerId: sessionStorage.getItem('customerId'),
+			customerId,
 			lotNo: lot[0].lotNo,
 			quantity: itemDetails.length,
 			soldBusinessManId: sessionStorage.getItem('soldBusinessManId'),
@@ -106,9 +117,28 @@ const SoldInventory = () => {
 									return (
 										<div className='main-wgt'>
 											<div className='child-wgt'>{item.itemNo}</div>
-											<div><input type='number' className='weight-input' name={`weight${item.id}`} value={item.weight}
-												disabled={item.weight}
-												onBlur={(e) => handleOnBlur(item.id, e.target.value)} />
+											<div>
+												<input type='number'
+													className='weight-input'
+													name={`weight${item.id}`}
+													value={item.weight}
+													disabled={item.weight}
+													onBlur={(e) => handleOnBlur(item.id, e.target.value)} />
+											</div>
+										</div>
+									)
+								})}
+								{lotScheduleList?.map((item, i) => {
+									return (
+										<div className='main-wgt'>
+											<div className='child-wgt'>{item.itemNo}</div>
+											<div>
+												<input type='number'
+													className='weight-input'
+													name={`weight${item.id}`}
+													value={item.weight}
+													disabled
+												/>
 											</div>
 										</div>
 									)

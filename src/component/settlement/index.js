@@ -56,8 +56,13 @@ const Settlement = () => {
 											<div>
 												<button className='mat-menu-item' onClick={() => {
 
-													sessionStorage.setItem('soldBusinessManId', item.soldBusinessManId)
-													sessionStorage.setItem('lotDetail', JSON.stringify([...item.itemDetails, { 'lotNo': item.lotNo, 'customerId': item.customerId }]))
+													sessionStorage.setItem('soldBusinessManId', item.supplierId)
+													sessionStorage.setItem('lotDetail', JSON.stringify([...item.itemDetails, {
+														lotNo: item.lotNo
+													},
+													{ customerId: item.customerId },
+													{ lotId: item.id }
+													]))
 													// setLotDetail(lot)
 													navigate("/store/out-inventory")
 												}}>

@@ -22,7 +22,7 @@ export const postSignInApi = async (payload) => {
 		}
 	} catch (err) {
 		console.log(err)
-		toast.error(err.response.data)
+		toast.error(err.response && err.response.data)
 	}
 }
 

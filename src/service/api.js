@@ -198,3 +198,12 @@ export const getSoldSchedule = async (storeId) => {
 		throw err
 	}
 }
+
+export const getLotScheduled = async (id) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}items/lotScheduleId/${id}`, headerWithAuthorization());
+		return response
+	} catch (err) {
+		throw err
+	}
+}

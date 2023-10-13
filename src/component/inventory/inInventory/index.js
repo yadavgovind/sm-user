@@ -113,7 +113,7 @@ const Inventory = () => {
 											<KebabMenu />
 										</button>
 									</div>
-									{index === showOption && lot.availableQuantity && supplier.length && <div className='cdk-overlay-pane'>
+									{index === showOption && lot.availableQuantity && supplier.length ? <div className='cdk-overlay-pane'>
 										<div className='mat-menu-panel mat-elevation-z4'>
 											<div className='mat-menu-content'>
 												<div>
@@ -129,7 +129,7 @@ const Inventory = () => {
 												</div>
 											</div>
 										</div>
-									</div>}
+									</div> : ''}
 								</td>
 							</tr>)
 						}))
