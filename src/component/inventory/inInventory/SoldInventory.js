@@ -113,21 +113,6 @@ const SoldInventory = () => {
 						<Form.Group className="mb-3" >
 							<Form.Label>Weight</Form.Label>
 							<div style={{ display: 'flex', flexWrap: 'wrap' }}>
-								{itemDetail?.map((item, i) => {
-									return (
-										<div className='main-wgt'>
-											<div className='child-wgt'>{item.itemNo}</div>
-											<div>
-												<input type='number'
-													className='weight-input'
-													name={`weight${item.id}`}
-													value={item.weight}
-													disabled={item.weight}
-													onBlur={(e) => handleOnBlur(item.id, e.target.value)} />
-											</div>
-										</div>
-									)
-								})}
 								{lotScheduleList?.map((item, i) => {
 									return (
 										<div className='main-wgt'>
@@ -139,6 +124,21 @@ const SoldInventory = () => {
 													value={item.weight}
 													disabled
 												/>
+											</div>
+										</div>
+									)
+								})}
+								{itemDetail?.map((item, i) => {
+									return (
+										<div className='main-wgt'>
+											<div className='child-wgt'>{item.itemNo}</div>
+											<div>
+												<input type='number'
+													className='weight-input'
+													name={`weight${item.id}`}
+													value={item.weight}
+													disabled={item.weight}
+													onBlur={(e) => handleOnBlur(item.id, e.target.value)} />
 											</div>
 										</div>
 									)
