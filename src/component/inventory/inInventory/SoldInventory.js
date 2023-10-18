@@ -14,7 +14,8 @@ const SoldInventory = () => {
 	const lotDetail = JSON.parse(sessionStorage.getItem('lotDetail'))
 	const itemDetail = lotDetail.filter(item => item.itemNo)
 	const lot = lotDetail.filter(item => item.lotNo)
-	const lotId = lotDetail.filter(item => item.lotId)[0].lotId
+	const soldScheduleId = lotDetail.filter(item => item.soldScheduleId)[0].soldScheduleId
+
 	const customerId = lotDetail.filter(item => item.customerId)[0].customerId
 
 	const handleOnBlur = (itemId, value) => {
@@ -22,7 +23,7 @@ const SoldInventory = () => {
 	}
 
 	useEffect(() => {
-		getLotScheduleApi(lotId).then((res) => {
+		getLotScheduleApi(soldScheduleId).then((res) => {
 			setList(res)
 		}).catch((err) => {
 			console.log(err)
@@ -42,6 +43,7 @@ const SoldInventory = () => {
 			itemIds: [...itemDetails],
 			customerId,
 			lotNo: lot[0].lotNo,
+			soldScheduleId,
 			quantity: itemDetails.length,
 			soldBusinessManId: sessionStorage.getItem('soldBusinessManId'),
 			storeId

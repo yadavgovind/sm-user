@@ -61,7 +61,7 @@ const Settlement = () => {
 														lotNo: item.lotNo
 													},
 													{ customerId: item.customerId },
-													{ lotId: item.id }
+													{ soldScheduleId: item.id }
 													]))
 													// setLotDetail(lot)
 													navigate("/store/out-inventory")
