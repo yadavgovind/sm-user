@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { toast } from "react-toastify";
@@ -8,7 +9,7 @@ import { getLotScheduleApi } from '../../settlement/handler';
 const SoldInventory = () => {
 	const [state, setState] = useState({})
 	const [lotScheduleList, setList] = useState([])
-
+	const navigate = useNavigate()
 	const storeId = sessionStorage.getItem('storeId').trim()
 
 	const lotDetail = JSON.parse(sessionStorage.getItem('lotDetail'))
@@ -56,7 +57,7 @@ const SoldInventory = () => {
 			outInventoryApi(payload).then(() => {
 				// setState({})
 				toast.success("Inventory out successfully")
-
+				navigate("/store/settlement")
 			}).catch(err => toast.error((err && err.message) || 'Something went wrong.'))
 		} else {
 			toast.error('Please fill required fields.')
