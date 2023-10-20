@@ -207,3 +207,12 @@ export const getLotScheduled = async (id) => {
 		throw err
 	}
 }
+
+export const getAverageRate = async (averageRate, storeCharge) => {
+	try {
+		const response = await axios.get(`${BASE_API_URL}customerResponse/session/2023/averageRate/${averageRate}?stroeCharge=${storeCharge}`, headerWithAuthorization());
+		return response
+	} catch (err) {
+		throw err
+	}
+}

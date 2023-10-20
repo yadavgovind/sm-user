@@ -4,7 +4,7 @@ import BarGraph from './barGraph';
 import Card from './Card';
 
 import './index.css'
-import { getDashboardCountApi, getProductInCountApi, getProductOutCountApi } from './handler';
+import { getDashboardCountApi, getProductInCountApi, getProductOutCountApi, getAverageRateApi } from './handler';
 import { getProductTypeApi } from '../inventory/inInventory/handler';
 import { getAvailableListApi } from '../room/handler';
 import { parseJwt } from '../customer/handler';
@@ -23,6 +23,8 @@ const Dashboard = () => {
 	const [rooms, setRoom] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [isOnload, setOnLoad] = useState(true)
+	const [customers, setCustomers] = useState([])
+
 
 	const detail = parseJwt(sessionStorage.getItem('token'))
 	sessionStorage.setItem('storeId', detail["storeId "])
@@ -95,6 +97,12 @@ const Dashboard = () => {
 		}
 	}, [state.roomProductOut])
 
+	useEffect(() => {
+		getAverageRateApi('600', '10')
+			.then(res => setCustomers(res))
+			.catch(err => console.log(err))
+	}, [])
+
 	const handleChange = (key, value) => {
 		setOnLoad(false)
 		setProduct({ ...state, [key]: value })
@@ -119,7 +127,7 @@ const Dashboard = () => {
 						productType={productType}
 						handleChange={handleChange}
 					/>
-					<BarGraph /></>}
+					<BarGraph customers={customers} /></>}
 		</>
 
 	)
