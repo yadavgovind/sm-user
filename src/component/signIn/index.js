@@ -18,7 +18,8 @@ function SignIn() {
   const [username, setUserName] = useState('')
   const [otp, setOtp] = useState('')
 
-  const submitForm = () => {
+
+  const handleSubmit = () => {
     const payload = { username, otp };
     postSignInApi(payload);
   }
@@ -44,7 +45,7 @@ function SignIn() {
                         phone: '',
                         otp: ''
                       }}
-                      onSubmit={(values, formik) => submitForm(values, formik)}
+                      onSubmit={(values, formik) => handleSubmit(values, formik)}
                     >{({ errors, touched, ...formikProps }) => (
                       <FormikForm >
                         <Form.Group className="mb-3" controlId="formBasicPhone">
@@ -77,7 +78,7 @@ function SignIn() {
                           {errors.otp && touched.otp && <span className="error">{errors.otp}</span>}
                         </Form.Group>
                         <div className='login-action'>
-                          <Button className='btn btn-primary ss2-btn-1' type="submit" onClick={formikProps.submitForm}>
+                          <Button className='btn btn-primary ss2-btn-1' type="submit">
                             LOG IN
                           </Button>
                           <p className=''>Don't have Account ? <Link to={SIGN_UP}>{' Sign Up'}</Link></p>

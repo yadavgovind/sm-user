@@ -10,7 +10,6 @@ export const postSignInApi = async (payload) => {
 		const response = await signIn(payload)
 		if (response && response.data) {
 			sessionStorage.setItem("token", response.data.token);
-			getApi()
 			const detail = parseJwt(response.data.token)
 			sessionStorage.setItem('storeId', detail["storeId "])
 			sessionStorage.setItem('storeName', detail["storeName "].trim())
