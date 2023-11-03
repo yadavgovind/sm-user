@@ -27,7 +27,7 @@ const Settlement = () => {
 	return (
 		<NavbarHoc
 			navbarArr={[
-				{ link: '/store', name: 'Settlement' }
+				{ link: '/store/settlement', name: 'Settlement' }
 			]}
 			TableView={() => <TableView
 				theading={lotHeading}
